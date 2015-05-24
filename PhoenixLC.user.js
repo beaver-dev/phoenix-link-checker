@@ -2,7 +2,7 @@
 // @name           PLC - Phoenix-Warez Links Checker
 // @description    Vérification des liens morts sur de nombreux hébergeurs.
 // @details        Basé sur W.A.R. Links Checker, ce script vérifie les liens morts sur de nombreux hébergeurs de fichiers. Utilisable sur Firefox, Chrome, Safari.
-// @version        1.0.0
+// @version        1.0.1
 // @license        Merci de ne pas modifier le contenu, contactez le staff en cas de problème
 // @author         Yeuf / Original iKickback & thecodingdude
 // @include        *phoenix-warez.ws*
@@ -14,7 +14,7 @@
 // @noframes
 // ==/UserScript==
 
-var PLC_version = "1.0.0";
+var PLC_version = "1.0.1";
 
 //separate alternative domains with "|" char (first name is considered being main)
 var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", "adrive.com", "bezvadata.cz", "filebeam.com",
@@ -480,7 +480,7 @@ function add_WARLC_style()
         document.getElementsByTagName('head')[0].appendChild(meta_not_to_add_more_style);
 
         GM_addStyle(
-            ".alive_link {background:transparent url(" + alive_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:green !important;}\
+            ".alive_link {background:transparent url(" + alive_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:#8FCF3C !important;}\
             .adead_link {background:transparent url(" + adead_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:red !important;}\
             .obsolete_link {background:transparent url(" + adead_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:red !important;}\
             .unava_link {background:transparent url(" + unava_link_png + ") no-repeat scroll 100% 50%;background-size:14px;padding-right:13px;color:#FF9900 !important;}\
