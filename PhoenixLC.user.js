@@ -2,7 +2,7 @@
 // @name           PLC - Phoenix-Warez Links Checker
 // @description    Vérification des liens morts sur de nombreux hébergeurs.
 // @details        Basé sur W.A.R. Links Checker, ce script vérifie les liens morts sur de nombreux hébergeurs de fichiers. Utilisable sur Firefox, Chrome, Safari.
-// @version        1.0.1
+// @version        1.0.2
 // @license        Merci de ne pas modifier le contenu, contactez le staff en cas de problème
 // @author         Yeuf / Original iKickback & thecodingdude
 // @include        *phoenix-warez.ws*
@@ -14,7 +14,7 @@
 // @noframes
 // ==/UserScript==
 
-var PLC_version = "1.0.1";
+var PLC_version = "1.0.2";
 
 //separate alternative domains with "|" char (first name is considered being main)
 var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", "adrive.com", "bezvadata.cz", "filebeam.com",
@@ -84,7 +84,11 @@ var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", 
 'up4.im', 'faststore.org', 'geupload.com|lenfile.com', 'up07.net', 'jumbofiles.net', 'toofile.com', 'themediastorage.com', 'rockfile.eu',
 'fileboom.me|fboom.me', 'rapidturk.com', 'bankupload.com', 'uplooad.net', 'openload.io', 'jumbofile.net', '4upld.com', 'exashare.com',
 'rziz.net', 'filerock.net', 'warped.co', 'iguanashare.com', 'zorofiles.com',
-"uptobox.com"];
+/***********
+CUSTOM_ADD
+***********/
+"uptobox.com", "jheberg.net", "mirrorupload.net", "go4up.com", "shareflare.net", "letitbit.net", "bigdownloader.com",
+"turbobit.pl|turbobit.net"];
 
 //separate alternative domains with "|" char (first name is considered being main)
 var allContainerNames = ["safelinking.net"];
@@ -192,11 +196,11 @@ var allObsoleteNames = ["uloz.cz", "storage.to", "iskladka.cz", "file-rack.com",
 'downforall.com', 'freakshare.net|freakshare.com', 'bitshare.com', 'ninjashare.com'];
 
 var pwCensoredHosts = ["filevice.com", "mirrorafile.com", "vip-file.com", "ufile.eu", "hitfile.net", "dirrectmirror.com", "keeplinks.me",
-"jheberg.net", "go4up.com", "exoshare.com", "digzip.com", "dl4.ru", "mirrorupload.net", "maxmirror.com", "uploadtubes.com", "uploadmirrors.com",
+"exoshare.com", "digzip.com", "dl4.ru", "maxmirror.com", "uploadtubes.com", "uploadmirrors.com",
 "uploadonall.com", "embedupload.com", "megaupper.com", "qooy.com", "multisiteupload.com", "multi-up.com", "multiupload.com|multiupload.nl", "multiload.cz",
 "mirrorcreator.com|mir.cr", "sharebee.com", "linkcrypt.ws", "linksave.in", "ncrypt.in", "unibytes.com", "share-links.biz|s2l.biz", "sharecash.org",
-"multishare.cz", "catshare.net", "4shared.com", "muchshare.net", "netfolder.in", "ziddu.com", "uploadblast.com", "uploadjockey.com", "shareflare.net",
-"adf.ly", "hellshare.com", "turbobit.pl|turbobit.net", "letitbit.net", "speedy.sh|speedyshare.com", "2downloadz.com", "anafile.com", "rapidu.net",
+"multishare.cz", "catshare.net", "4shared.com", "muchshare.net", "netfolder.in", "ziddu.com", "uploadblast.com", "uploadjockey.com",
+"adf.ly", "hellshare.com", "speedy.sh|speedyshare.com", "2downloadz.com", "anafile.com", "rapidu.net",
 "gamefront.com", "fileneo.com", "queenshare.com", "filemaze.ws", "goo.gl", "tiny.cc", "bit.ly", "tinyurl.com", "is.gd", "vidxden.com",
 "q.gs", "imxd.net", "unlimit.co.il", "multiup.org", "flashmirrors.com", "filemirrorupload.com", "lix.in", "toturl.us", "fff.re", "directmirror.com",
 "uploadseeds.com", "uploadmagnet.com", "sflk.in", "adfoc.us", "urlz.so", "filetolink.com", "mtsafelinking.org"];
@@ -204,8 +208,8 @@ var pwCensoredHosts = ["filevice.com", "mirrorafile.com", "vip-file.com", "ufile
 var update = {
 	version: '',
 	currentTime: new Date().valueOf(),
-   rawUrl: 'https://raw.githubusercontent.com/beaver-dev/phoenix-link-checker/master/',
-   baseUrl: 'https://github.com/beaver-dev/phoenix-link-checker/',
+	rawUrl: 'https://raw.githubusercontent.com/beaver-dev/phoenix-link-checker/master/',
+	baseUrl: 'https://github.com/beaver-dev/phoenix-link-checker/',
 	updateUrl: this.rawUrl + 'update.json',
 	changelogSuffix: 'changelog.md',
 	userscriptSuffix : 'PhoenixLC.user.js',
@@ -232,49 +236,49 @@ var update = {
 	getUpdate: function(version) {
 		var changelogUrl = update.baseUrl + update.changelogSuffix;
 		var userscriptUrl = update.rawUrl + update.userscriptSuffix;
-        var allowedToInstall = confirm('PLC - Une mise à jour est disponible (v' + version + ').\nElle sera installée après confirmation de votre part.\nNote: Si la mise à jour ne s\'effectue pas, vérifiez que votre navigateur ne bloque pas les popup.');
+		var allowedToInstall = confirm('PLC - Une mise à jour est disponible (v' + version + ').\nElle sera installée après confirmation de votre part.\nNote: Si la mise à jour ne s\'effectue pas, vérifiez que votre navigateur ne bloque pas les popup.');
 
 		sendMessage('PLC a été mise à jour ! Version ' + version + '. Cliquez <a href="' + changelogUrl + '">ici</a> pour voir les dernières modifications.');
 
 		if (allowedToInstall) {
-            window.open(userscriptUrl, '_blank');
-        }
+			window.open(userscriptUrl, '_blank');
+		}
 	}
 };
 
 String.prototype.contains = function(searchString) {
-    if (searchString.constructor === RegExp) {
-        if (searchString.test(this)) return true;
-        else return false;
+	if (searchString.constructor === RegExp) {
+		if (searchString.test(this)) return true;
+		else return false;
 
-    } else if (searchString.constructor === String) {
-        function replaceStr(string) {
-            return string.replace(new RegExp(RAND_STRING, 'g'), '|');
-        }
+	} else if (searchString.constructor === String) {
+		function replaceStr(string) {
+			return string.replace(new RegExp(RAND_STRING, 'g'), '|');
+		}
 
-        searchString = searchString.replace(/\\\|/g, RAND_STRING);
-        var searchArray = searchString.split('|');
+		searchString = searchString.replace(/\\\|/g, RAND_STRING);
+		var searchArray = searchString.split('|');
 
-        if (searchArray.length > 1) {
-            var found = false;
-            var i = searchArray.length;
+		if (searchArray.length > 1) {
+			var found = false;
+			var i = searchArray.length;
 
-            while (i--) {
-                if (this.indexOf(replaceStr(searchArray[i])) > -1) {
-                    found = true;
-                    break;
-                }
-            }
+			while (i--) {
+				if (this.indexOf(replaceStr(searchArray[i])) > -1) {
+					found = true;
+					break;
+				}
+			}
 
-            return found;
+			return found;
 
-        } else {
-            if (this.indexOf(replaceStr(searchString)) > -1) return true;
-            else return false;
-        }
-    } else {
-        throw new TypeError('String.contains: Input is not valid, string or regular expression required, ' + searchString.constructor.name + ' given.');
-    }
+		} else {
+			if (this.indexOf(replaceStr(searchString)) > -1) return true;
+			else return false;
+		}
+	} else {
+		throw new TypeError('String.contains: Input is not valid, string or regular expression required, ' + searchString.constructor.name + ' given.');
+	}
 }
 
 var firstRun = JSON.parse(localStorage.getItem("PLC_First_Run"));
@@ -292,7 +296,7 @@ var RAND_STRING = "8QyvpOSsRG3QWq";
 
 var PW_MODE = false;
 if (window.location.host.contains('phoenix-warez.ws')) {
-    PW_MODE = true;
+	PW_MODE = true;
 }
 
 var ANONYMIZE_SERVICE;
@@ -329,166 +333,166 @@ $("body").append("<b class='PLCInfoBox' style='position: fixed; top: 2px; paddin
 //global settings end
 
 function linkify(filterId) { //code from http://userscripts.org/scripts/review/2254 Linkify ting
-    if (!filterId) {
-        var regexy = "", ikkeTilladteTags = [];
+	if (!filterId) {
+		var regexy = "", ikkeTilladteTags = [];
 
-        if (Allow_spaces_in_DL_links) {
-            regexy = "(?:http:\/\/.+?\\?)?(?:https?:\/\/)?(?:[\\w\\.\\-]*[\\w\\-]+\\.(?:com?\\.\\w{2}|in\\.ua|uk\\.com|\\w{2,4})(?::\\d{2,5})?\/|(?:www\\.)?\\w{6,}\\.1fichier\\.com)[\\w\\–\\-\\.+$!*\\/\\(\\)\\[\\]\',~%?:@#&=\\\\\\—;\\u0020…×Ã\\_\\u0080-\\u03FF’‘\\|]*";
-        } else {
-            regexy = "(?:http:\/\/.+?\\?)?(?:https?:\/\/)?(?:[\\w\\.\\-]*[\\w\\-]+\\.(?:com?\\.\\w{2}|in\\.ua|uk\\.com|\\w{2,4})(?::\\d{2,5})?\/|(?:www\\.)?\\w{6,}\\.1fichier\\.com)[\\w\\–\\-\\.+$!*\\/()\\[\\]\',~%?:@#&=\\\\\\—;…×Ã\\_\\u0080-\\u03FF’‘\\|]*";
-        }
+		if (Allow_spaces_in_DL_links) {
+			regexy = "(?:http:\/\/.+?\\?)?(?:https?:\/\/)?(?:[\\w\\.\\-]*[\\w\\-]+\\.(?:com?\\.\\w{2}|in\\.ua|uk\\.com|\\w{2,4})(?::\\d{2,5})?\/|(?:www\\.)?\\w{6,}\\.1fichier\\.com)[\\w\\–\\-\\.+$!*\\/\\(\\)\\[\\]\',~%?:@#&=\\\\\\—;\\u0020…×Ã\\_\\u0080-\\u03FF’‘\\|]*";
+		} else {
+			regexy = "(?:http:\/\/.+?\\?)?(?:https?:\/\/)?(?:[\\w\\.\\-]*[\\w\\-]+\\.(?:com?\\.\\w{2}|in\\.ua|uk\\.com|\\w{2,4})(?::\\d{2,5})?\/|(?:www\\.)?\\w{6,}\\.1fichier\\.com)[\\w\\–\\-\\.+$!*\\/()\\[\\]\',~%?:@#&=\\\\\\—;…×Ã\\_\\u0080-\\u03FF’‘\\|]*";
+		}
 
-        if (Do_not_linkify_DL_links) {
-            ikkeTilladteTags = ['a', 'head', 'script', 'style', 'title', 'option', 'iframe', 'textarea', 'span']; //tags, hvor det der stAÎžâ€™Î’ÂĄr inden i ikke skal vAÎžâ€™Î’Â¦re links
-        } else {
-            ikkeTilladteTags = ['a', 'head', 'script', 'style', 'title', 'option', 'iframe', 'textarea']; //tags, hvor det der stAÎžâ€™Î’ÂĄr inden i ikke skal vAÎžâ€™Î’Â¦re links
-        }
+		if (Do_not_linkify_DL_links) {
+			ikkeTilladteTags = ['a', 'head', 'script', 'style', 'title', 'option', 'iframe', 'textarea', 'span']; //tags, hvor det der stAÎžâ€™Î’ÂĄr inden i ikke skal vAÎžâ€™Î’Â¦re links
+		} else {
+			ikkeTilladteTags = ['a', 'head', 'script', 'style', 'title', 'option', 'iframe', 'textarea']; //tags, hvor det der stAÎžâ€™Î’ÂĄr inden i ikke skal vAÎžâ€™Î’Â¦re links
+		}
 
-        var linkRegex = new RegExp(regexy, "g");
-        var censors = [ 'Disallowed',
-        				'Dead File Host',
-                        'Direct links only',
-                        'Folders are not allowed',
-                        'Multi hosts disallowed',
-                        'Protected links are not allowed',
-                        "Due To The Increase In Phishing,? We Now Disallow Protected URL'?s",
-                        "Not allowed Direct links only",
-                        "not allowed, please post direct links",
-                        "Spam",
-                        "If you are reading this report this SPAMMER to a moderator",
-                        "3rd Party links are not allowed. Direct Links Only",
-                        "Direct links only - please report me",
-                        "Spyware",
-                        "\\s*Ad\\-fly\\s*links\\s*are\\s*fobidden\\.\\s*Direct\\s*links only\\s*",
-                        "Disallowed - Direct links only",
-                        "Protected links not allowed"];
+		var linkRegex = new RegExp(regexy, "g");
+		var censors = [ 'Disallowed',
+		'Dead File Host',
+		'Direct links only',
+		'Folders are not allowed',
+		'Multi hosts disallowed',
+		'Protected links are not allowed',
+		"Due To The Increase In Phishing,? We Now Disallow Protected URL'?s",
+		"Not allowed Direct links only",
+		"not allowed, please post direct links",
+		"Spam",
+		"If you are reading this report this SPAMMER to a moderator",
+		"3rd Party links are not allowed. Direct Links Only",
+		"Direct links only - please report me",
+		"Spyware",
+		"\\s*Ad\\-fly\\s*links\\s*are\\s*fobidden\\.\\s*Direct\\s*links only\\s*",
+		"Disallowed - Direct links only",
+		"Protected links not allowed"];
 
-        var regexParts = [ 'https?:\/\/', //protocol
-                           '[\\w\\.\\-]+' //host/server
-                           ];
+		var regexParts = [ 'https?:\/\/', //protocol
+		'[\\w\\.\\-]+' //host/server
+	];
 
-        var censorRegex = new RegExp(   '(?:' + regexParts.join('') + '\/\\?)?' //anonymizers
-                                        + '(?:' + regexParts.join('|') + '|' + regexParts.join('') + ')' //all possible combinations of protocol + subdomain
-                                        + '~ (?:' //opening of the censor + non-capturing group (for the different censors)
-                                        + censors.join("|") //body of the non-capturing group, different options for censor contents
-                                        +  ') ~' //closing of the group and the censor
-                                        + '[\\w\\–\\-\\.+$!*\\/()\\[\\]\',~%?:@#&=\\\\\\—;…×Ã\\_\\u0080-\\u03FF’‘]+', //different characters possible in URL after the censor (END OF CENSOR BODY)
-                                        'ig'); //case insensitive, multiple matches on multiple lines
-        var ignoreImage = /(?:\.png|\.jpg|\.gif|\.jpeg|\.bmp)$/i, textNode, muligtLink;
+	var censorRegex = new RegExp(   '(?:' + regexParts.join('') + '\/\\?)?' //anonymizers
+	+ '(?:' + regexParts.join('|') + '|' + regexParts.join('') + ')' //all possible combinations of protocol + subdomain
+	+ '~ (?:' //opening of the censor + non-capturing group (for the different censors)
+	+ censors.join("|") //body of the non-capturing group, different options for censor contents
+	+  ') ~' //closing of the group and the censor
+	+ '[\\w\\–\\-\\.+$!*\\/()\\[\\]\',~%?:@#&=\\\\\\—;…×Ã\\_\\u0080-\\u03FF’‘]+', //different characters possible in URL after the censor (END OF CENSOR BODY)
+	'ig'); //case insensitive, multiple matches on multiple lines
+	var ignoreImage = /(?:\.png|\.jpg|\.gif|\.jpeg|\.bmp)$/i, textNode, muligtLink;
 
-        var path = "//text()[not(parent::" + ikkeTilladteTags.join(" or parent::") + ") and contains(.,'/')]";
-        var textNodes = document.evaluate(path, document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	var path = "//text()[not(parent::" + ikkeTilladteTags.join(" or parent::") + ") and contains(.,'/')]";
+	var textNodes = document.evaluate(path, document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
-        var i = textNodes.snapshotLength;
+	var i = textNodes.snapshotLength;
 
-        while (i--) {
-            textNode = textNodes.snapshotItem(i);
-            muligtLink = $.trim(textNode.nodeValue); //all links on page without whitespace
+	while (i--) {
+		textNode = textNodes.snapshotItem(i);
+		muligtLink = $.trim(textNode.nodeValue); //all links on page without whitespace
 
-            var myArray = null;
-            if (censorRegex.test(muligtLink)) {
-                var span = document.createElement('span'), lastLastIndex = 0, myArray = null;
-                censorRegex.lastIndex = 0;
+		var myArray = null;
+		if (censorRegex.test(muligtLink)) {
+			var span = document.createElement('span'), lastLastIndex = 0, myArray = null;
+			censorRegex.lastIndex = 0;
 
-                while (myArray = censorRegex.exec(muligtLink)) {
-                    var link = $.trim(myArray[0]); //removes whitespace from beginning and end of link (can sometimes cause issues when spaces are still picked up by the regex even when Allow_spaces_in_DL_links is false)
+			while (myArray = censorRegex.exec(muligtLink)) {
+				var link = $.trim(myArray[0]); //removes whitespace from beginning and end of link (can sometimes cause issues when spaces are still picked up by the regex even when Allow_spaces_in_DL_links is false)
 
-                    if (ignoreImage.test(link.replace(/\[\/img\]$/, ""))) continue;
+				if (ignoreImage.test(link.replace(/\[\/img\]$/, ""))) continue;
 
-                    span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex, myArray.index)));
+				span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex, myArray.index)));
 
-                    var $span = $('<span class="obsolete_link" warlc_error="Cause de l\'erreur: <b>Lien censuré.</b>">' + link + '</span>');
+				var $span = $('<span class="obsolete_link" warlc_error="Cause de l\'erreur: <b>Lien censuré.</b>">' + link + '</span>');
 
-                    $span.appendTo(span);
+				$span.appendTo(span);
 
-                    updateHosts('dead', 'censored links');
-                    cLinksTotal++; cLinksProcessed++; cLinksDead++;
+				updateHosts('dead', 'censored links');
+				cLinksTotal++; cLinksProcessed++; cLinksDead++;
 
-                    lastLastIndex = censorRegex.lastIndex;
-                }
+				lastLastIndex = censorRegex.lastIndex;
+			}
 
-                span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex)));
-                textNode.parentNode.replaceChild(span, textNode);
+			span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex)));
+			textNode.parentNode.replaceChild(span, textNode);
 
-                $('span.obsolete_link', textNode.parentNode).mouseover(displayTooltipError);
-            } else if (linkRegex.test(muligtLink)) {
-                var span = document.createElement('span'), lastLastIndex = 0, myArray = null;
-                linkRegex.lastIndex = 0;
+			$('span.obsolete_link', textNode.parentNode).mouseover(displayTooltipError);
+		} else if (linkRegex.test(muligtLink)) {
+			var span = document.createElement('span'), lastLastIndex = 0, myArray = null;
+			linkRegex.lastIndex = 0;
 
-                while (myArray = linkRegex.exec(muligtLink)) {
-                    var link = $.trim(myArray[0]); //removes whitespace from beginning and end of link (can sometimes cause issues when spaces are still picked up by the regex even when Allow_spaces_in_DL_links is false)
+			while (myArray = linkRegex.exec(muligtLink)) {
+				var link = $.trim(myArray[0]); //removes whitespace from beginning and end of link (can sometimes cause issues when spaces are still picked up by the regex even when Allow_spaces_in_DL_links is false)
 
-                    var hostName = gimmeHostName2(link);
-                    var hostNameSafe = hostName.replace(/\./g, "_dot_").replace(/\-/g, "_dash_").toLowerCase();
-                    if (hostName == gimmeHostName(window.location.hostname) || !hostsIDs[hostNameSafe] || ignoreImage.test(link.replace(/\[\/img\]$/, ""))) {
-                        continue;
-                    }
+				var hostName = gimmeHostName2(link);
+				var hostNameSafe = hostName.replace(/\./g, "_dot_").replace(/\-/g, "_dash_").toLowerCase();
+				if (hostName == gimmeHostName(window.location.hostname) || !hostsIDs[hostNameSafe] || ignoreImage.test(link.replace(/\[\/img\]$/, ""))) {
+					continue;
+				}
 
-                    span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex, myArray.index)));
+				span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex, myArray.index)));
 
-                    var $a = $("<a>" + link + "</a>")
+				var $a = $("<a>" + link + "</a>")
 
-                    if (!link.match(/https?:\/\//)) {
-                        link = 'http://' + link;
-                    }
+				if (!link.match(/https?:\/\//)) {
+					link = 'http://' + link;
+				}
 
-                    $a.attr("href", link.replace(/\[\/hide:\w+\]/,"")).appendTo(span);
+				$a.attr("href", link.replace(/\[\/hide:\w+\]/,"")).appendTo(span);
 
-                    lastLastIndex = linkRegex.lastIndex;
-                }
+				lastLastIndex = linkRegex.lastIndex;
+			}
 
-                span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex)));
-                textNode.parentNode.replaceChild(span, textNode);
-            }
-        }
-    }
+			span.appendChild(document.createTextNode(muligtLink.substring(lastLastIndex)));
+			textNode.parentNode.replaceChild(span, textNode);
+		}
+	}
+}
 
-    var jQ;
-    filterId ? jQ = "a." + filterId : jQ = "a";
-    var as = $(jQ);
-    var i = as.length;
-    var currA, hostNameSafe, hostID;
-    while(i--) {
-        currA = as[i];
-        if (currA.href && /^https?:\/\//.test(currA.href) && gimmeHostName2(currA.href) != -1 && gimmeHostName2(currA.href) != gimmeHostName(window.location.host) && (!currA.className || currA.className == "processing_link" || currA.className == filterId)) {
-            hostNameSafe = gimmeHostName2(currA.href).replace(/\./g, "_dot_").replace(/\-/g, "_dash_").toLowerCase();
-            if (!hostsIDs[hostNameSafe]) {
-                if (filterId) cLinksTotal--; currA.className = '';
-                continue;
-            } else {
-                var ix = hostsIDs[hostNameSafe].length;
-                while(ix--) {
-                    if (new RegExp(hostsIDs[hostNameSafe][ix].linkRegex).test(currA.href)) {
-                        currA.className = "processing_link";
-                        hostID = hostsIDs[hostNameSafe][ix].hostID;
-                        hostsCheck[hostID].links.push(currA);
-                        foundMirrors[hostID.substr(0,2)].push(hostID);
-                    }
-                }
-            }
-        }
-    }
+var jQ;
+filterId ? jQ = "a." + filterId : jQ = "a";
+var as = $(jQ);
+var i = as.length;
+var currA, hostNameSafe, hostID;
+while(i--) {
+	currA = as[i];
+	if (currA.href && /^https?:\/\//.test(currA.href) && gimmeHostName2(currA.href) != -1 && gimmeHostName2(currA.href) != gimmeHostName(window.location.host) && (!currA.className || currA.className == "processing_link" || currA.className == filterId)) {
+		hostNameSafe = gimmeHostName2(currA.href).replace(/\./g, "_dot_").replace(/\-/g, "_dash_").toLowerCase();
+		if (!hostsIDs[hostNameSafe]) {
+			if (filterId) cLinksTotal--; currA.className = '';
+			continue;
+		} else {
+			var ix = hostsIDs[hostNameSafe].length;
+			while(ix--) {
+				if (new RegExp(hostsIDs[hostNameSafe][ix].linkRegex).test(currA.href)) {
+					currA.className = "processing_link";
+					hostID = hostsIDs[hostNameSafe][ix].hostID;
+					hostsCheck[hostID].links.push(currA);
+					foundMirrors[hostID.substr(0,2)].push(hostID);
+				}
+			}
+		}
+	}
+}
 }
 
 function add_WARLC_style()
 {
-    if (!(document.getElementsByTagName('WARLC')[0]))
-    {
-        var meta_not_to_add_more_style = document.createElement("WARLC");
-        meta_not_to_add_more_style.setAttribute('content', 'war_links_checker');
-        meta_not_to_add_more_style.setAttribute('name', 'description');
-        document.getElementsByTagName('head')[0].appendChild(meta_not_to_add_more_style);
+	if (!(document.getElementsByTagName('WARLC')[0]))
+	{
+		var meta_not_to_add_more_style = document.createElement("WARLC");
+		meta_not_to_add_more_style.setAttribute('content', 'war_links_checker');
+		meta_not_to_add_more_style.setAttribute('name', 'description');
+		document.getElementsByTagName('head')[0].appendChild(meta_not_to_add_more_style);
 
-        GM_addStyle(
-            ".alive_link {background:transparent url(" + alive_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:#8FCF3C !important;}\
-            .adead_link {background:transparent url(" + adead_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:red !important;}\
-            .obsolete_link {background:transparent url(" + adead_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:red !important;}\
-            .unava_link {background:transparent url(" + unava_link_png + ") no-repeat scroll 100% 50%;background-size:14px;padding-right:13px;color:#FF9900 !important;}\
-            .unknown_link {background:transparent url(" + unknown_link_png + ") no-repeat scroll 100% 50%;padding-right:13px;background-size:13px;color:rgb(0, 150, 255) !important}\
-            .processing_link {background:transparent url(" + processing_link_gif + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:16px;color:grey !important;}\
-            .container_link {background:transparent url(" + processing_link_gif + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:16px;color:grey !important;}"
-        );
-    }
+		GM_addStyle(
+			".alive_link {background:transparent url(" + alive_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:#8FCF3C !important;}\
+			.adead_link {background:transparent url(" + adead_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:red !important;}\
+			.obsolete_link {background:transparent url(" + adead_link_png + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:13px;color:red !important;}\
+			.unava_link {background:transparent url(" + unava_link_png + ") no-repeat scroll 100% 50%;background-size:14px;padding-right:13px;color:#FF9900 !important;}\
+			.unknown_link {background:transparent url(" + unknown_link_png + ") no-repeat scroll 100% 50%;padding-right:13px;background-size:13px;color:rgb(0, 150, 255) !important}\
+			.processing_link {background:transparent url(" + processing_link_gif + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:16px;color:grey !important;}\
+			.container_link {background:transparent url(" + processing_link_gif + ") no-repeat scroll 100% 50%;background-size:13px;padding-right:16px;color:grey !important;}"
+		);
+	}
 }
 
 var warlcTooltip = null, mouseoverLink = null; //link href with mouse cursor over it
@@ -500,56 +504,56 @@ $(document).ready(initTooltip);
 //inits tooltip
 function initTooltip()
 {    warlcTooltip = document.createElement("div");
-    warlcTooltip.setAttribute("style", "background: #EAEAEA; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);padding: 6px 6px 6px 6px; border-radius:2px; border:2px solid #6699CC; color:#000000;font-family:Verdana,sans-serif;font-size:11px;position:absolute;z-index:1000; max-width: " + TOOLTIP_MAXWIDTH + "px;");
-    warlcTooltip.style.visibility = "hidden";
+warlcTooltip.setAttribute("style", "background: #EAEAEA; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);padding: 6px 6px 6px 6px; border-radius:2px; border:2px solid #6699CC; color:#000000;font-family:Verdana,sans-serif;font-size:11px;position:absolute;z-index:1000; max-width: " + TOOLTIP_MAXWIDTH + "px;");
+warlcTooltip.style.visibility = "hidden";
 
-    document.body.appendChild(warlcTooltip);
+document.body.appendChild(warlcTooltip);
 }
 
 function updateHosts(status, hostname) {
-    $('warbb[name="filehosts"]').attr(status, function(index, value) {
-        if (!value.contains(hostname)) {
-            return value += hostname + ",";
-        }
-    });
+	$('warbb[name="filehosts"]').attr(status, function(index, value) {
+		if (!value.contains(hostname)) {
+			return value += hostname + ",";
+		}
+	});
 }
 
 //"mousemove" event handler for all links
 function moveTooltip(event)
 {
-    if ((Math.abs(lastX - event.clientX) + Math.abs(lastY - event.clientY)) < 6)
-    {    //no need to reflow if the cursor moved just a little
-        return;
-    }
-    else
-    {
-        lastX = event.clientX;
-        lastY = event.clientY;
-    }
+	if ((Math.abs(lastX - event.clientX) + Math.abs(lastY - event.clientY)) < 6)
+	{    //no need to reflow if the cursor moved just a little
+		return;
+	}
+	else
+	{
+		lastX = event.clientX;
+		lastY = event.clientY;
+	}
 
-    posX = event.clientX + window.pageXOffset + 10;
-    posY = event.clientY + window.pageYOffset;
+	posX = event.clientX + window.pageXOffset + 10;
+	posY = event.clientY + window.pageYOffset;
 
-    var ttHeight = warlcTooltip.offsetHeight;
-    var ttFreeSpace = window.innerHeight - event.clientY;
+	var ttHeight = warlcTooltip.offsetHeight;
+	var ttFreeSpace = window.innerHeight - event.clientY;
 
-    if (ttHeight > ttFreeSpace)
-    {    //prevents tooltip from getting out of the window
-        posY -= (ttHeight - (ttFreeSpace)) + 10;
-    }
-    else
-    {
-        posY += 7;
-    }
+	if (ttHeight > ttFreeSpace)
+	{    //prevents tooltip from getting out of the window
+		posY -= (ttHeight - (ttFreeSpace)) + 10;
+	}
+	else
+	{
+		posY += 7;
+	}
 
-    warlcTooltip.style.top = posY + "px";
-    warlcTooltip.style.left = posX + "px";
+	warlcTooltip.style.top = posY + "px";
+	warlcTooltip.style.left = posX + "px";
 }
 
 //"mouseout" event handler for all links
 function hideTooltip(){
-    warlcTooltip.style.visibility = "hidden";
-    mouseoverLink = null;
+	warlcTooltip.style.visibility = "hidden";
+	mouseoverLink = null;
 }
 
 
@@ -557,431 +561,431 @@ function hideTooltip(){
 //displays tooltip error message on dead links
 function displayTooltipError()
 {
-    mouseoverLink = this.href;
+	mouseoverLink = this.href;
 
-    this.addEventListener("mouseout", hideTooltip);
-    this.addEventListener("mousemove", function(event) { moveTooltip(event); });
+	this.addEventListener("mouseout", hideTooltip);
+	this.addEventListener("mousemove", function(event) { moveTooltip(event); });
 
-    warlcTooltip.innerHTML = '<b>CHARGEMENT...</b>';
-    warlcTooltip.style.minWidth = 0;
-    warlcTooltip.style.visibility = "visible";
+	warlcTooltip.innerHTML = '<b>CHARGEMENT...</b>';
+	warlcTooltip.style.minWidth = 0;
+	warlcTooltip.style.visibility = "visible";
 
-    if ($(this).attr('warlc_error')) { //an error message is already known and stored in warlc_error attribute
-        warlcTooltip.innerHTML = $(this).attr('warlc_error');
-    }
-    else
-    {
-        loadErrorInfo(this);
-    }
+	if ($(this).attr('warlc_error')) { //an error message is already known and stored in warlc_error attribute
+		warlcTooltip.innerHTML = $(this).attr('warlc_error');
+	}
+	else
+	{
+		loadErrorInfo(this);
+	}
 
-    function loadErrorInfo(link)
-    {
-        var href = link.href;
-        if (link.href.contains('anysend.com') && link.name) href = link.name;
-        href = href.replace(/quickshare\.cz\/.+/, "quickshare.cz/chyba");
+	function loadErrorInfo(link)
+	{
+		var href = link.href;
+		if (link.href.contains('anysend.com') && link.name) href = link.name;
+		href = href.replace(/quickshare\.cz\/.+/, "quickshare.cz/chyba");
 
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: href.replace(ANONYMIZE_SERVICE, ""),
-            headers: {
-                'User-agent': rUA(),
-                'Accept': 'text/xml,application/x-httpd-php',
-                'Referer': ""
-            },
-            onload: function(result) {
-                var res = result.responseText;
-                //console.log(res);
-                //TODO: errorRegexs -
-                var errorRegexs =     [    //generic error messages follow
-                                        /(empty directory)/i,
-                                        /(soubor nebyl nalezen)/i,
-                                        /((?:file|page|link|folder)(?:is|not|does|has been|was|has| ){1,}(?:found|available|blocked|exists?|deleted|removed|expired))/i,
+		GM_xmlhttpRequest({
+			method: 'GET',
+			url: href.replace(ANONYMIZE_SERVICE, ""),
+			headers: {
+				'User-agent': rUA(),
+				'Accept': 'text/xml,application/x-httpd-php',
+				'Referer': ""
+			},
+			onload: function(result) {
+				var res = result.responseText;
+				//console.log(res);
+				//TODO: errorRegexs -
+				var errorRegexs =     [    //generic error messages follow
+					/(empty directory)/i,
+					/(soubor nebyl nalezen)/i,
+					/((?:file|page|link|folder)(?:is|not|does|has been|was|has| ){1,}(?:found|available|blocked|exists?|deleted|removed|expired))/i,
 
-                                        //server specific error messages follow
-                                        /msg error" style="cursor: default">(.+?)<\/div>/, //sendspace
-                                        /color:red;font\-weight:bold;border\-style:dashed;font-size:12px;border\-width:2px;><tr><td align=center>(.+?)<\/td>/, //fastshare
-                                        /errorIcon">\s*<p><strong>(.+?)<br \/>/, //filefactory
-                                        /no_download_msg">\s*(.+?)<span/, //depositfiles
-                                        /(Takový soubor neexistuje. Je možné, že byl již smazán.)/, //quickshare
-                                        /file_info file_info_deleted">\s*<h1>(.+?)<\/h1>/, //filepost
-                                        /<br \/>\s*<p style="color:#000">(.+?)<\/p>\s*<\/center>/, //letitbit
-                                        /(?:error_div">|<\/h1><p>)<strong>(.+?)<\/strong>/, //share-rapid,quickshare
-                                        /class="red">(.+?)<(?:span|br)>/, //megashares
-                                        /class="wp640">\s*<h1 class="h1">(.+?)<\/h1>/, //uloz.to
-                                        /download_file">\s*<tr>\s*<td>(.+?)<\/td>/, //hotfile
-                                        /error\.gif" \/>\s*(.+?)\s*<\/div>/, //uploading.com
-                                        /not-found">\s*<p>(.+?)<\/p>/, //bayfiles
-                                        /(Your file could not be found. Please check the download link.)/, //stahnu.to
-                                        /error_msg">\s*(<h3>.+?<\/h3><ul>(.+?)<\/ul>)/, //edisk
-                                        /id="obsah">\s*<h2>(.+?)<\/h2>/, //euroshare
-                                        /error">\s*(?:<[bp]>)?\s*(.+?)<\/[bp]>/, //filesmonster, shragle, gigapeta
-                                        /center aC">\s*<h1>(.+?)<br \/>/, //uploaded.to
-                                        /icon_err">\s*<h1>(.+?)<\/h1>/, //filejungle
-                                        /Code: ER_NFF_\d+<\/h2>\s*(.+?)\s*<\/div>/, //netload
-                                        /(File has been removed due to Copyright Claim)/, //filerio
-                                        /<span style="color:red;" class="result-form">(.+?)<\/span>/, //safelinking
-                                        /(The file link that you requested is not valid.)/, //2shared
-                                        /#FF0000"><big>(.+?\s+.+?)<\/big>/, //jumbofiles
-                                        /error_msg_title">(.+?)<\/h3>/, //mediafire
-                                        /<span class="bold">(?:<br \/>)+(.+?)<\/span>/, //filebox
-                                        /err">(.+?)</, //speedy-share, will work for others
-                                        /<h2 class="error">(.+?)<\/h2>/, //gigasize.com
-                                        /<h1 class="filename" id="status">(.+?)<\/h1>/, //anysend.com
-                                        /<title>(Removed download) \| AnySend<\/title>/, //anysend.com
-                                        /<div class='message t_0'>(.+?)<\/div>/, //sockshare.com
-                                    ];
-                var errorIdx = errorRegexs.length;
+					//server specific error messages follow
+					/msg error" style="cursor: default">(.+?)<\/div>/, //sendspace
+					/color:red;font\-weight:bold;border\-style:dashed;font-size:12px;border\-width:2px;><tr><td align=center>(.+?)<\/td>/, //fastshare
+					/errorIcon">\s*<p><strong>(.+?)<br \/>/, //filefactory
+					/no_download_msg">\s*(.+?)<span/, //depositfiles
+					/(Takový soubor neexistuje. Je možné, že byl již smazán.)/, //quickshare
+					/file_info file_info_deleted">\s*<h1>(.+?)<\/h1>/, //filepost
+					/<br \/>\s*<p style="color:#000">(.+?)<\/p>\s*<\/center>/, //letitbit
+					/(?:error_div">|<\/h1><p>)<strong>(.+?)<\/strong>/, //share-rapid,quickshare
+					/class="red">(.+?)<(?:span|br)>/, //megashares
+					/class="wp640">\s*<h1 class="h1">(.+?)<\/h1>/, //uloz.to
+					/download_file">\s*<tr>\s*<td>(.+?)<\/td>/, //hotfile
+					/error\.gif" \/>\s*(.+?)\s*<\/div>/, //uploading.com
+					/not-found">\s*<p>(.+?)<\/p>/, //bayfiles
+					/(Your file could not be found. Please check the download link.)/, //stahnu.to
+					/error_msg">\s*(<h3>.+?<\/h3><ul>(.+?)<\/ul>)/, //edisk
+					/id="obsah">\s*<h2>(.+?)<\/h2>/, //euroshare
+					/error">\s*(?:<[bp]>)?\s*(.+?)<\/[bp]>/, //filesmonster, shragle, gigapeta
+					/center aC">\s*<h1>(.+?)<br \/>/, //uploaded.to
+					/icon_err">\s*<h1>(.+?)<\/h1>/, //filejungle
+					/Code: ER_NFF_\d+<\/h2>\s*(.+?)\s*<\/div>/, //netload
+					/(File has been removed due to Copyright Claim)/, //filerio
+					/<span style="color:red;" class="result-form">(.+?)<\/span>/, //safelinking
+					/(The file link that you requested is not valid.)/, //2shared
+					/#FF0000"><big>(.+?\s+.+?)<\/big>/, //jumbofiles
+					/error_msg_title">(.+?)<\/h3>/, //mediafire
+					/<span class="bold">(?:<br \/>)+(.+?)<\/span>/, //filebox
+					/err">(.+?)</, //speedy-share, will work for others
+					/<h2 class="error">(.+?)<\/h2>/, //gigasize.com
+					/<h1 class="filename" id="status">(.+?)<\/h1>/, //anysend.com
+					/<title>(Removed download) \| AnySend<\/title>/, //anysend.com
+					/<div class='message t_0'>(.+?)<\/div>/, //sockshare.com
+				];
+				var errorIdx = errorRegexs.length;
 
-                var error = "Cause de l'erreur: <b>inconnue</b>";
-                var errorCandidate = "";
-                while(errorIdx--)
-                {
-                    var errorCandidate = res.match(errorRegexs[errorIdx]);
-                    if (errorCandidate != null)
-                    {
-                        error = "Cause de l'erreur: <b>" + errorCandidate[1].replace(/&nbsp;/g," ") + "</b>";
-                        break;
-                    }
-                }
+				var error = "Cause de l'erreur: <b>inconnue</b>";
+				var errorCandidate = "";
+				while(errorIdx--)
+				{
+					var errorCandidate = res.match(errorRegexs[errorIdx]);
+					if (errorCandidate != null)
+					{
+						error = "Cause de l'erreur: <b>" + errorCandidate[1].replace(/&nbsp;/g," ") + "</b>";
+						break;
+					}
+				}
 
-                //link attributes
-                $(link).attr('warlc_error', error);
+				//link attributes
+				$(link).attr('warlc_error', error);
 
-                if (mouseoverLink == link.href) //mouse cursor is still over the link
-                {
-                    warlcTooltip.innerHTML = error;
-                }
-            }
-        });
-    }
+				if (mouseoverLink == link.href) //mouse cursor is still over the link
+				{
+					warlcTooltip.innerHTML = error;
+				}
+			}
+		});
+	}
 }
 
 //"mouseover" event handler for alive links
 //displays tooltip info (file size, file name,...) on alive links
 function displayTooltipInfo()
 {
-    mouseoverLink = this.href;
+	mouseoverLink = this.href;
 
-    //exclude direct download filehostings
-    if (this.href.contains(/(?:uloziste\.com|filemonster\.net|uploadbin\.net|adrive\.com|dropbox(?:usercontent)?\.com|karelia\.pro|archive\.org|demo\.ovh\.eu)/))
-    {
-        return;
-    }
+	//exclude direct download filehostings
+	if (this.href.contains(/(?:uloziste\.com|filemonster\.net|uploadbin\.net|adrive\.com|dropbox(?:usercontent)?\.com|karelia\.pro|archive\.org|demo\.ovh\.eu)/))
+	{
+		return;
+	}
 
-    this.addEventListener("mouseout", hideTooltip);
-    this.addEventListener("mousemove", function(event) { moveTooltip(event); });
+	this.addEventListener("mouseout", hideTooltip);
+	this.addEventListener("mousemove", function(event) { moveTooltip(event); });
 
-    warlcTooltip.innerHTML = '<b>CHARGEMENT...</b>';
-    warlcTooltip.style.minWidth = 0;
-    warlcTooltip.style.visibility = "visible";
+	warlcTooltip.innerHTML = '<b>CHARGEMENT...</b>';
+	warlcTooltip.style.minWidth = 0;
+	warlcTooltip.style.visibility = "visible";
 
-    if (this.warlc_tooltipcache) //file size is already known and stored in warlc_filename and warlc_filesize attributes
-    {
-        warlcTooltip.innerHTML = this.warlc_tooltipcache;
-    }
-    else
-    {
-        loadInfo(this);
-    }
+	if (this.warlc_tooltipcache) //file size is already known and stored in warlc_filename and warlc_filesize attributes
+	{
+		warlcTooltip.innerHTML = this.warlc_tooltipcache;
+	}
+	else
+	{
+		loadInfo(this);
+	}
 
-    function loadInfo(link)
-    {
-        var href = link.href;
-        if (link.href.contains('anysend.com')) href = link.name;
-        href = href.replace(/.*(?:share-online\.biz|egoshare\.com)\/(?:dl\/|download\.php\?id=|\?d=)(\w+)/, 'http://api.share-online.biz/linkcheck.php?links=$1');
-        href = href.replace(/.*(?:uploaded|ul)\.(?:to|net)\/(?:files?\/|\?(?:lang=\w{2}&)?id=|f(?:older)?\/)?(?!img|coupon)(\w+)/, 'http://uploaded.net/api/filemultiple?apikey=lhF2IeeprweDfu9ccWlxXVVypA5nA3EL&id_0=$1');
-        href = href.replace(/.*(?:depositfiles\.(?:com|lt|org)|dfiles\.(?:eu|ru))\/(?:en\/|ru\/|de\/|es\/|pt\/|)files\/(\w+)/, 'http://depositfiles.com/api/get_download_info.php?id=$1&format=json')
+	function loadInfo(link)
+	{
+		var href = link.href;
+		if (link.href.contains('anysend.com')) href = link.name;
+		href = href.replace(/.*(?:share-online\.biz|egoshare\.com)\/(?:dl\/|download\.php\?id=|\?d=)(\w+)/, 'http://api.share-online.biz/linkcheck.php?links=$1');
+		href = href.replace(/.*(?:uploaded|ul)\.(?:to|net)\/(?:files?\/|\?(?:lang=\w{2}&)?id=|f(?:older)?\/)?(?!img|coupon)(\w+)/, 'http://uploaded.net/api/filemultiple?apikey=lhF2IeeprweDfu9ccWlxXVVypA5nA3EL&id_0=$1');
+		href = href.replace(/.*(?:depositfiles\.(?:com|lt|org)|dfiles\.(?:eu|ru))\/(?:en\/|ru\/|de\/|es\/|pt\/|)files\/(\w+)/, 'http://depositfiles.com/api/get_download_info.php?id=$1&format=json')
 
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: href.replace(ANONYMIZE_SERVICE, ""),
-            headers: {
-                'User-agent': rUA(),
-                'Accept': 'text/xml,application/x-httpd-php',
-                'Referer': ""
-            },
-            onload: function(result) {
+		GM_xmlhttpRequest({
+			method: 'GET',
+			url: href.replace(ANONYMIZE_SERVICE, ""),
+			headers: {
+				'User-agent': rUA(),
+				'Accept': 'text/xml,application/x-httpd-php',
+				'Referer': ""
+			},
+			onload: function(result) {
 
-                var res = result.responseText;
-                //console.log(res);
-                var nameRegexs =     [    /File Name: (.+?)<\/p>/, //filesmall
-                                        /(?:finfo|(?:file[-_]?)?name)(?:"|')?>\s*?(.+?)<\/?(?:h1|a|b|div|span style|td)/, //hellshare, uploaded.to, netload, badongo, 4fastfile, luckyshare
-                                        /fl" title="(.+?)">/, //edisk
-                                        /<title>\s*(?:Download)?\s*(.+?)\s*(?::: DataPort|\| Ulož|- Share\-Rapid|- WEBSITENAME|download Extabit|- download now for free|\| refile)/, //dataport, uloz.to, share-rapid, shragle, extabit, filefactory, refile.net
-                                        /<h3>Stahujete soubor: <\/h3>\s*<div class="textbox">(.+?)<\/div>/, //webshare
-                                        /<h3><b><span style=color:black;>(.+?)<\/b><\/h3><br>/, //fastshare
-                                        /title="download (.+?)">/, //sendspace
-                                        /Stáhnout soubor: (.+?)<\/h1>/, //quickshare
-                                        /fz24">Download:\s*<strong>(.+?)<\/strong>/, //crocko
-                                        /\w+:<\/b> (.+?)<\/h2>/, //filevelocity
-                                        /'file\-icon\d+ \w+'>(?:<\/span><span>)?(.+?)<\/span>/, //hitfile, turbobit
-                                        /d0FileName =  "(.+?)";/, //letitbit
-                                        /file(?:_name|-info)" title="">\w+: <span>(.+?)<\/span>/, //vip-file, shareflare
-                                        /download_file_title" title="(.+?)">/, //mediafire
-                                        /dl\-btn\-label"> (.+?) <\/div>/, //mediafire
-                                        /id="file_title">(.+?)<\/h1>/, //uploading.com
-                                        /recent-comments"><h2>(.+) &nbsp;/, //xdisk
-                                        /fname" value="(.+?)">/, //sharerun, syfiles, grupload,
-                                        /download\-header">\s*<h2>File:<\/h2>\s*<p title="(.+?)">/, //bayfiles
-                                        /description">\s*<p><b>Soubor: (.+?)<\/b>/, //bezvadata
-                                        /Complete name                            : (.+?)<br \/>/, //bezvadata
-                                        /itemprop="name">(.+?)<\/span>/, //bezvadata
-                                        /Downloading:\s*<\/strong>\s*<a href="">\s*(.+?)\s*<\/a>/, //rapidgator
-                                        /Downloading:<\/strong> (.+?) <span>/, //hotfile
-                                        /<h1 class="black xxl" style="letter-spacing: -1px" title="(.+?)">/, //megashares
-                                        /(?:Filename|Dateiname):<\/b>(?:<\/td><td nowrap>)?(.+?)(?:<br>|<\/td>)/, //billionuploads
-                                        /<span > (.+?) \(\d+.?\d+? \w+\)<\/span>/, //clipshouse
-                                        /File Download Area<\/center><\/h1><center><h3>(.+?)<\/h3>/, //filebeam
-                                        /<h2 class="float\-left">(.+?)<\/h2>/, //easyfilesharing
-                                        /<h1 id="file_name" class=".+?" title="(.+?)">/, //box.com
-                                        /file_info">\s+<h2><strong>(.+?)<\/strong>/, //fliiby
-                                        /dateiname'>(.+?)<\/h1>/, //file-upload.net
-                                        /Filename:<\/p>\s+<\/div>\s+<div class=".+?">\s+<p>\s+(.+?)\s+<\/p>/, //sharesix
-                                        /File Name:<\/dt>\s+<dd>(.+?)<\/dd>/, //gamefront
-                                        /<h2>Download File (.+?) <span id="span1">/, //jumbofiles.org
-                                        /dir="ltr">(.+?) <\/td>/, //unlimitshare.com
-                                        /nom_de_fichier">(.+?)<\/div>/, //uploadhero
-                                        /OK;(.+?);\d+/, //share-online
-                                        /File:\s*<span>(.+?)<\/span>/, //keep2share
-                                        /Name:<\/font>\s*<font style=".+?">(.+?)<\/font>/, //zippyshare
-                                        /online,\w+,\d+,\w+,(.+)/, //uploaded.net
-                                        /\{"file_info":\{"size":"\d+","name":"(.+?)"\},"/, //depositfiles.com
-                                        /File:<\/div>\s*\n*<div class="name">(.+?)<\/div>/, //dizzcloud.com
-                                        /site-content">\s*\n*<h1>(.+?)<strong>/, //putlocker.com
-                                        /<div class="external_title_left">(.+)<\/div>/, //putlocker.com
-                                        /(?:Filename|Nom du fichier) :<\/th><td>(.+?)<\/td>/, //1fichier.com
-                                        /<div id="file_name" class="span8">\n\s+<h2>(.+?)<\/h2>/, //filefactory.com
-                                        /<span class="bgbtn sprite fileIcon ext\w+"><\/span>\s+<strong title="(.+?)">/, //gigasize.com
-                                        /<span class="label label-important">Downloading<\/span>\s<br>\s(.+?)\s[\d\.]+\s\w+\s<\/h4>/, //nowdownload.eu
-                                        /<!-- File header informations  -->\n\s*<br\/>\n\s*<h1>(.+?)<\/h1>/, //mixturecloud.com
-                                        /<span class="file-name">(.+?)<\/span>/, //anysend.com
-                                        /<td class="dofir" title="(.+?)">/, //billionuploads.com
-                                        /<title>uploadto.us - (.+?)<\/title>/, //uploadto.us|ultramegabit.com
-                                        /<title>Download (.+?) \| myUpload\.dk<\/title>/, //myupload.dk
-                                        /<td width="300px" align="left" valign="top">Downloaded \d{1,} times<br>\nFile: (.+?)<br>/, //datafilehost.com
-                                        /<div id="download\-title">\n\s*<h2>(.+?)<\/h2>/, //solidfiles.com
-                                        /<div class="content_m"><div class="download"><h1>(.+?)<\/h1>/, //mystore.to
-                                        /<h4 class="dl_name w420" >\s*(.+?) <span/, //myvdrive.com
-                                        /<div class='badge pull-right'>.+?<\/div>\s*<h1>Download (.+?)<\/h1>/, //filemonkey.in
-                                        /<strong>File name:<\/strong> (.+?)<br \/>/, //netkups.com
-                                        /<div id="file_name" title="(.+?)">/, //uploadable.ch
-                                    ];
-                var nameIdx = nameRegexs.length;
+				var res = result.responseText;
+				//console.log(res);
+				var nameRegexs =     [    /File Name: (.+?)<\/p>/, //filesmall
+					/(?:finfo|(?:file[-_]?)?name)(?:"|')?>\s*?(.+?)<\/?(?:h1|a|b|div|span style|td)/, //hellshare, uploaded.to, netload, badongo, 4fastfile, luckyshare
+					/fl" title="(.+?)">/, //edisk
+					/<title>\s*(?:Download)?\s*(.+?)\s*(?::: DataPort|\| Ulož|- Share\-Rapid|- WEBSITENAME|download Extabit|- download now for free|\| refile)/, //dataport, uloz.to, share-rapid, shragle, extabit, filefactory, refile.net
+					/<h3>Stahujete soubor: <\/h3>\s*<div class="textbox">(.+?)<\/div>/, //webshare
+					/<h3><b><span style=color:black;>(.+?)<\/b><\/h3><br>/, //fastshare
+					/title="download (.+?)">/, //sendspace
+					/Stáhnout soubor: (.+?)<\/h1>/, //quickshare
+					/fz24">Download:\s*<strong>(.+?)<\/strong>/, //crocko
+					/\w+:<\/b> (.+?)<\/h2>/, //filevelocity
+					/'file\-icon\d+ \w+'>(?:<\/span><span>)?(.+?)<\/span>/, //hitfile, turbobit
+					/d0FileName =  "(.+?)";/, //letitbit
+					/file(?:_name|-info)" title="">\w+: <span>(.+?)<\/span>/, //vip-file, shareflare
+					/download_file_title" title="(.+?)">/, //mediafire
+					/dl\-btn\-label"> (.+?) <\/div>/, //mediafire
+					/id="file_title">(.+?)<\/h1>/, //uploading.com
+					/recent-comments"><h2>(.+) &nbsp;/, //xdisk
+					/fname" value="(.+?)">/, //sharerun, syfiles, grupload,
+					/download\-header">\s*<h2>File:<\/h2>\s*<p title="(.+?)">/, //bayfiles
+					/description">\s*<p><b>Soubor: (.+?)<\/b>/, //bezvadata
+					/Complete name                            : (.+?)<br \/>/, //bezvadata
+					/itemprop="name">(.+?)<\/span>/, //bezvadata
+					/Downloading:\s*<\/strong>\s*<a href="">\s*(.+?)\s*<\/a>/, //rapidgator
+					/Downloading:<\/strong> (.+?) <span>/, //hotfile
+					/<h1 class="black xxl" style="letter-spacing: -1px" title="(.+?)">/, //megashares
+					/(?:Filename|Dateiname):<\/b>(?:<\/td><td nowrap>)?(.+?)(?:<br>|<\/td>)/, //billionuploads
+					/<span > (.+?) \(\d+.?\d+? \w+\)<\/span>/, //clipshouse
+					/File Download Area<\/center><\/h1><center><h3>(.+?)<\/h3>/, //filebeam
+					/<h2 class="float\-left">(.+?)<\/h2>/, //easyfilesharing
+					/<h1 id="file_name" class=".+?" title="(.+?)">/, //box.com
+					/file_info">\s+<h2><strong>(.+?)<\/strong>/, //fliiby
+					/dateiname'>(.+?)<\/h1>/, //file-upload.net
+					/Filename:<\/p>\s+<\/div>\s+<div class=".+?">\s+<p>\s+(.+?)\s+<\/p>/, //sharesix
+					/File Name:<\/dt>\s+<dd>(.+?)<\/dd>/, //gamefront
+					/<h2>Download File (.+?) <span id="span1">/, //jumbofiles.org
+					/dir="ltr">(.+?) <\/td>/, //unlimitshare.com
+					/nom_de_fichier">(.+?)<\/div>/, //uploadhero
+					/OK;(.+?);\d+/, //share-online
+					/File:\s*<span>(.+?)<\/span>/, //keep2share
+					/Name:<\/font>\s*<font style=".+?">(.+?)<\/font>/, //zippyshare
+					/online,\w+,\d+,\w+,(.+)/, //uploaded.net
+					/\{"file_info":\{"size":"\d+","name":"(.+?)"\},"/, //depositfiles.com
+					/File:<\/div>\s*\n*<div class="name">(.+?)<\/div>/, //dizzcloud.com
+					/site-content">\s*\n*<h1>(.+?)<strong>/, //putlocker.com
+					/<div class="external_title_left">(.+)<\/div>/, //putlocker.com
+					/(?:Filename|Nom du fichier) :<\/th><td>(.+?)<\/td>/, //1fichier.com
+					/<div id="file_name" class="span8">\n\s+<h2>(.+?)<\/h2>/, //filefactory.com
+					/<span class="bgbtn sprite fileIcon ext\w+"><\/span>\s+<strong title="(.+?)">/, //gigasize.com
+					/<span class="label label-important">Downloading<\/span>\s<br>\s(.+?)\s[\d\.]+\s\w+\s<\/h4>/, //nowdownload.eu
+					/<!-- File header informations  -->\n\s*<br\/>\n\s*<h1>(.+?)<\/h1>/, //mixturecloud.com
+					/<span class="file-name">(.+?)<\/span>/, //anysend.com
+					/<td class="dofir" title="(.+?)">/, //billionuploads.com
+					/<title>uploadto.us - (.+?)<\/title>/, //uploadto.us|ultramegabit.com
+					/<title>Download (.+?) \| myUpload\.dk<\/title>/, //myupload.dk
+					/<td width="300px" align="left" valign="top">Downloaded \d{1,} times<br>\nFile: (.+?)<br>/, //datafilehost.com
+					/<div id="download\-title">\n\s*<h2>(.+?)<\/h2>/, //solidfiles.com
+					/<div class="content_m"><div class="download"><h1>(.+?)<\/h1>/, //mystore.to
+					/<h4 class="dl_name w420" >\s*(.+?) <span/, //myvdrive.com
+					/<div class='badge pull-right'>.+?<\/div>\s*<h1>Download (.+?)<\/h1>/, //filemonkey.in
+					/<strong>File name:<\/strong> (.+?)<br \/>/, //netkups.com
+					/<div id="file_name" title="(.+?)">/, //uploadable.ch
+				];
+				var nameIdx = nameRegexs.length;
 
 
-                //      [sizeRegexs]
-                //      /    \    \?
-                //   prefix (size) postfix
-                //           /   \
-                //          val  quant
+				//      [sizeRegexs]
+				//      /    \    \?
+				//   prefix (size) postfix
+				//           /   \
+				//          val  quant
 
-                var quantRegex = '(?:M|G|K)?i?(?:B)(?:[y|i]te?s?)?';
-                var valRegex = '\\d+(?:[\\., ]\\d+){0,2}';                 // 111([., ]222)?([., ]333)?
+				var quantRegex = '(?:M|G|K)?i?(?:B)(?:[y|i]te?s?)?';
+				var valRegex = '\\d+(?:[\\., ]\\d+){0,2}';                 // 111([., ]222)?([., ]333)?
 
-                var uniSizeRegex = valRegex + '(?:\\s*|&nbsp;)' + quantRegex;
+				var uniSizeRegex = valRegex + '(?:\\s*|&nbsp;)' + quantRegex;
 
-                var preSizeRegex = '(?::|\\(|>|>, | - |\\[)';
-                var postSizeRegex = '(?:\\))?';
+				var preSizeRegex = '(?::|\\(|>|>, | - |\\[)';
+				var postSizeRegex = '(?:\\))?';
 
-                var sizeRegexs =     [     preSizeRegex + "\\s*(" + uniSizeRegex + ")\\s*" + postSizeRegex,
-                                        'FileSize_master">(.+?)<\/strong>', //hellshare
-                                        'Velikost: <strong>(.+?)<\/strong>', //warserver
-                                        'File Size:(?:<\/b>) (.+?)<\/(?:p|td)>', //filesmall, unlimitzone
-                                        'online,\\w+,(\\d+),', //uploaded.net
-                                        '"file_info":{"size":"(\\d+)","name":', //depositfiles.com
-                                        '(?:File size|Taille) :<\/th><td>(.+?)<\/td>', //1fichier.com
-                                        ';(\\d+)\n$', //share-online.biz
-                                        'label-important">Downloading<\/span>.+?(' + uniSizeRegex + ') <\/h4>', //nowdownload.eu
-                                        '<h5>Size : (' + uniSizeRegex + ')<\/h5>', //mixturecloud.com,
-                                        '<td>\\n\\s*Total size:\\n\\s*</td>\\n\\s*<td>\\n\\s*(.+?)\\s*</td>', //anysend.com
-                                        '<span class="size">(' + uniSizeRegex + ')</span>', //easybytez.com
-                                        'span class="filename_normal">\\((' + uniSizeRegex + ')\\)</span>', //uploadable.ch
-                                    ];
-                var sizeIdx = sizeRegexs.length;
+				var sizeRegexs =     [     preSizeRegex + "\\s*(" + uniSizeRegex + ")\\s*" + postSizeRegex,
+				'FileSize_master">(.+?)<\/strong>', //hellshare
+				'Velikost: <strong>(.+?)<\/strong>', //warserver
+				'File Size:(?:<\/b>) (.+?)<\/(?:p|td)>', //filesmall, unlimitzone
+				'online,\\w+,(\\d+),', //uploaded.net
+				'"file_info":{"size":"(\\d+)","name":', //depositfiles.com
+				'(?:File size|Taille) :<\/th><td>(.+?)<\/td>', //1fichier.com
+				';(\\d+)\n$', //share-online.biz
+				'label-important">Downloading<\/span>.+?(' + uniSizeRegex + ') <\/h4>', //nowdownload.eu
+				'<h5>Size : (' + uniSizeRegex + ')<\/h5>', //mixturecloud.com,
+				'<td>\\n\\s*Total size:\\n\\s*</td>\\n\\s*<td>\\n\\s*(.+?)\\s*</td>', //anysend.com
+				'<span class="size">(' + uniSizeRegex + ')</span>', //easybytez.com
+				'span class="filename_normal">\\((' + uniSizeRegex + ')\\)</span>', //uploadable.ch
+			];
+			var sizeIdx = sizeRegexs.length;
 
-                //
-                //
+			//
+			//
 
-                var tooltip = "Nom du fichier: <b>";
+			var tooltip = "Nom du fichier: <b>";
 
-                var fileName = "inconnu";
-                var nameCandidate = "";
-                while(nameIdx--)
-                {
-                    var nameCandidate = res.match(nameRegexs[nameIdx]);
-                    if (nameCandidate != null)
-                    {
-                        fileName = nameCandidate[1].replace(/&nbsp;/g," ").replace("<br>", "");
-                        break;
-                    }
-                }
+			var fileName = "inconnu";
+			var nameCandidate = "";
+			while(nameIdx--)
+			{
+				var nameCandidate = res.match(nameRegexs[nameIdx]);
+				if (nameCandidate != null)
+				{
+					fileName = nameCandidate[1].replace(/&nbsp;/g," ").replace("<br>", "");
+					break;
+				}
+			}
 
-                tooltip += fileName + "</b><br>Taille du fichier:  <b>";
+			tooltip += fileName + "</b><br>Taille du fichier:  <b>";
 
-                var fileSize = "inconnue";
-                var sizeCandidate = "";
-                while(sizeIdx--)
-                {
-                    sizeCandidate = res.match(new RegExp(sizeRegexs[sizeIdx], "i"));
-                    if (sizeCandidate != null)
-                    {
-                        fileSize = sizeCandidate[1].replace(/&nbsp;/g," ");
-                        if (/^\d+$/.test(fileSize) && fileSize >= 1024)  //assume bytes
-                        {
-                            if(fileSize > (1<<30)) fileSize = Math.round(10 * fileSize / (1<<30)) / 10 + ' GB';
-                                else if(fileSize > (1<<20)) fileSize = Math.round(fileSize / (1<<20)) + ' MB';
-                                    else fileSize = Math.round(fileSize / 1024) + ' KB';
-                        }
-                        break;
-                    }
-                }
+			var fileSize = "inconnue";
+			var sizeCandidate = "";
+			while(sizeIdx--)
+			{
+				sizeCandidate = res.match(new RegExp(sizeRegexs[sizeIdx], "i"));
+				if (sizeCandidate != null)
+				{
+					fileSize = sizeCandidate[1].replace(/&nbsp;/g," ");
+					if (/^\d+$/.test(fileSize) && fileSize >= 1024)  //assume bytes
+					{
+						if(fileSize > (1<<30)) fileSize = Math.round(10 * fileSize / (1<<30)) / 10 + ' GB';
+						else if(fileSize > (1<<20)) fileSize = Math.round(fileSize / (1<<20)) + ' MB';
+						else fileSize = Math.round(fileSize / 1024) + ' KB';
+					}
+					break;
+				}
+			}
 
-                tooltip += fileSize + "</b>";
+			tooltip += fileSize + "</b>";
 
-                // Safelinking package info
-                if (href.contains('safelinking.net/p/'))
-                {
-                    var linkStatus = res.match(/<span style="color:green;" class="result-form">(.+?)<\/span>/);
-                    var linkTitle = res.match(/link\-title">(.+?)<\/span>/);
-                    var linkDesc = res.match(/description" class="result-form">(.+?)<\/span>/);
-                    if (linkStatus) { tooltip = "<b>Statut:</b> " + linkStatus[1].replace(/<\/?strong>/,"").replace(/<br\/>/, " "); }
-                    if (linkTitle) { tooltip += "<br><b>Nom:</b> " + linkTitle[1]; }
-                    if (linkDesc) { tooltip += "<br><b>Description:</b> " + linkDesc[1]; }
-                }
+			// Safelinking package info
+			if (href.contains('safelinking.net/p/'))
+			{
+				var linkStatus = res.match(/<span style="color:green;" class="result-form">(.+?)<\/span>/);
+				var linkTitle = res.match(/link\-title">(.+?)<\/span>/);
+				var linkDesc = res.match(/description" class="result-form">(.+?)<\/span>/);
+				if (linkStatus) { tooltip = "<b>Statut:</b> " + linkStatus[1].replace(/<\/?strong>/,"").replace(/<br\/>/, " "); }
+				if (linkTitle) { tooltip += "<br><b>Nom:</b> " + linkTitle[1]; }
+				if (linkDesc) { tooltip += "<br><b>Description:</b> " + linkDesc[1]; }
+			}
 
-                link.warlc_tooltipcache = tooltip;
+			link.warlc_tooltipcache = tooltip;
 
-                if (mouseoverLink == link.href) //mouse cursor is still over the link
-                {
-                    warlcTooltip.innerHTML = tooltip;
-                }
-            }
-        });
-    }
+			if (mouseoverLink == link.href) //mouse cursor is still over the link
+			{
+				warlcTooltip.innerHTML = tooltip;
+			}
+		}
+	});
+}
 }
 
 //function to return hostname + tld
 function gimmeHostName(link) {
-    if (link.contains(/([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?$/)) return link.match(/([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?$/)[1];
-    else {
-        console.warn("gimmeHostName error.", link);
-        return -1;
-    }
+	if (link.contains(/([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?$/)) return link.match(/([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?$/)[1];
+	else {
+		console.warn("gimmeHostName error.", link);
+		return -1;
+	}
 }
 //Second gimmehostname function to match whole hostname
 function gimmeHostName2(link) {
-    link = link.replace(/http:\/\/.*?\?http:\/\//, 'http://'); //anonymizers
-    if (link.contains(/(?:https?:\/\/)?(?:www\.|[\w\.])*?[\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4})(?::\d+)?\//)) return link.match(/(?:https?:\/\/)?(?:www\.|[\w\.])*?([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?\//)[1];
-    else if (link.contains(".1fichier.com")) {
-        return "1fichier.com";
-    } else {
-        console.warn("gimmeHostName error.", link);
-        return -1;
-    }
+	link = link.replace(/http:\/\/.*?\?http:\/\//, 'http://'); //anonymizers
+	if (link.contains(/(?:https?:\/\/)?(?:www\.|[\w\.])*?[\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4})(?::\d+)?\//)) return link.match(/(?:https?:\/\/)?(?:www\.|[\w\.])*?([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?\//)[1];
+	else if (link.contains(".1fichier.com")) {
+		return "1fichier.com";
+	} else {
+		console.warn("gimmeHostName error.", link);
+		return -1;
+	}
 }
 
 function uniqArray(array) {
-    var uniqueArray = [];
-    $.each(array, function(i, el){
-        if($.inArray(el, uniqueArray) === -1) uniqueArray.push(el);
-    });
-    return uniqueArray;
+	var uniqueArray = [];
+	$.each(array, function(i, el){
+		if($.inArray(el, uniqueArray) === -1) uniqueArray.push(el);
+	});
+	return uniqueArray;
 }
 
 function randArr(array) {
-    return array[Math.floor(Math.random() * array.length)];
+	return array[Math.floor(Math.random() * array.length)];
 }
 
 var UA = { //obj used for rUA()
-    OSes: [
-        "Windows NT 5.1",
-        "Windows NT 6.1; WOW64",
-        "Windows NT 6.3; Win64; x64",
-        "Macintosh; Intel Mac OS X 10_9_2",
-        "Macintosh; Intel Mac OS X 10_9_3",
-        "Macintosh; Intel Mac OS X 10_10_0"
-    ],
-    UAs: [
-        "Mozilla/5.0 (%) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36", //Chrome 35
-        "Mozilla/5.0 (%) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.67 Safari/537.36", //Chrome 36
-        "Mozilla/5.0 (%) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36", //Chrome 37
-        "Mozilla/5.0 (%) Gecko/20100101 Firefox/30.0", //FF 30
-        "Mozilla/5.0 (%) Gecko/20100101 Firefox/31.0", //FF 31
-        "Mozilla/5.0 (%) AppleWebKit/600.1.8 (KHTML, like Gecko) Version/8.0 Safari/600.1.8" //Safari 6
-    ]
+	OSes: [
+		"Windows NT 5.1",
+		"Windows NT 6.1; WOW64",
+		"Windows NT 6.3; Win64; x64",
+		"Macintosh; Intel Mac OS X 10_9_2",
+		"Macintosh; Intel Mac OS X 10_9_3",
+		"Macintosh; Intel Mac OS X 10_10_0"
+	],
+	UAs: [
+		"Mozilla/5.0 (%) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36", //Chrome 35
+		"Mozilla/5.0 (%) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.67 Safari/537.36", //Chrome 36
+		"Mozilla/5.0 (%) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36", //Chrome 37
+		"Mozilla/5.0 (%) Gecko/20100101 Firefox/30.0", //FF 30
+		"Mozilla/5.0 (%) Gecko/20100101 Firefox/31.0", //FF 31
+		"Mozilla/5.0 (%) AppleWebKit/600.1.8 (KHTML, like Gecko) Version/8.0 Safari/600.1.8" //Safari 6
+	]
 }
 
 function rUA() { //generates a random user agent to fool websites about browser signatures
-    return navigator.userAgent;//randArr(UA.UAs).replace('%', randArr(UA.OSes));
+	return navigator.userAgent;//randArr(UA.UAs).replace('%', randArr(UA.OSes));
 }
 
 function sendMessage(content)
 {
-    var msgDiv = "<div class='PLCInfoMsg'>" + content + "</div>";
-    $(".PLCInfoBox").append(msgDiv).show();
-    setTimeout(function(){$(".PLCInfoBox").hide()}, 5000);
+	var msgDiv = "<div class='PLCInfoMsg'>" + content + "</div>";
+	$(".PLCInfoBox").append(msgDiv).show();
+	setTimeout(function(){$(".PLCInfoBox").hide()}, 5000);
 }
 
 function genset(pref, def) {
-    var val = preferences.general[pref];
-    if (val == undefined) val = def;
-    return val;
+	var val = preferences.general[pref];
+	if (val == undefined) val = def;
+	return val;
 }
 
 function lsSave() {
-    localStorage.setItem("PLC_Preferences", JSON.stringify(preferences));
+	localStorage.setItem("PLC_Preferences", JSON.stringify(preferences));
 }
 
 function setVariables()
 {
-    if (firstRun)
-    {
-        console.warn('First run, compiling preferences object...');
-        preferences = {
-            hosts: {},
-            general: {}
-        }
+	if (firstRun)
+	{
+		console.warn('First run, compiling preferences object...');
+		preferences = {
+			hosts: {},
+			general: {}
+		}
 
-        lsSetVal("general", "Display_tooltip_info", true);
-        lsSetVal("general", "Display_full_links_in_link_containers", true);
-        lsSetVal("general", "Allow_spaces_in_DL_links", false);
-        lsSetVal("general", "Do_not_linkify_DL_links", false);
-        lsSetVal("general", "Filefactory_API_Check", false);
-        lsSetVal("general", "Processbox_Pos_Y", 0);
-        lsSetVal("general", "Processbox_Pos_X", 90);
-        lsSetVal("general", "Progressbox_Scaling", 100);
-        lsSetVal("general", "Last_Update_Check", new Date().valueOf());
-        lsSetVal("general", "Ref_anonymize_service", ANONYMIZERS[0]);
-        lsSetVal("general", "Show_Update_Notification", true);
-        lsSetVal("general", "Focus_First_Link", false);
+		lsSetVal("general", "Display_tooltip_info", true);
+		lsSetVal("general", "Display_full_links_in_link_containers", true);
+		lsSetVal("general", "Allow_spaces_in_DL_links", false);
+		lsSetVal("general", "Do_not_linkify_DL_links", false);
+		lsSetVal("general", "Filefactory_API_Check", false);
+		lsSetVal("general", "Processbox_Pos_Y", 0);
+		lsSetVal("general", "Processbox_Pos_X", 90);
+		lsSetVal("general", "Progressbox_Scaling", 100);
+		lsSetVal("general", "Last_Update_Check", new Date().valueOf());
+		lsSetVal("general", "Ref_anonymize_service", ANONYMIZERS[0]);
+		lsSetVal("general", "Show_Update_Notification", true);
+		lsSetVal("general", "Focus_First_Link", false);
 
-        localStorage.setItem("PLC_First_Run", false);
-        lsSave();
-    }
+		localStorage.setItem("PLC_First_Run", false);
+		lsSave();
+	}
 
-    Display_tooltip_info = genset("Display_tooltip_info", true);
-    Display_full_links_in_link_containers = genset("Display_full_links_in_link_containers", true);
-    Allow_spaces_in_DL_links = genset("Allow_spaces_in_DL_links", false);
-    Do_not_linkify_DL_links = genset("Do_not_linkify_DL_links", false);
-    Processbox_Pos_Y = genset("Processbox_Pos_Y", 0);
-    Processbox_Pos_X = genset("Processbox_Pos_X", 90);
-    Progressbox_Scaling = genset("Progressbox_Scaling", 100);
-    Last_Update_Check = genset("Last_Update_Check", 0);
-    Show_Update_Notification = genset("Show_Update_Notification", true);
-    Focus_First_Link = genset("Focus_First_Link", false);
-    ANONYMIZE_SERVICE = genset("Ref_anonymize_service", ANONYMIZERS[0]);
-    ANONYMIZE_SERVICE = (ANONYMIZE_SERVICE != 'NoRed' ? ANONYMIZE_SERVICE : '');
+	Display_tooltip_info = genset("Display_tooltip_info", true);
+	Display_full_links_in_link_containers = genset("Display_full_links_in_link_containers", true);
+	Allow_spaces_in_DL_links = genset("Allow_spaces_in_DL_links", false);
+	Do_not_linkify_DL_links = genset("Do_not_linkify_DL_links", false);
+	Processbox_Pos_Y = genset("Processbox_Pos_Y", 0);
+	Processbox_Pos_X = genset("Processbox_Pos_X", 90);
+	Progressbox_Scaling = genset("Progressbox_Scaling", 100);
+	Last_Update_Check = genset("Last_Update_Check", 0);
+	Show_Update_Notification = genset("Show_Update_Notification", true);
+	Focus_First_Link = genset("Focus_First_Link", false);
+	ANONYMIZE_SERVICE = genset("Ref_anonymize_service", ANONYMIZERS[0]);
+	ANONYMIZE_SERVICE = (ANONYMIZE_SERVICE != 'NoRed' ? ANONYMIZE_SERVICE : '');
 }
 
 function hostSet(key, def) { //will get the value of the key in pref object, if key is undefined -> opposite value of default returned (to keep the compatibility with old GM_getValue and the inversed default values in PLC 2.0)
-    var val = preferences.hosts[key];
-    if (val == undefined) val = !def;
-    return val;
+	var val = preferences.hosts[key];
+	if (val == undefined) val = !def;
+	return val;
 }
 
 function lsSetVal(section, key, value) { //replacement of GM_setValue, valid for both sections of preferences object
-    preferences[section][key] = value;
-    lsSave();
+	preferences[section][key] = value;
+	lsSave();
 }
 
 // Delinkifies the links
@@ -990,745 +994,745 @@ function lsSetVal(section, key, value) { //replacement of GM_setValue, valid for
 // e.g. 'uloz.to/xs68skxl8')
 function delinkifySnapshot(snapshot)
 {
-    var n = snapshot.snapshotLength;
+	var n = snapshot.snapshotLength;
 
-    while (n--)
-    {
-        thisLink = snapshot.snapshotItem(n);
+	while (n--)
+	{
+		thisLink = snapshot.snapshotItem(n);
 
-        var spanElm = document.createElement("span");
-        spanElm.className = thisLink.className;
-        spanElm.innerHTML = thisLink.innerHTML;
+		var spanElm = document.createElement("span");
+		spanElm.className = thisLink.className;
+		spanElm.innerHTML = thisLink.innerHTML;
 
-        if (Display_tooltip_info)
-        {
-            spanElm.href = thisLink.href;
+		if (Display_tooltip_info)
+		{
+			spanElm.href = thisLink.href;
 
-            switch (thisLink.className){
-            case "alive_link": spanElm.addEventListener("mouseover", displayTooltipInfo, false); break;
-            case "adead_link": spanElm.addEventListener("mouseover", displayTooltipError, false); break;
-            case "obsolete_link": spanElm.addEventListener("mouseover", displayTooltipError, false); break;
-            case "unava_link": //reserved
-            default:
-            }
-        }
+			switch (thisLink.className){
+				case "alive_link": spanElm.addEventListener("mouseover", displayTooltipInfo, false); break;
+				case "adead_link": spanElm.addEventListener("mouseover", displayTooltipError, false); break;
+				case "obsolete_link": spanElm.addEventListener("mouseover", displayTooltipError, false); break;
+				case "unava_link": //reserved
+				default:
+			}
+		}
 
-        thisLink.parentNode.replaceChild(spanElm, thisLink);
-    }
+		thisLink.parentNode.replaceChild(spanElm, thisLink);
+	}
 }
 
 
-    function checkLinks(filterId)
-    {
-        start(filterId);
-    }
-
-    /**
-     * Initialises progress box including event binding and CSS
-     */
-    function initProgressBox()
-    {
-        if ($("#warlc-progressbox").length > 0)
-            return;
-
-        //progressbox css
-        var progressboxCss = "#warlc-progressbox  {position:fixed; background:white; bottom:" + Processbox_Pos_Y + "%; left:" + Processbox_Pos_X + "%; padding:5px; font-size:10px; font-weight:bold; font-family:Helvetica; width:130px; cursor:default; border:1px solid #4DD9FF; z-index:200;}\
-                    \
-                    #warlc-hostdetails  {position:fixed; background:white; bottom:" + (parseInt(Processbox_Pos_Y) + 9) + "%; left:" + Processbox_Pos_X + "%; padding:5px; font-size:10px; font-weight:bold; cursor:default; border:1px solid #4DD9FF; display:none; z-index:201;}\
-                    \
-                    .warlc-progressbox-contents {right: 5px;}\
-                    \
-                    .warlc-progressbar {text-align:left; background: lightGrey; height:3px; margin-bottom:5px; width:0px; border-radius:1.5px; }\
-                    \
-                    .warlc-progressitem { display: block; padding:2.5px 0px 2.5px 20px }\
-                    \
-                    .alive {color: rgb(133, 195, 49); background:transparent url(" + alive_link_png + ") no-repeat scroll 0% 50%;background-size:15px;}\
-                    \
-                    .adead {color: red; background:transparent url(" + adead_link_png + ") no-repeat scroll 0% 50%;background-size:15px;}\
-                    \
-                    .unava {color: #FF9900; background:transparent url(ToBeAddedLater) no-repeat scroll 0% 50%;background-size:15px;}\
-                    \
-                    .unknown {color: rgb(0, 150, 255); background:transparent url(" + unknown_link_png + ") no-repeat scroll 0% 50%;background-size:15px;}\
-                    \
-                    .processing {color: grey; background:transparent url(" + processing_link_gif + ") no-repeat scroll 0% 50%;}"
-
-        if (Progressbox_Scaling != 100) {
-            $.each(progressboxCss.match(/[\d\.]+px/g), function(i, el) { //dynamic rescaling of the progressbox according to user settings
-                progressboxCss = progressboxCss.replace(new RegExp(el + "(?!" + RAND_STRING + ")"), parseFloat(el) * Progressbox_Scaling/100 + "px" + RAND_STRING); //RAND_STRING to prevent the same value replaced twice
-            });
-        }
-
-        progressboxCss = progressboxCss.replace(new RegExp(RAND_STRING, "g"), "").replace("ToBeAddedLater", unava_link_png); //inserting the unava_link_png at the end because the function messes up its base64 string
-
-        GM_addStyle(progressboxCss);
-
-        $('body').append('    <div id="warlc-progressbox">\
-                                <div class="warlc-progressbox-contents">\
-                                    <div class="warlc-progressbar" aria-valuenow=0></div>\
-                                    <div class="warlc-progressitems">\
-                                        <span class="warlc-progressitem alive"></span>\
-                                        <span class="warlc-progressitem adead"></span>\
-                                        <span class="warlc-progressitem unava"></span>\
-                                        <span class="warlc-progressitem unknown"></span>\
-                                        <span class="warlc-progressitem processing"></span>\
-                                    </div>\
-                                </div>\
-                            </div>\
-                            <div id="warlc-hostdetails"></div>');
-
-        $('#warlc-progressbox').hide().click(function(){
-                                                clearInterval(intervalId);
-                                                $(this).hide();
-                                                return false;
-                                            });
-
-        $(".warlc-progressitem").hover(function() {
-            showHostDetails(this);
-        }, function() {
-            showHostDetails("none");
-        });
-
-    }
-
-    function showHostDetails(item) {
-        var $div = $("#warlc-hostdetails");
-        if (item == "none") {
-            $div.hide().removeClass();
-            if ($("#warlc-progressbox").css("display") != "none") intervalId = setInterval(function() { updateProgress(); }, 1000);
-        }
-        else {
-            function help(status) {
-                return $('warbb[name="filehosts"]').attr(status);
-            }
-            var statusArr;
-            var divTxt = "Les hébergeurs suivants ";
-            switch(item.className) {
-            case "warlc-progressitem alive": divTxt += "ont été trouvés valides: "; statusArr = help('live'); break;
-            case "warlc-progressitem adead": divTxt += "ont été trouvés morts: "; statusArr = help('dead'); break;
-            case "warlc-progressitem unava": divTxt += "ont été trouvés inaccessible: "; statusArr = help('unava'); break;
-            case "warlc-progressitem unknown": divTxt += "n'ont pas été reconnus: "; statusArr = help('unknown'); break;
-            case "warlc-progressitem processing": divTxt += "sont en cours d'analyse: "; statusArr = getProcHosts(); break;
-            }
-            $div.addClass(item.className);
-            $("#warlc-progressbox").append($div);
-            if (statusArr == "") divTxt = divTxt.replace("The following", "No").replace(":", ".");
-            $div.text(divTxt + statusArr.slice(0,statusArr.length-1).replace(/,/g, ", "));
-            clearInterval(intervalId);
-            $div.show();
-        }
-
-    }
-
-    function getProcHosts() {
-        var filehostsProc = "";
-        var $links = $(".processing_link");
-        if ($links.length > 0) {
-            var i = $links.length;
-            var hostname;
-            while (i--)
-            {
-                hostname = gimmeHostName2($links[i].href);
-                if (!filehostsProc.contains(hostname)) {
-                    filehostsProc += hostname + ",";
-                }
-            }
-        }
-        return filehostsProc;
-    }
-
-    function dismissProgressbar() {
-        $(".warlc-progressbar").fadeOut();
-        $(".warlc-progressitem.processing").fadeOut();
-        clearInterval(intervalId); //stops refreshing the stats
-    }
-
-    /**
-     * Updates progress data in progress box
-     */
-    var percAlive, percDead, percUnava, percProc;
-    function updateProgress()
-    {
-        if (cLinksTotal) // some links were detected on page
-        {
-            var percProgress = Math.round(((100 / cLinksTotal) * cLinksProcessed));
-            var $progressItems = $('.warlc-progressitems > .warlc-progressitem');
-
-            $(".warlc-progressbar").css("width", percProgress + "%");
-            $(".warlc-progressbar").attr("aria-valuenow", percProgress);
-
-            percAlive = Math.round((cLinksAlive / cLinksTotal) * 100);
-            percDead =     Math.round((cLinksDead / cLinksTotal) * 100);
-            percUnava = Math.round((cLinksUnava / cLinksTotal) * 100);
-            percUnknown = Math.round((cLinksUnknown / cLinksTotal) * 100);
-            percProc = Math.round(((cLinksTotal - cLinksProcessed) / cLinksTotal) * 100);
-
-            $progressItems.first().text(cLinksAlive + " - " + percAlive + "% Valides")
-                            .next().text(cLinksDead + " - " + percDead + "% Morts")
-                            .next().text(cLinksUnava + " - " + percUnava + "% Inaccessibles")
-                            .next().text(cLinksUnknown + " - " + percUnknown + "% Inconnus")
-                            .next().text(cLinksTotal - cLinksProcessed + " - " + percProc + "% En cours");
-            if (percProgress > 0) $("#warlc-progressbox").show();
-            if (percProgress == 100) dismissProgressbar();
-
-            if (Focus_First_Link) {
-                $('html, body').animate({
-                    scrollTop: ($("a[class$='_link']").first().offset().top)
-                }, 500);
-            }
-        }
-    }
-
-
-
-    function check_all_links()
-    {
-        add_WARLC_style();
-
-        initProgressBox();
-        intervalId = setInterval(function(){updateProgress();}, 1000);
-
-        start(null);
-    }
-
-    function KeyDownHandler(event)
-    {
-        var kcode = (event.keyCode) ? event.keyCode : event.which;
-        if (event.ctrlKey && event.altKey)
-        {
-            switch(kcode)
-            {
-                case 65 : check_all_links(); break;
-                case 67 : configuration(); break;
-            }
-        }
-    }
-
-    //
-    //
-    //   SCRIPT EXECUTION START POINT
-    //
-    //
-
-    //init the stuff
-    setVariables();
-
-    //register GM menu commands & keyboard shortcut event handler
-    $(document).keydown(KeyDownHandler);
-    GM_registerMenuCommand("[PLC - Phoenix-Warez Links Checker] Configuration  (CTRL + ALT + C)", configuration);
-    GM_registerMenuCommand("[PLC - Phoenix-Warez Links Checker] Vérifier tous les liens (CTRL + ALT + A)", check_all_links);
-
-    //start linkchecking
-    $(document).ready(check_all_links);
-    //
-    //
-    //   SCRIPT EXECUTION END POINT
-    //
-    //
-
-    //shows configuration box
-    function configuration()
-    {
-
-        //prevent multiple creating of config window
-        if ($("#hideshow").length)
-        {
-            $("#hideshow").show();
-            return;
-        }
-
-        var settingsIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACGCAYAAAAcjCKsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAEVdJREFUeNrsXY114roSVnK2ALaCdSoIqSDmNrBQQaCCQAWECkgqgFQQUkGcCuJUEN8KllfBPov7iQyDJMvGMth4zvFhN/wZzaf5n9HF379/RUstKbpsl6ClFhAttYBoyY1+0P9cXFw08keGvTBMHzrp1cWffqVX4PDWdzwm6oreoqSJa6RsyQtqVNYdECnjJdNDMP4Wjx0PXxWlV5xen/IxBUncAuJ0QNAH8/uOu94HrQGSV/lYRylSW0BACkjm/8bjKZKUGM/ptaoLOGoHCNgBdwBBp0abT0qO5xQYyxYQ5QBhmD7cE4OwriTVylN6LU9Rapw0IKAWxpAIgWgeSWkxOyVgnCwgUjBIIExrphZqD4yTAwS8hXlDJYKLKnlMgbE+e0CkQJAAWCB+cM4kpcQkBcXqbAGRguEBBmNHtKRIAmJUtbQ4KiAgFV4a4Dn4VCOjKqXF0QABN3LeSgUneoTRuW4kIFIwSFth2PI5F8mo58C3J1IpIBBXeGtVxEEqRIIi8g0I7/UQKRgkCL5aMBxEmw0FdeuVLj2DIYRkaO2FcmiRrum8loAAmlswlE9j2GL1AQTAsGh5542GvkBx2YKhBQWlUr0M5CNeWl5VSjKdPjo5LwPeRCsZjiMpxiclIRCK/mgNyKPS6JCqrNICU23Q6WRIBq96RSvAy1QZixYMYpZeE8NzkkE/xX/FMD5JBa8OktIHAQK6q3/uWzPdlQ/p9ahhugo5y8f3Cm6lc6hRf3kAGKRUmIuWYgKMEUBAPYBEPV3R/YSoM6kOEBBLi3NmvuNrqFQIdC5jet04fm4emmLDViYhpmdoN0jRL5nXYwzswsvaWvt4TY9JhZCpkhspUWAEJh7ud1EJIJCwGp+hdLiFWogYKJZMTXQYWNT/H2F8SuZPmDcQerjfbhHVkdvtTL/k40y9ihgSgtpQa2kjIFxvay2UIHgWmiYdkhH2RVcuxTWF4hDwKs7ZkJzAm6DMXIh8rQNSSmxK7gEq3xlh2XzcKx0QEH1foo1GSltiBXE8PcA4HajYQQVr2suqtioSmBqfGRhiGIUR220rZBmnhvfMiFE50dgYAir3A6pEuarytT/Tz7+QV8mGprOB6SQhYEV/nREY5KSYK/b7p2BaX7PAMdRJZJGuYw2INnaJfJ5WVnuSxtZcRy6VcabV0jc8L2BI4jmnn2FzvLD3yzL7hwoM9x2QF1YZQOu5gUHSmya4w5uQV3lqESBBBuzP98o1lfUkHr24wKVIN1NCHGg8NYFk99QT1AIV42u4dLmbaFAoS2M5E3yPb7VslBJ5jMr7M/cq+iR4RKXDEweD3OmS2en1J73+ptcb1ITO9aT0G7GCxPNvCQz3s6XLDCQPWzdzazRyMa4z0F6YNxbqVA+ARPs2FZM2YwFw+Wrfuy8MiDOWDmswpSe+eytvGVMTtnm6whyC1qncT26wyqBXek1w/YRLWrrEY7kXN0DgTacaopbMuLEs2Ai+fFTgsx9hG2zcSO4BKDxYVIuOXKRsoDFCl57V4B79qKl0iOASxilw79jOTMhCvhp27cqyKJ8OhmJgUCuHSiXq2fU9GvN3AH4ulXHsSijJtCuDrqZ1Bk8Wgy02SI8B1IGOFjAGZTVziNYC/lmBplQtsuj9Z83ffjFpEMMgleb+H5E/R5KHuia1cWlQF11x/FlPcqcm8POXGpWhFnLFGBFZADFzFMMhGCLzDC9Yj39tGwZSpafxFB4N39nX/J4qVXQ/j4QIT0xFTNhCdzTPz4R9oltiEpOOAFlpxC7X+TH8fJXL2NgiDt7byqKKfNFdHkD8rtiiT2wiFbtvAoYO+Kgd7MC9Ilf5PhiXm0QTsw1M8QG+y2PxPQWfSp/Q1CADY1Q78xqqZq5TKQRMSQXr3tVVaO9FKvGiPxUC4gqg4MkfbVQNOl1Nuw8su2oNZsawOSKWQHohYnOnp0HaEADMTp7CUMzi3CBj6GHZq1eoqE5C0M1lTG4doT9zW9HDkj/baWwlzrmWn/kqGUgymH3BGlxkpBGMGmiYqkv07RTOWOwy3sOyhvss7yVmgB0K/4XMj0ql2QDxIKrNXezsMBValSIXizL1oFsTk4FJpMANA8kD3rcS+k61BB7PigBcnd/xW+gThANIsA/8X97P/4ja9m1kbssCbYB4q9io3KlVJLtp7ngfscHdCx2BMaJ1DOT3R3g+YKppgOcObV8cQVIdtUYVNpYVEH9E9fmLrch1kFDqLIooq48RwOqK7LM1VEV0R+zWO6icwyvZ5Rudj90/Ffkr0BPo7rhC1WCjTXmdFhC9f3pyF/hKwcawoLtkcTvKoMNCLQyM2zlaAGI9hGFJz9IyFpSSuo57S6SR1jlGgkyUhc2hVMmaqZh7h0CeTU0dswBpsxkVDnjo2qcfvMZCyoWW9sETdtgTFsskgunuvc/IwL4bwPCidLz88YaRyqrOUcUPuBqaCpbyRl2DDKAN2HlfHMwRIpEBmN8HsBISbT0WIH4Z3c5UQvgus9+r/rWME5A7dgRGzh0XbKAbB4xwsCCGmwpv64aurzVehwLLjUHUW8vTyOd8kU23M5D0SKp6K1VNBTK+b2hOgyEWMCyxU5UKc909icGOoDQEc0Ool0fNGrypWD+JCWzAoopgmN7ntZeqQOYvC/48M4n0JSUGJNax6k46tkjlre/omNidYTDXgQHBoLnYL0jNsphjw3fqFkEyYgE/fKR5XsViaOzjAwDlhuQnA3nH4O3o7m8ojlui2LUBogpSO2+s2flSMkyg8/Pq1Mj2fQYawu1baUAhQ7tz1EPELNYwE7u5jVvGYG572MB5UuRbZczIpRg2wffwXbEikqFI6j0x/P3WYYe8kHwIpTG8iBEMzRsMB3lgAOoS9TLVAasiCVyIqFr94SBei9JK028QwG1cMPBtAkRYuKLW9qeLSDStCaTBBACg75nzwJlm53cgaTqGTTUuc1KcTzvCp8ro8z4AEkPgTB+BCYcsWmyIPbhKvTHyOAOxG/ns8t8B5o41wAtEzcm3DTEnFUeKeB5+BWYeGq2LC0oHSgsSBNuTBogjvIgGd8D/qEAUyYojZbTpusAm2G2H7K7EUAcZFrjfMWwJGrhS/Qwd0fAha1V5GX32SL2KtTi8oNdkUP4q8FnqXriUuNOU67WAKCrOsYO5ungV5Zzl/X6AQamTEkOxX8fZJxJNlciNhN+mmkaoDJUhfCc7dw0Db6c4BLMWhnBJgwJqI9HEBMrwmu6Q86AdW9KTCA3JqcY0RPsAxNJQWNrXGJOqHnJJFlalrK8BkNDyPVmdTcuCjFL1hq8MVKFgATCSYm8lhMWn72rCyN0sMU+zoYZFDxDciXWg03yejG2IgqBQzKfxhmsaUxHHDzt7B0QkDq+W2mQG0wWbid2pa9eOhqCOsbHBraRVzF3of/kbaIX1pKCdIkH9AEDtBHA07fx1p6QKo1LunC9y6kuHMTk6WBR9Z0uHRILIf28TaADGssDHXxObiLuxjRrLSNsFLjUGYdkUePwtQwNzukxNqH4LZYC69GEqAMc53NzGqYzPKgMvKGjtYNH/hbiPc0xlubY8dwuX0GabhADsNUAUOu6oEVRiF3GLsM4CwgaIspCv3MHIYYoqtdJViFg12byL784p3U7910UvWhgbaUAaEHskS8zKa1XBNNqjSYgyADEzzFTIGxwK6c6DcScZ+ETK5CKLlf96gD5NNKrDCixmfNaJ3m2AiMsWQRZ1EeBm8qxkyGIYkhEyFsETY6MSz8nu6mws3L+87kS98xs7QuBSEwc4VEq8oE6wj/kKgQFsQUEjNqSDsxDYkgWuA1xXrBMsc9BWBmj3NgyKZb+Ih1PnOVxxVmAqPtAzUGHcIVnYG42+D4U55OwCum1ltGmCG22ahUhP8Ps+8Rhn2Dhdw24KREOI22Y/DDqlbBHY1UiIWwR+1gV2mIo//LTs7iECVh0mlQL6+4gBq4CSEHXDS94+AbKkIaDYU6uXWSKkBJILvtbo9BDBo1WZXwZV9QW7ouMILik+xnjPGwmm7eVfyFCQkah/lvM9ExBgXFk/dAadvqLGICG54E9l6D4Wfzh09z6RGMVWXVD1QmyXuOkSwtlTyKARKpTXFldwCh0WlQiIQ8PKqolYV+onNEb4pLZo0Hhi2lnXJXQk25puecuaatd7KwC4pebz/x64TqrxmDc9X4nvJFlEbJI7Uc9I5YoORDE1+5YlIdTZkRHxKK7B/CcWTJJS4ip9/VLkS1MnDm5iXloitvGm+busGFed401IeWsDd8Zp+J4GWWzOmxL7h4Oov3+46n816IIblKL4OCQJsBuAl3/GDdaiSWeV/qTq3GUa/rOHm7jDTejK3AOx3xNRlf2wFt+zIRYa6RAbOrvqSitTAtEGiGXJN6EGhgjWL6noDYwZOe5mHV0XNYDxmby5eMdoRJXWpAGAMOZ5Li0ieV1ijEDNXEgYE/gBqC+wO3oZkuKzJAmhptdEQj+WYMR3EkYfRTUGg5WvWRVTTyXdhG5hY81uU6HmROwfqexi9AYFJFZsAMOG8bJTS3M00XONAbGy1ZtcOvipSUnqQhl+IYaLfxj0sprW0hHfVU6ZNkTOBJaqoBIGMKjKcdWJvsAQkDfUU9bZy5jZnrw89AMc6QWL+QcMkMzrkoEd3F5RuQrVVken4q8NCHdRF/IzrmDDDA1giFARFYjd0DUNcQc1BUNmwVImILCLDw1lq/K0jkafCfRX6Cz4qfge/yNfYztl5tqiXtQhqfK9AVzqueZ+liqghoUbiGZR5uZ2PbfzwYOY1A0sHRoYpTyLnUmxmvcGRKVsE2rkQJJ7iyTRVno16MxS6xngeQ9y9X7SLEsrLzJUgMp/vEPKxJrZkaoL7FbYQ8sJpI4aSbBmA8+VTVN3sp7/XeQw+KEoL1K3c+YlGXqugLLCUI6p8FeNpAJkSlV9MAkzQRjbx2Y4KelQCBBg3FdJBtWaxBqmTCRvZz6SM7PvSjTktkBgUkU34zsuGN84NbrKMibzHOQqWDCpDFJehG4G5YoGx5BCVzWTRQ1cFYwZ4fjDpYbJzwZjuO5geHRohchnVDIp8SL8Vhn32HT6D+j5V2VzsObfa4P38on3xWwqrTIS+aEpgfB/1HLV5HwcdVb6O0tKhB51KmXenOzSvopFYG60ZHbHhH5SJp8Y4hVqeOkAh70lNe6tsBnuuSRq7mZffMHM9y/RdFhzC1ly7wvjgx80bvIXCW7txT4IOD5QhzluGBhWurnfpQMCoHgUJRfHEvqCgTfW2B2U6FwqXh1NZ0vdOdgzTZss55o1LgcQRHX4qDruGOIGXSIB+uw1XdNrxX+RSeouB6L5lFtVFDYqmWgORbVNriNIJl1cQB1ZZAokqczqvOFgeHSZrlNKHMIAivGJLLJKp7ucbtNUygxAeQcEc+VaOh5Jb+qmqKooGpgy0UTUu2GlCUbkoCgYyjIquSvaa0FxNBpknVBYKSAIKJrQ71hHjyIq68NKnUIHlPZaUFQKhmWZH1j6WMIWFPUFgxdAMFAkLd/qA4bS3E6LO2o6hrGl4t7EqEiOotI4hAMoZK4gbPl5MBh6ZXkTRwMEAUbT5kNXSTHA4M0uqxwQAMVQmKuqW9JTodxELQABUKi2+tauOJK9cFKAIMB4EA07a6JMRw1gqMxLOzogAIpQ6M//PmepMEMBUqV0EoBg0uL+zG0LVRV+lIDeSQECoAjEfo/GuaiHWZn5iEYAggFjcQZxiwRAWJ7CzZwsIJg3ct9AiSFjCk+nAoTaAIJJDAWMOtsYKwAhOsWbqw0gGDgkKH6L+tRMSrVgHGHQAqJcqSFBcXuC4EggDZ595R1aQNjBofo41ByIqmMa6oC39zpIgsYDwgAQNcJIdnAFJXosMQCgDoeL6wqAswFEBlgUMDoOkkQdrLJRA01hfC5AtNTSZbsELbWAaMlI/xdgACZvWugac3GNAAAAAElFTkSuQmCC";
-
-        var configcss = '\
-        .popup_block .popup fieldset{\
-           padding: 1%;\
-           border-style: none;\
-           border-width: 0;\
-           border-color: white;\
-           margin-bottom: 1px;\
-        }\
-        .popup_block .popup hr {\
-            height: 1px;\
-            border-color:black;\
-        }\
-        #PLCTitle{\
-         font-size: 2em;\
-         width:100%;\
-        }\
-        #hideshow {\
-         position: fixed;\
-         width: 100%;\
-         height: 100%;\
-         top: 0;\
-         left: 0;\
-         font-size:12px;\
-         z-index:2147483647;\
-         text-align:left;\
-        }\
-        #fade {\
-         background: #000;\
-         position: fixed;\
-         width: 100%;\
-         height: 100%;\
-         opacity: .80;\
-         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";\
-         left: 0;\
-         z-index: 10;\
-        }\
-        .popup_block {\
-         font-family:verdana;\
-         color:black;\
-         background: #ddd;\
-         padding: 10px 20px;\
-         border: 2px solid #4DD9FF;\
-         float: left;\
-         width: 700px;\
-         position: absolute;\
-         top: 7%;\
-         left: 50%;\
-         bottom: 7%;\
-         margin: 0 0 0 -350px;\
-         -moz-border-radius:10px;\
-         z-index: 100;\
-        }\
-        .popup_block .popup {\
-         display: block;\
-         float: left;\
-         width: 100%;\
-         height: 95%;\
-         background: #fff;\
-         margin: 10px 0px;\
-         border: 1px solid #4DD9FF;\
-        }\
-        .popup p {\
-         padding: 1px 10px;\
-         margin: 0px 0;\
-         -x-system-font:none;\
-         font-family:verdana,geneva,lucida,"lucida grande",arial,helvetica,sans-serif;\
-         font-size:10pt;\
-         font-size-adjust:none;\
-         font-stretch:normal;\
-         font-style:normal;\
-         font-variant:normal;\
-         font-weight:normal;\
-         line-height:normal;\
-        }\
-        #note {\
-            font-size:7pt;\
-            color:gray;\
-            padding: 1px 10px;\
-            margin: 0px 0;display:inline-block;\
-            min-width:100px;\
-        }\
-        #configinfo {\
-            font-size:8pt;\
-            color:gray;\
-            padding: 1px 10px;\
-            margin: 0px 0;display:inline-block;width:60em;\
-        }\
-        #PLCTabs > input[type="button"], .PLCButtons > input[type="button"] {\
-            display: inline-block;\
-            font-size: 12px;\
-            font-weight: normal;\
-            background-color: rgb(238, 238, 238);\
-            background-position: 0px -178px;\
-            background-repeat: repeat-x;\
-            text-shadow: 0px 1px rgb(255, 255, 255);\
-            padding: 4px 8px;\
-            position: relative;\
-            overflow: hidden;\
-            color: rgb(51, 51, 51);\
-            margin: 0 0;\
-            border: 1px solid rgb(170, 170, 170);\
-            border-radius: 0 0 0 0;\
-            box-shadow: 0px 12px rgb(255, 255, 255) inset;\
-            float: left;\
-        }\
-        #PLCTabs > input[type="button"] {\
-            border-bottom: none;\
-        }\
-        #PLCSeparator {\
-            border-bottom: 1px solid rgb(170, 170, 170);\
-            margin-top: 24px;\
-        }\
-        #selectAllButton {\
-            border-radius: 3px 0 0 3px;\
-            border-right: none;\
-        }\
-        #invertButton {\
-            border-radius: 0 3px 3px 0;\
-            border-left: none;\
-        }\
-        #PLCTabs > input[name="PLCHosts"] {\
-            border-radius: 3px 0 0 0;\
-            border-right:none;\
-            margin-left:10px;\
-        }\
-        #PLCTabs > input[name="PLCAbout"] {\
-            border-radius: 0 3px 0 0;\
-            border-left:none;\
-        }\
-        .PLCButtons > input[type="button"]:hover {\
-            padding: 5px 8px 3px;\
-            box-shadow: 0 0 white;\
-            background: none;\
-        }\
-        #PLCTabs > input.activeTab {\
-            padding: 5px 8px 3px;\
-            box-shadow: 0 0 white;\
-            background: none;\
-        }\
-        .PLCTab {\
-            display: none;\
-        }\
-        .PLCButtons, #PLCTabs, #warlcsitelist1 {\
-            margin-left: 5px;\
-        }\
-        #warlcsitelist1 {\
-            border-top: 1px solid grey;\
-            padding-top: 5px;\
-            overflow:auto;\
-            margin-top:2px;\
-        }\
-        .PLCTabContainer {\
-            overflow:auto;\
-        }\
-        input:hover+label {\
-            background:#F1F77C;\
-            font-size:110%;\
-        }\
-        .popup_block .popup legend {\
-            display:block;\
-            width:100%;\
-            padding:0;\
-            margin-bottom:2px;\
-            font-size:15px;\
-            line-height:inherit;\
-            color:#333;\
-            border:0;\
-            border-bottom:1px solid #e5e5e5\
-        }\
-        ';
-
-        GM_addStyle(configcss);
-
-        var configurationinnerHTML =
-        '<div id="fade"></div>\
-        <div class="popup_block">\
-            <div class="popup">\
-                <div id="PLCTitle" style="height: 1.2em"><img src=' + settingsIcon + ' style="height:35px;margin-left:2px;vertical-align:middle;"></img>PLC - Configuration</div><br>\
-                <div id="PLCTabs">\
-                    <input type="button" name="PLCHosts" class="activeTab" value="Hébergeurs">\
-                    <input type="button" name="PLCSettings" value="Réglages">\
-                    <input type="button" name="PLCAbout" value="A propos">\
-                </div>\
-                <div id="PLCSeparator"></div>\
-                <div id="PLCHosts" class="PLCTab">\
-                    <br><div class="PLCButtons">\
-                        <input type="button" id="selectAllButton" value="Sélectionner tout">\
-                        <input type="button" id="selectNoneButton" value="Sélectionner aucun">\
-                        <input type="button" id="invertButton" value="Inverser">\
-                    </div><br><br>\
-                    <input style="margin-left:5px;" type="textbox" placeholder="Chercher un hébergeur" id="hostSearchBox" value="">\
-                    <div id="warlcsitelist1"><span>Vide</span></div>\
-                </div>\
-                <div id="PLCSettings" class="PLCTab">\
-                    <br>\
-                    <div id="PLCPreferences" class="PLCTabContainer">\
-                        <fieldset>\
-                            <legend>Réglages généraux</legend>\
-                            <p><input type="checkbox" id="Do_not_linkify_DL_links"> Rendre les liens NON cliquables</p>\
-                            <p><input type="checkbox" id="Allow_spaces_in_DL_links"> Autoriser les espaces dans les liens<br><div id="configinfo">Note: Tous les liens doivent se terminer par un retour à la ligne!</div></p>\
-                            <p><input type="checkbox" id="Display_full_links_in_link_containers"> Afficher les liens dans les conteneurs</p>\
-                            <p><input type="checkbox" id="Display_tooltip_info"> Afficher une infobulle<br><div id="configinfo">Note: Nom, taille du fichier, messages d\'erreur, etc.</div></p>\
-                            <p><input type="checkbox" id="Show_Update_Notification">Afficher une notification quand PLC est à jour</p>'
-                            //<p><input type="checkbox" id="Focus_First_Link">Focus on the first link found</p>\
-                        + '</fieldset>\
-                        <fieldset>\
-                            <legend>Réglages Progressbox</legend>\
-                            <p>Horizontal positioning of the progressbox: <input type="text" id="Processbox_Pos_X"><br><div id="configinfo">Note: Define this value in percentages starting from the left of the screen.</div></p>\
-                            <p>Vertical positioning of the progressbox: <input type="text" id="Processbox_Pos_Y"><br><div id="configinfo">Note: Define this value in percentages starting from the bottom of the screen.</div></p>\
-                            <p>Scaling of the progressbox: <input type="text" id="Progressbox_Scaling"><br><div id="configinfo">Note: Resizes the progressbox. Define this value in percentages. 100% = full size, 200% = double size, etc</div></p>\
-                        </fieldset>\
-                        <fieldset>\
-                            <legend>Options hébergeurs</legend>\
-                            <p>Anonymizer:\
-                            <select style="margin-left:5px;" id="redirector">\
-                                <option>Lorem ipsum dolorem</option>\
-                            </select></p>\
-                            <p><input type="checkbox" id="Filefactory_API_Check"> Check Filefactory.com links through API</p>\
-                            <div id="configinfo">Note: We cannot guarantee this will work. If disabled, PLC will use a website check instead.</div>\
-                        </fieldset>\
-                    </div>\
-                </div>\
-                <div id="PLCAbout" class="PLCTab">\
-                    <br>\
-                    <div class="PLCTabContainer">\
-                    <fieldset>\
-                    <legend>PLC - Phoenix-Warez Link Checker v' + PLC_version + '</legend>\
-                    <p>Authors: iKickback (<a href="http://www.warez-bb.org/profile.php?mode=viewprofile&u=2348347">Phoenix-Warez</a> | <a href="http://userscripts.org/users/476129">Userscripts</a>) & thecodingdude (<a href="http://www.warez-bb.org/profile.php?mode=viewprofile&u=2089048">Phoenix-Warez</a> | <a href="http://userscripts.org/users/437232">Userscripts</a>)</p>\
-                    <p>Based on <a href="http://userscripts.org/scripts/show/125631">W.A.R. Links Checker - Dev</a></p>\
-                    <p>Original by <a href="http://userscripts.org/users/302353">dkitty</a></p>\
-                    <p>Graphics by LiabilityZero (<a href="http://www.warez-bb.org/profile.php?mode=viewprofile&u=3229521">Phoenix-Warez</a> | <a href="http://liabilityzero.deviantart.com/">deviantART</a> | <a href="mailto:liabilityjeeru@gmail.com">Contact</a>)</p>\
-                    </fieldset>\
-                    <br />\
-                    <fieldset>\
-                    <legend>Currently supported</legend>\
-                    <p>Filehostings: ' + allHostNames.length + '<br />\
-                    Containers: ' + allContainerNames.length + '<br />\
-                    Obsolete sites: ' + allObsoleteNames.length + '<br /></p>\
-                    </fieldset>\
-                    <br />\
-                    <fieldset>\
-                    <legend>Uses</legend>\
-                    <p>adam_3\'s <a href="http://userscripts.org/scripts/show/2254">Linkify ting</a> (modified)</p>\
-                    <p><a href="http://jquery.com/">jQuery</a> JavaScript Library</p>\
-                    </fieldset>\
-                    <br />\
-                    <fieldset>\
-                    <legend>License</legend>\
-                    <p>GPL version 3 or any later version (<a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>)</p>\
-                    </fieldset>\
-                    </div>\
-                </div>\
-            </div>\
-        </div>';
-
-        $('body').append('<div id="hideshow">' + configurationinnerHTML + '</div>');
-        $("#PLCHosts").show();
-
-        //sets height of warlcsitelist1
-        var totalHeight = $(".popup").height();
-        $("#warlcsitelist1").height(totalHeight - 155); $(".PLCTabContainer").height(totalHeight - 90);
-        $("#PLCSeparator").css("margin-top", 9 + $(".activeTab").height() + "px"); //because the buttons have a different height on the different themes
-
-        $("#PLCTabs > input[type='button']").click(function() {
-            var $target = $(this);
-            var current = "#" + $(".activeTab").removeClass().attr("name"); $(current).hide();
-            var targetTab = "#" + $target.addClass("activeTab").attr("name"); $(targetTab).show();
-        });
-
-        $("#fade").click(function(event) {
-            $("#hideshow").hide(); event.preventDefault();
-        });
-
-        var elmHostList = document.getElementById("warlcsitelist1");
-
-        buildSettings();
-        buildSitelist("", allHostNames, elmHostList);
-        appendObsolete("", allObsoleteNames, elmHostList);
-
-        //handler for checkbox state change
-        function changeConfiguration(e)
-        {
-            var element = e.target;
-
-            if (element.type == 'checkbox')
-            {
-                if (element.checked == 1)
-                {
-                    lsSetVal("hosts", element.id, true);
-                }
-                else
-                {
-                    lsSetVal("hosts", element.id, false);
-                }
-
-            }
-        }
-
-        //Selects all filehosting checkboxes
-        function selectAll()
-        {
-            $(":checkbox:visible:not(:checked)").prop("checked",true)
-                         .each(function(index, element){lsSetVal("hosts", this.id, true)});
-        }
-
-        //Deselects all filehosting checkboxes
-        function selectNone()
-        {
-            $(":checkbox:visible:checked").prop("checked",false)
-                         .each(function(index, element){lsSetVal("hosts", this.id, false)});
-        }
-
-        //Inverts filehosting checkboxes selection
-        function selectInvert()
-        {
-            var $checked = $(":checkbox:visible:checked");
-            var $unchecked = $(":checkbox:visible:not(:checked)");
-
-            $unchecked.prop("checked",true)
-                         .each(function(index, element){lsSetVal("hosts", this.id, true)});
-            $checked.prop("checked",false)
-                         .each(function(index, element){lsSetVal("hosts", this.id, false)});
-        }
-
-        //Sets anonymizer setting
-        function changeAnonymizer()
-        {
-            var val = $("#redirector").val();
-            lsSetVal("general", "Ref_anonymize_service", (val == ANONYMIZERS.length ? '' : ANONYMIZERS[val]));
-            $('#redirector option[value=' + val + ']').prop('selected', true);
-        }
-
-        //Sets selected redirector option
-        var anonlist = "";
-        $(ANONYMIZERS).each(function(index, value) {
-            anonlist += '<option value=' + index  + (value == ANONYMIZE_SERVICE ? ' selected' : '') + '>' + gimmeHostName2(value) + '</option>';
-        });
-        anonlist += '<option value="' + ANONYMIZERS.length + '">No referer</option>';
-        $('#redirector').html(anonlist);
-
-        //Sets Processbox position setting
-        function changeProgBox(event) {
-            var setting;
-            switch(event.data.set) {
-                case "X": setting = "Processbox_Pos_X"; break;
-                case "Y": setting = "Processbox_Pos_Y"; break;
-                case "Scale": setting = "Progressbox_Scaling"; break;
-            }
-
-            var $setting = $("#" + setting);
-            var newSet = $setting.val().replace("%", "");
-            lsSetVal("general", setting, newSet);
-        }
-
-        //Sets value of Processbox position
-        $("#Processbox_Pos_X").val(Processbox_Pos_X + "%");
-        $("#Processbox_Pos_Y").val(Processbox_Pos_Y + "%");
-        $("#Progressbox_Scaling").val(Progressbox_Scaling + "%");
-
-        function buildSettings()
-        {
-            $("#PLCPreferences :checkbox").each(function(){
-                $(this).prop("checked", genset($(this).attr("id")))
-                    .click(function(e){
-                        lsSetVal("general", $(this).attr("id"), $(this).prop("checked"));
-                        setVariables();
-                    });
-            })
-        }
-
-        //Dynamic build of host list
-        //param search         [string]    searches for hostnames matching search substring
-        //param siteNames     [array]        array of site names
-        //param targetNode     [DOM Node]    where the list should be built
-        //                                first child node is replaced
-        function buildSitelist(search, siteNames, targetNode)
-        {
-            var searchRegex = new RegExp("\\|?([\\w\\.-]*" + search.replace(/\./g,"\\.").replace(/-/g, "\\-") + "[\\w\\.-]*)\\|?", "i");
-
-            $(targetNode).empty().append("<fieldset id='PLCHosts1'><legend>Filehosts</legend></fieldset>");
-            var $targetNode = $("#PLCHosts1");
-
-            var searchedSite = "";
-            $.each(siteNames, function(i, site){
-                if (searchedSite = site.match(searchRegex))
-                {
-                    var baseSite = site.replace(/\|.+/, ""); //filehosting main domain
-
-                    //ensuring backward compatibility with the rest of code, to be refactored later
-                    var oldRSLCvalue = "Check_" + baseSite.replace(/\|.+/, "").replace(/\./g,"_dot_").replace(/-/g, "_dash_") + "_links";
-                    //
-
-                    $targetNode.append('<input type="checkbox" id="' + oldRSLCvalue +'" />\
-                        <label for="' + oldRSLCvalue + '">' + searchedSite[1] + '</label>' +
-                        ((searchedSite[1] != baseSite) ? ('<div id="note"> ( ~ ' + baseSite + ' )</div>') : (""))
-                        );
-
-                    $("#" + oldRSLCvalue).prop("checked", hostSet(oldRSLCvalue, false))
-                                        .change(changeConfiguration);
-
-                    $targetNode.append('<br />');
-                }
-            });
-
-            $(targetNode).append("<fieldset id='PLCHosts2'><legend>Containers</legend></fieldset>");
-            $targetNode = $("#PLCHosts2");
-
-            searchedSite = "";
-            $.each(allContainerNames, function(i, site) {
-                if (searchedSite = site.match(searchRegex)) {
-                var oldRSLCvalue = "Check_" + searchedSite[1].replace(/\|.+/, "").replace(/\./g,"_dot_").replace(/-/g, "_dash_") + "_links";
-                $targetNode.append('<input type="checkbox" id="' + oldRSLCvalue +'" />\
-                    <label for="' + oldRSLCvalue + '">' + searchedSite[1] + '</label>');
-                $("#" + oldRSLCvalue).prop("checked", hostSet(oldRSLCvalue, false))
-                                    .change(changeConfiguration);
-                $targetNode.append('<br />');
-                }
-            });
-        }
-
-        //obsolete hosts checkbox
-        function appendObsolete(search, siteNames, targetNode) {
-            var searchRegex = new RegExp("\\|?([\\w\\.-]*" + search.replace(/\./g,"\\.").replace(/-/g, "\\-") + "[\\w\\.-]*)\\|?", "i");
-            $(targetNode).append('<fieldset id="PLCHosts3"><legend>Obsolete hosts</legend><input type="checkbox" id="Obsolete_file_hosts" /><label for="Obsolete_file_hosts">Check obsolete file hosts</label><br /></fieldset>');
-            $("#Obsolete_file_hosts").prop("checked", hostSet("Obsolete_file_hosts", false))
-                                    .change(changeConfiguration);
-
-            var $targetNode = $("#PLCHosts3");
-
-            var foundName = "";
-            $.each(siteNames, function(i, site){
-                if (foundName = siteNames[i].match(searchRegex))
-                {
-                    $targetNode.append('<div id="note">' + foundName[1] + '</div>');
-                }
-            })
-        }
-
-        //event listener binding
-        $("#hostSearchBox").keyup(function() {
-            buildSitelist($("#hostSearchBox").val(), allHostNames, elmHostList);
-            appendObsolete($("#hostSearchBox").val(), allObsoleteNames, elmHostList);
-        });
-        $("#selectAllButton").click(selectAll);
-        $("#selectNoneButton").click(selectNone);
-        $("#invertButton").click(selectInvert);
-        $("#redirector").change(changeAnonymizer);
-        $("#Processbox_Pos_X").change({ set: "X" }, changeProgBox);
-        $("#Processbox_Pos_Y").change({ set: "Y" }, changeProgBox);
-        $("#Progressbox_Scaling").change({ set: "Scale" }, changeProgBox);
-
-        //buttons and edit boxes init end
-    }
+function checkLinks(filterId)
+{
+	start(filterId);
+}
+
+/**
+* Initialises progress box including event binding and CSS
+*/
+function initProgressBox()
+{
+	if ($("#warlc-progressbox").length > 0)
+	return;
+
+	//progressbox css
+	var progressboxCss = "#warlc-progressbox  {position:fixed; background:white; bottom:" + Processbox_Pos_Y + "%; left:" + Processbox_Pos_X + "%; padding:5px; font-size:10px; font-weight:bold; font-family:Helvetica; width:130px; cursor:default; border:1px solid #4DD9FF; z-index:200;}\
+	\
+	#warlc-hostdetails  {position:fixed; background:white; bottom:" + (parseInt(Processbox_Pos_Y) + 9) + "%; left:" + Processbox_Pos_X + "%; padding:5px; font-size:10px; font-weight:bold; cursor:default; border:1px solid #4DD9FF; display:none; z-index:201;}\
+	\
+	.warlc-progressbox-contents {right: 5px;}\
+	\
+	.warlc-progressbar {text-align:left; background: lightGrey; height:3px; margin-bottom:5px; width:0px; border-radius:1.5px; }\
+	\
+	.warlc-progressitem { display: block; padding:2.5px 0px 2.5px 20px }\
+	\
+	.alive {color: rgb(133, 195, 49); background:transparent url(" + alive_link_png + ") no-repeat scroll 0% 50%;background-size:15px;}\
+	\
+	.adead {color: red; background:transparent url(" + adead_link_png + ") no-repeat scroll 0% 50%;background-size:15px;}\
+	\
+	.unava {color: #FF9900; background:transparent url(ToBeAddedLater) no-repeat scroll 0% 50%;background-size:15px;}\
+	\
+	.unknown {color: rgb(0, 150, 255); background:transparent url(" + unknown_link_png + ") no-repeat scroll 0% 50%;background-size:15px;}\
+	\
+	.processing {color: grey; background:transparent url(" + processing_link_gif + ") no-repeat scroll 0% 50%;}"
+
+	if (Progressbox_Scaling != 100) {
+		$.each(progressboxCss.match(/[\d\.]+px/g), function(i, el) { //dynamic rescaling of the progressbox according to user settings
+			progressboxCss = progressboxCss.replace(new RegExp(el + "(?!" + RAND_STRING + ")"), parseFloat(el) * Progressbox_Scaling/100 + "px" + RAND_STRING); //RAND_STRING to prevent the same value replaced twice
+		});
+	}
+
+	progressboxCss = progressboxCss.replace(new RegExp(RAND_STRING, "g"), "").replace("ToBeAddedLater", unava_link_png); //inserting the unava_link_png at the end because the function messes up its base64 string
+
+	GM_addStyle(progressboxCss);
+
+	$('body').append('    <div id="warlc-progressbox">\
+	<div class="warlc-progressbox-contents">\
+	<div class="warlc-progressbar" aria-valuenow=0></div>\
+	<div class="warlc-progressitems">\
+	<span class="warlc-progressitem alive"></span>\
+	<span class="warlc-progressitem adead"></span>\
+	<span class="warlc-progressitem unava"></span>\
+	<span class="warlc-progressitem unknown"></span>\
+	<span class="warlc-progressitem processing"></span>\
+	</div>\
+	</div>\
+	</div>\
+	<div id="warlc-hostdetails"></div>');
+
+	$('#warlc-progressbox').hide().click(function(){
+		clearInterval(intervalId);
+		$(this).hide();
+		return false;
+	});
+
+	$(".warlc-progressitem").hover(function() {
+		showHostDetails(this);
+	}, function() {
+		showHostDetails("none");
+	});
+
+}
+
+function showHostDetails(item) {
+	var $div = $("#warlc-hostdetails");
+	if (item == "none") {
+		$div.hide().removeClass();
+		if ($("#warlc-progressbox").css("display") != "none") intervalId = setInterval(function() { updateProgress(); }, 1000);
+	}
+	else {
+		function help(status) {
+			return $('warbb[name="filehosts"]').attr(status);
+		}
+		var statusArr;
+		var divTxt = "Les hébergeurs suivants ";
+		switch(item.className) {
+			case "warlc-progressitem alive": divTxt += "ont été trouvés valides: "; statusArr = help('live'); break;
+			case "warlc-progressitem adead": divTxt += "ont été trouvés morts: "; statusArr = help('dead'); break;
+			case "warlc-progressitem unava": divTxt += "ont été trouvés inaccessible: "; statusArr = help('unava'); break;
+			case "warlc-progressitem unknown": divTxt += "n'ont pas été reconnus: "; statusArr = help('unknown'); break;
+			case "warlc-progressitem processing": divTxt += "sont en cours d'analyse: "; statusArr = getProcHosts(); break;
+		}
+		$div.addClass(item.className);
+		$("#warlc-progressbox").append($div);
+		if (statusArr == "") divTxt = divTxt.replace("The following", "No").replace(":", ".");
+		$div.text(divTxt + statusArr.slice(0,statusArr.length-1).replace(/,/g, ", "));
+		clearInterval(intervalId);
+		$div.show();
+	}
+
+}
+
+function getProcHosts() {
+	var filehostsProc = "";
+	var $links = $(".processing_link");
+	if ($links.length > 0) {
+		var i = $links.length;
+		var hostname;
+		while (i--)
+		{
+			hostname = gimmeHostName2($links[i].href);
+			if (!filehostsProc.contains(hostname)) {
+				filehostsProc += hostname + ",";
+			}
+		}
+	}
+	return filehostsProc;
+}
+
+function dismissProgressbar() {
+	$(".warlc-progressbar").fadeOut();
+	$(".warlc-progressitem.processing").fadeOut();
+	clearInterval(intervalId); //stops refreshing the stats
+}
+
+/**
+* Updates progress data in progress box
+*/
+var percAlive, percDead, percUnava, percProc;
+function updateProgress()
+{
+	if (cLinksTotal) // some links were detected on page
+	{
+		var percProgress = Math.round(((100 / cLinksTotal) * cLinksProcessed));
+		var $progressItems = $('.warlc-progressitems > .warlc-progressitem');
+
+		$(".warlc-progressbar").css("width", percProgress + "%");
+		$(".warlc-progressbar").attr("aria-valuenow", percProgress);
+
+		percAlive = Math.round((cLinksAlive / cLinksTotal) * 100);
+		percDead =     Math.round((cLinksDead / cLinksTotal) * 100);
+		percUnava = Math.round((cLinksUnava / cLinksTotal) * 100);
+		percUnknown = Math.round((cLinksUnknown / cLinksTotal) * 100);
+		percProc = Math.round(((cLinksTotal - cLinksProcessed) / cLinksTotal) * 100);
+
+		$progressItems.first().text(cLinksAlive + " - " + percAlive + "% Valides")
+		.next().text(cLinksDead + " - " + percDead + "% Morts")
+		.next().text(cLinksUnava + " - " + percUnava + "% Inaccessibles")
+		.next().text(cLinksUnknown + " - " + percUnknown + "% Inconnus")
+		.next().text(cLinksTotal - cLinksProcessed + " - " + percProc + "% En cours");
+		if (percProgress > 0) $("#warlc-progressbox").show();
+		if (percProgress == 100) dismissProgressbar();
+
+		if (Focus_First_Link) {
+			$('html, body').animate({
+				scrollTop: ($("a[class$='_link']").first().offset().top)
+			}, 500);
+		}
+	}
+}
+
+
+
+function check_all_links()
+{
+	add_WARLC_style();
+
+	initProgressBox();
+	intervalId = setInterval(function(){updateProgress();}, 1000);
+
+	start(null);
+}
+
+function KeyDownHandler(event)
+{
+	var kcode = (event.keyCode) ? event.keyCode : event.which;
+	if (event.ctrlKey && event.altKey)
+	{
+		switch(kcode)
+		{
+			case 65 : check_all_links(); break;
+			case 67 : configuration(); break;
+		}
+	}
+}
+
+//
+//
+//   SCRIPT EXECUTION START POINT
+//
+//
+
+//init the stuff
+setVariables();
+
+//register GM menu commands & keyboard shortcut event handler
+$(document).keydown(KeyDownHandler);
+GM_registerMenuCommand("[PLC - Phoenix-Warez Links Checker] Configuration  (CTRL + ALT + C)", configuration);
+GM_registerMenuCommand("[PLC - Phoenix-Warez Links Checker] Vérifier tous les liens (CTRL + ALT + A)", check_all_links);
+
+//start linkchecking
+$(document).ready(check_all_links);
+//
+//
+//   SCRIPT EXECUTION END POINT
+//
+//
+
+//shows configuration box
+function configuration()
+{
+
+	//prevent multiple creating of config window
+	if ($("#hideshow").length)
+	{
+		$("#hideshow").show();
+		return;
+	}
+
+	var settingsIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACGCAYAAAAcjCKsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAEVdJREFUeNrsXY114roSVnK2ALaCdSoIqSDmNrBQQaCCQAWECkgqgFQQUkGcCuJUEN8KllfBPov7iQyDJMvGMth4zvFhN/wZzaf5n9HF379/RUstKbpsl6ClFhAttYBoyY1+0P9cXFw08keGvTBMHzrp1cWffqVX4PDWdzwm6oreoqSJa6RsyQtqVNYdECnjJdNDMP4Wjx0PXxWlV5xen/IxBUncAuJ0QNAH8/uOu94HrQGSV/lYRylSW0BACkjm/8bjKZKUGM/ptaoLOGoHCNgBdwBBp0abT0qO5xQYyxYQ5QBhmD7cE4OwriTVylN6LU9Rapw0IKAWxpAIgWgeSWkxOyVgnCwgUjBIIExrphZqD4yTAwS8hXlDJYKLKnlMgbE+e0CkQJAAWCB+cM4kpcQkBcXqbAGRguEBBmNHtKRIAmJUtbQ4KiAgFV4a4Dn4VCOjKqXF0QABN3LeSgUneoTRuW4kIFIwSFth2PI5F8mo58C3J1IpIBBXeGtVxEEqRIIi8g0I7/UQKRgkCL5aMBxEmw0FdeuVLj2DIYRkaO2FcmiRrum8loAAmlswlE9j2GL1AQTAsGh5542GvkBx2YKhBQWlUr0M5CNeWl5VSjKdPjo5LwPeRCsZjiMpxiclIRCK/mgNyKPS6JCqrNICU23Q6WRIBq96RSvAy1QZixYMYpZeE8NzkkE/xX/FMD5JBa8OktIHAQK6q3/uWzPdlQ/p9ahhugo5y8f3Cm6lc6hRf3kAGKRUmIuWYgKMEUBAPYBEPV3R/YSoM6kOEBBLi3NmvuNrqFQIdC5jet04fm4emmLDViYhpmdoN0jRL5nXYwzswsvaWvt4TY9JhZCpkhspUWAEJh7ud1EJIJCwGp+hdLiFWogYKJZMTXQYWNT/H2F8SuZPmDcQerjfbhHVkdvtTL/k40y9ihgSgtpQa2kjIFxvay2UIHgWmiYdkhH2RVcuxTWF4hDwKs7ZkJzAm6DMXIh8rQNSSmxK7gEq3xlh2XzcKx0QEH1foo1GSltiBXE8PcA4HajYQQVr2suqtioSmBqfGRhiGIUR220rZBmnhvfMiFE50dgYAir3A6pEuarytT/Tz7+QV8mGprOB6SQhYEV/nREY5KSYK/b7p2BaX7PAMdRJZJGuYw2INnaJfJ5WVnuSxtZcRy6VcabV0jc8L2BI4jmnn2FzvLD3yzL7hwoM9x2QF1YZQOu5gUHSmya4w5uQV3lqESBBBuzP98o1lfUkHr24wKVIN1NCHGg8NYFk99QT1AIV42u4dLmbaFAoS2M5E3yPb7VslBJ5jMr7M/cq+iR4RKXDEweD3OmS2en1J73+ptcb1ITO9aT0G7GCxPNvCQz3s6XLDCQPWzdzazRyMa4z0F6YNxbqVA+ARPs2FZM2YwFw+Wrfuy8MiDOWDmswpSe+eytvGVMTtnm6whyC1qncT26wyqBXek1w/YRLWrrEY7kXN0DgTacaopbMuLEs2Ai+fFTgsx9hG2zcSO4BKDxYVIuOXKRsoDFCl57V4B79qKl0iOASxilw79jOTMhCvhp27cqyKJ8OhmJgUCuHSiXq2fU9GvN3AH4ulXHsSijJtCuDrqZ1Bk8Wgy02SI8B1IGOFjAGZTVziNYC/lmBplQtsuj9Z83ffjFpEMMgleb+H5E/R5KHuia1cWlQF11x/FlPcqcm8POXGpWhFnLFGBFZADFzFMMhGCLzDC9Yj39tGwZSpafxFB4N39nX/J4qVXQ/j4QIT0xFTNhCdzTPz4R9oltiEpOOAFlpxC7X+TH8fJXL2NgiDt7byqKKfNFdHkD8rtiiT2wiFbtvAoYO+Kgd7MC9Ilf5PhiXm0QTsw1M8QG+y2PxPQWfSp/Q1CADY1Q78xqqZq5TKQRMSQXr3tVVaO9FKvGiPxUC4gqg4MkfbVQNOl1Nuw8su2oNZsawOSKWQHohYnOnp0HaEADMTp7CUMzi3CBj6GHZq1eoqE5C0M1lTG4doT9zW9HDkj/baWwlzrmWn/kqGUgymH3BGlxkpBGMGmiYqkv07RTOWOwy3sOyhvss7yVmgB0K/4XMj0ql2QDxIKrNXezsMBValSIXizL1oFsTk4FJpMANA8kD3rcS+k61BB7PigBcnd/xW+gThANIsA/8X97P/4ja9m1kbssCbYB4q9io3KlVJLtp7ngfscHdCx2BMaJ1DOT3R3g+YKppgOcObV8cQVIdtUYVNpYVEH9E9fmLrch1kFDqLIooq48RwOqK7LM1VEV0R+zWO6icwyvZ5Rudj90/Ffkr0BPo7rhC1WCjTXmdFhC9f3pyF/hKwcawoLtkcTvKoMNCLQyM2zlaAGI9hGFJz9IyFpSSuo57S6SR1jlGgkyUhc2hVMmaqZh7h0CeTU0dswBpsxkVDnjo2qcfvMZCyoWW9sETdtgTFsskgunuvc/IwL4bwPCidLz88YaRyqrOUcUPuBqaCpbyRl2DDKAN2HlfHMwRIpEBmN8HsBISbT0WIH4Z3c5UQvgus9+r/rWME5A7dgRGzh0XbKAbB4xwsCCGmwpv64aurzVehwLLjUHUW8vTyOd8kU23M5D0SKp6K1VNBTK+b2hOgyEWMCyxU5UKc909icGOoDQEc0Ool0fNGrypWD+JCWzAoopgmN7ntZeqQOYvC/48M4n0JSUGJNax6k46tkjlre/omNidYTDXgQHBoLnYL0jNsphjw3fqFkEyYgE/fKR5XsViaOzjAwDlhuQnA3nH4O3o7m8ojlui2LUBogpSO2+s2flSMkyg8/Pq1Mj2fQYawu1baUAhQ7tz1EPELNYwE7u5jVvGYG572MB5UuRbZczIpRg2wffwXbEikqFI6j0x/P3WYYe8kHwIpTG8iBEMzRsMB3lgAOoS9TLVAasiCVyIqFr94SBei9JK028QwG1cMPBtAkRYuKLW9qeLSDStCaTBBACg75nzwJlm53cgaTqGTTUuc1KcTzvCp8ro8z4AEkPgTB+BCYcsWmyIPbhKvTHyOAOxG/ns8t8B5o41wAtEzcm3DTEnFUeKeB5+BWYeGq2LC0oHSgsSBNuTBogjvIgGd8D/qEAUyYojZbTpusAm2G2H7K7EUAcZFrjfMWwJGrhS/Qwd0fAha1V5GX32SL2KtTi8oNdkUP4q8FnqXriUuNOU67WAKCrOsYO5ungV5Zzl/X6AQamTEkOxX8fZJxJNlciNhN+mmkaoDJUhfCc7dw0Db6c4BLMWhnBJgwJqI9HEBMrwmu6Q86AdW9KTCA3JqcY0RPsAxNJQWNrXGJOqHnJJFlalrK8BkNDyPVmdTcuCjFL1hq8MVKFgATCSYm8lhMWn72rCyN0sMU+zoYZFDxDciXWg03yejG2IgqBQzKfxhmsaUxHHDzt7B0QkDq+W2mQG0wWbid2pa9eOhqCOsbHBraRVzF3of/kbaIX1pKCdIkH9AEDtBHA07fx1p6QKo1LunC9y6kuHMTk6WBR9Z0uHRILIf28TaADGssDHXxObiLuxjRrLSNsFLjUGYdkUePwtQwNzukxNqH4LZYC69GEqAMc53NzGqYzPKgMvKGjtYNH/hbiPc0xlubY8dwuX0GabhADsNUAUOu6oEVRiF3GLsM4CwgaIspCv3MHIYYoqtdJViFg12byL784p3U7910UvWhgbaUAaEHskS8zKa1XBNNqjSYgyADEzzFTIGxwK6c6DcScZ+ETK5CKLlf96gD5NNKrDCixmfNaJ3m2AiMsWQRZ1EeBm8qxkyGIYkhEyFsETY6MSz8nu6mws3L+87kS98xs7QuBSEwc4VEq8oE6wj/kKgQFsQUEjNqSDsxDYkgWuA1xXrBMsc9BWBmj3NgyKZb+Ih1PnOVxxVmAqPtAzUGHcIVnYG42+D4U55OwCum1ltGmCG22ahUhP8Ps+8Rhn2Dhdw24KREOI22Y/DDqlbBHY1UiIWwR+1gV2mIo//LTs7iECVh0mlQL6+4gBq4CSEHXDS94+AbKkIaDYU6uXWSKkBJILvtbo9BDBo1WZXwZV9QW7ouMILik+xnjPGwmm7eVfyFCQkah/lvM9ExBgXFk/dAadvqLGICG54E9l6D4Wfzh09z6RGMVWXVD1QmyXuOkSwtlTyKARKpTXFldwCh0WlQiIQ8PKqolYV+onNEb4pLZo0Hhi2lnXJXQk25puecuaatd7KwC4pebz/x64TqrxmDc9X4nvJFlEbJI7Uc9I5YoORDE1+5YlIdTZkRHxKK7B/CcWTJJS4ip9/VLkS1MnDm5iXloitvGm+busGFed401IeWsDd8Zp+J4GWWzOmxL7h4Oov3+46n816IIblKL4OCQJsBuAl3/GDdaiSWeV/qTq3GUa/rOHm7jDTejK3AOx3xNRlf2wFt+zIRYa6RAbOrvqSitTAtEGiGXJN6EGhgjWL6noDYwZOe5mHV0XNYDxmby5eMdoRJXWpAGAMOZ5Li0ieV1ijEDNXEgYE/gBqC+wO3oZkuKzJAmhptdEQj+WYMR3EkYfRTUGg5WvWRVTTyXdhG5hY81uU6HmROwfqexi9AYFJFZsAMOG8bJTS3M00XONAbGy1ZtcOvipSUnqQhl+IYaLfxj0sprW0hHfVU6ZNkTOBJaqoBIGMKjKcdWJvsAQkDfUU9bZy5jZnrw89AMc6QWL+QcMkMzrkoEd3F5RuQrVVken4q8NCHdRF/IzrmDDDA1giFARFYjd0DUNcQc1BUNmwVImILCLDw1lq/K0jkafCfRX6Cz4qfge/yNfYztl5tqiXtQhqfK9AVzqueZ+liqghoUbiGZR5uZ2PbfzwYOY1A0sHRoYpTyLnUmxmvcGRKVsE2rkQJJ7iyTRVno16MxS6xngeQ9y9X7SLEsrLzJUgMp/vEPKxJrZkaoL7FbYQ8sJpI4aSbBmA8+VTVN3sp7/XeQw+KEoL1K3c+YlGXqugLLCUI6p8FeNpAJkSlV9MAkzQRjbx2Y4KelQCBBg3FdJBtWaxBqmTCRvZz6SM7PvSjTktkBgUkU34zsuGN84NbrKMibzHOQqWDCpDFJehG4G5YoGx5BCVzWTRQ1cFYwZ4fjDpYbJzwZjuO5geHRohchnVDIp8SL8Vhn32HT6D+j5V2VzsObfa4P38on3xWwqrTIS+aEpgfB/1HLV5HwcdVb6O0tKhB51KmXenOzSvopFYG60ZHbHhH5SJp8Y4hVqeOkAh70lNe6tsBnuuSRq7mZffMHM9y/RdFhzC1ly7wvjgx80bvIXCW7txT4IOD5QhzluGBhWurnfpQMCoHgUJRfHEvqCgTfW2B2U6FwqXh1NZ0vdOdgzTZss55o1LgcQRHX4qDruGOIGXSIB+uw1XdNrxX+RSeouB6L5lFtVFDYqmWgORbVNriNIJl1cQB1ZZAokqczqvOFgeHSZrlNKHMIAivGJLLJKp7ucbtNUygxAeQcEc+VaOh5Jb+qmqKooGpgy0UTUu2GlCUbkoCgYyjIquSvaa0FxNBpknVBYKSAIKJrQ71hHjyIq68NKnUIHlPZaUFQKhmWZH1j6WMIWFPUFgxdAMFAkLd/qA4bS3E6LO2o6hrGl4t7EqEiOotI4hAMoZK4gbPl5MBh6ZXkTRwMEAUbT5kNXSTHA4M0uqxwQAMVQmKuqW9JTodxELQABUKi2+tauOJK9cFKAIMB4EA07a6JMRw1gqMxLOzogAIpQ6M//PmepMEMBUqV0EoBg0uL+zG0LVRV+lIDeSQECoAjEfo/GuaiHWZn5iEYAggFjcQZxiwRAWJ7CzZwsIJg3ct9AiSFjCk+nAoTaAIJJDAWMOtsYKwAhOsWbqw0gGDgkKH6L+tRMSrVgHGHQAqJcqSFBcXuC4EggDZ595R1aQNjBofo41ByIqmMa6oC39zpIgsYDwgAQNcJIdnAFJXosMQCgDoeL6wqAswFEBlgUMDoOkkQdrLJRA01hfC5AtNTSZbsELbWAaMlI/xdgACZvWugac3GNAAAAAElFTkSuQmCC";
+
+	var configcss = '\
+	.popup_block .popup fieldset{\
+		padding: 1%;\
+		border-style: none;\
+		border-width: 0;\
+		border-color: white;\
+		margin-bottom: 1px;\
+	}\
+	.popup_block .popup hr {\
+		height: 1px;\
+		border-color:black;\
+	}\
+	#PLCTitle{\
+		font-size: 2em;\
+		width:100%;\
+	}\
+	#hideshow {\
+		position: fixed;\
+		width: 100%;\
+		height: 100%;\
+		top: 0;\
+		left: 0;\
+		font-size:12px;\
+		z-index:2147483647;\
+		text-align:left;\
+	}\
+	#fade {\
+		background: #000;\
+		position: fixed;\
+		width: 100%;\
+		height: 100%;\
+		opacity: .80;\
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";\
+		left: 0;\
+		z-index: 10;\
+	}\
+	.popup_block {\
+		font-family:verdana;\
+		color:black;\
+		background: #ddd;\
+		padding: 10px 20px;\
+		border: 2px solid #4DD9FF;\
+		float: left;\
+		width: 700px;\
+		position: absolute;\
+		top: 7%;\
+		left: 50%;\
+		bottom: 7%;\
+		margin: 0 0 0 -350px;\
+		-moz-border-radius:10px;\
+		z-index: 100;\
+	}\
+	.popup_block .popup {\
+		display: block;\
+		float: left;\
+		width: 100%;\
+		height: 95%;\
+		background: #fff;\
+		margin: 10px 0px;\
+		border: 1px solid #4DD9FF;\
+	}\
+	.popup p {\
+		padding: 1px 10px;\
+		margin: 0px 0;\
+		-x-system-font:none;\
+		font-family:verdana,geneva,lucida,"lucida grande",arial,helvetica,sans-serif;\
+		font-size:10pt;\
+		font-size-adjust:none;\
+		font-stretch:normal;\
+		font-style:normal;\
+		font-variant:normal;\
+		font-weight:normal;\
+		line-height:normal;\
+	}\
+	#note {\
+		font-size:7pt;\
+		color:gray;\
+		padding: 1px 10px;\
+		margin: 0px 0;display:inline-block;\
+		min-width:100px;\
+	}\
+	#configinfo {\
+		font-size:8pt;\
+		color:gray;\
+		padding: 1px 10px;\
+		margin: 0px 0;display:inline-block;width:60em;\
+	}\
+	#PLCTabs > input[type="button"], .PLCButtons > input[type="button"] {\
+		display: inline-block;\
+		font-size: 12px;\
+		font-weight: normal;\
+		background-color: rgb(238, 238, 238);\
+		background-position: 0px -178px;\
+		background-repeat: repeat-x;\
+		text-shadow: 0px 1px rgb(255, 255, 255);\
+		padding: 4px 8px;\
+		position: relative;\
+		overflow: hidden;\
+		color: rgb(51, 51, 51);\
+		margin: 0 0;\
+		border: 1px solid rgb(170, 170, 170);\
+		border-radius: 0 0 0 0;\
+		box-shadow: 0px 12px rgb(255, 255, 255) inset;\
+		float: left;\
+	}\
+	#PLCTabs > input[type="button"] {\
+		border-bottom: none;\
+	}\
+	#PLCSeparator {\
+		border-bottom: 1px solid rgb(170, 170, 170);\
+		margin-top: 24px;\
+	}\
+	#selectAllButton {\
+		border-radius: 3px 0 0 3px;\
+		border-right: none;\
+	}\
+	#invertButton {\
+		border-radius: 0 3px 3px 0;\
+		border-left: none;\
+	}\
+	#PLCTabs > input[name="PLCHosts"] {\
+		border-radius: 3px 0 0 0;\
+		border-right:none;\
+		margin-left:10px;\
+	}\
+	#PLCTabs > input[name="PLCAbout"] {\
+		border-radius: 0 3px 0 0;\
+		border-left:none;\
+	}\
+	.PLCButtons > input[type="button"]:hover {\
+		padding: 5px 8px 3px;\
+		box-shadow: 0 0 white;\
+		background: none;\
+	}\
+	#PLCTabs > input.activeTab {\
+		padding: 5px 8px 3px;\
+		box-shadow: 0 0 white;\
+		background: none;\
+	}\
+	.PLCTab {\
+		display: none;\
+	}\
+	.PLCButtons, #PLCTabs, #warlcsitelist1 {\
+		margin-left: 5px;\
+	}\
+	#warlcsitelist1 {\
+		border-top: 1px solid grey;\
+		padding-top: 5px;\
+		overflow:auto;\
+		margin-top:2px;\
+	}\
+	.PLCTabContainer {\
+		overflow:auto;\
+	}\
+	input:hover+label {\
+		background:#F1F77C;\
+		font-size:110%;\
+	}\
+	.popup_block .popup legend {\
+		display:block;\
+		width:100%;\
+		padding:0;\
+		margin-bottom:2px;\
+		font-size:15px;\
+		line-height:inherit;\
+		color:#333;\
+		border:0;\
+		border-bottom:1px solid #e5e5e5\
+	}\
+	';
+
+	GM_addStyle(configcss);
+
+	var configurationinnerHTML =
+	'<div id="fade"></div>\
+	<div class="popup_block">\
+	<div class="popup">\
+	<div id="PLCTitle" style="height: 1.2em"><img src=' + settingsIcon + ' style="height:35px;margin-left:2px;vertical-align:middle;"></img>PLC - Configuration</div><br>\
+	<div id="PLCTabs">\
+	<input type="button" name="PLCHosts" class="activeTab" value="Hébergeurs">\
+	<input type="button" name="PLCSettings" value="Réglages">\
+	<input type="button" name="PLCAbout" value="A propos">\
+	</div>\
+	<div id="PLCSeparator"></div>\
+	<div id="PLCHosts" class="PLCTab">\
+	<br><div class="PLCButtons">\
+	<input type="button" id="selectAllButton" value="Sélectionner tout">\
+	<input type="button" id="selectNoneButton" value="Sélectionner aucun">\
+	<input type="button" id="invertButton" value="Inverser">\
+	</div><br><br>\
+	<input style="margin-left:5px;" type="textbox" placeholder="Chercher un hébergeur" id="hostSearchBox" value="">\
+	<div id="warlcsitelist1"><span>Vide</span></div>\
+	</div>\
+	<div id="PLCSettings" class="PLCTab">\
+	<br>\
+	<div id="PLCPreferences" class="PLCTabContainer">\
+	<fieldset>\
+	<legend>Réglages généraux</legend>\
+	<p><input type="checkbox" id="Do_not_linkify_DL_links"> Rendre les liens NON cliquables</p>\
+	<p><input type="checkbox" id="Allow_spaces_in_DL_links"> Autoriser les espaces dans les liens<br><div id="configinfo">Note: Tous les liens doivent se terminer par un retour à la ligne!</div></p>\
+	<p><input type="checkbox" id="Display_full_links_in_link_containers"> Afficher les liens dans les conteneurs</p>\
+	<p><input type="checkbox" id="Display_tooltip_info"> Afficher une infobulle<br><div id="configinfo">Note: Nom, taille du fichier, messages d\'erreur, etc.</div></p>\
+	<p><input type="checkbox" id="Show_Update_Notification">Afficher une notification quand PLC est à jour</p>'
+	//<p><input type="checkbox" id="Focus_First_Link">Focus on the first link found</p>\
+	+ '</fieldset>\
+	<fieldset>\
+	<legend>Réglages Progressbox</legend>\
+	<p>Horizontal positioning of the progressbox: <input type="text" id="Processbox_Pos_X"><br><div id="configinfo">Note: Define this value in percentages starting from the left of the screen.</div></p>\
+	<p>Vertical positioning of the progressbox: <input type="text" id="Processbox_Pos_Y"><br><div id="configinfo">Note: Define this value in percentages starting from the bottom of the screen.</div></p>\
+	<p>Scaling of the progressbox: <input type="text" id="Progressbox_Scaling"><br><div id="configinfo">Note: Resizes the progressbox. Define this value in percentages. 100% = full size, 200% = double size, etc</div></p>\
+	</fieldset>\
+	<fieldset>\
+	<legend>Options hébergeurs</legend>\
+	<p>Anonymizer:\
+	<select style="margin-left:5px;" id="redirector">\
+	<option>Lorem ipsum dolorem</option>\
+	</select></p>\
+	<p><input type="checkbox" id="Filefactory_API_Check"> Check Filefactory.com links through API</p>\
+	<div id="configinfo">Note: We cannot guarantee this will work. If disabled, PLC will use a website check instead.</div>\
+	</fieldset>\
+	</div>\
+	</div>\
+	<div id="PLCAbout" class="PLCTab">\
+	<br>\
+	<div class="PLCTabContainer">\
+	<fieldset>\
+	<legend>PLC - Phoenix-Warez Link Checker v' + PLC_version + '</legend>\
+	<p>Authors: iKickback (<a href="http://www.warez-bb.org/profile.php?mode=viewprofile&u=2348347">Phoenix-Warez</a> | <a href="http://userscripts.org/users/476129">Userscripts</a>) & thecodingdude (<a href="http://www.warez-bb.org/profile.php?mode=viewprofile&u=2089048">Phoenix-Warez</a> | <a href="http://userscripts.org/users/437232">Userscripts</a>)</p>\
+	<p>Based on <a href="http://userscripts.org/scripts/show/125631">W.A.R. Links Checker - Dev</a></p>\
+	<p>Original by <a href="http://userscripts.org/users/302353">dkitty</a></p>\
+	<p>Graphics by LiabilityZero (<a href="http://www.warez-bb.org/profile.php?mode=viewprofile&u=3229521">Phoenix-Warez</a> | <a href="http://liabilityzero.deviantart.com/">deviantART</a> | <a href="mailto:liabilityjeeru@gmail.com">Contact</a>)</p>\
+	</fieldset>\
+	<br />\
+	<fieldset>\
+	<legend>Currently supported</legend>\
+	<p>Filehostings: ' + allHostNames.length + '<br />\
+	Containers: ' + allContainerNames.length + '<br />\
+	Obsolete sites: ' + allObsoleteNames.length + '<br /></p>\
+	</fieldset>\
+	<br />\
+	<fieldset>\
+	<legend>Uses</legend>\
+	<p>adam_3\'s <a href="http://userscripts.org/scripts/show/2254">Linkify ting</a> (modified)</p>\
+	<p><a href="http://jquery.com/">jQuery</a> JavaScript Library</p>\
+	</fieldset>\
+	<br />\
+	<fieldset>\
+	<legend>License</legend>\
+	<p>GPL version 3 or any later version (<a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>)</p>\
+	</fieldset>\
+	</div>\
+	</div>\
+	</div>\
+	</div>';
+
+	$('body').append('<div id="hideshow">' + configurationinnerHTML + '</div>');
+	$("#PLCHosts").show();
+
+	//sets height of warlcsitelist1
+	var totalHeight = $(".popup").height();
+	$("#warlcsitelist1").height(totalHeight - 155); $(".PLCTabContainer").height(totalHeight - 90);
+	$("#PLCSeparator").css("margin-top", 9 + $(".activeTab").height() + "px"); //because the buttons have a different height on the different themes
+
+	$("#PLCTabs > input[type='button']").click(function() {
+		var $target = $(this);
+		var current = "#" + $(".activeTab").removeClass().attr("name"); $(current).hide();
+		var targetTab = "#" + $target.addClass("activeTab").attr("name"); $(targetTab).show();
+	});
+
+	$("#fade").click(function(event) {
+		$("#hideshow").hide(); event.preventDefault();
+	});
+
+	var elmHostList = document.getElementById("warlcsitelist1");
+
+	buildSettings();
+	buildSitelist("", allHostNames, elmHostList);
+	appendObsolete("", allObsoleteNames, elmHostList);
+
+	//handler for checkbox state change
+	function changeConfiguration(e)
+	{
+		var element = e.target;
+
+		if (element.type == 'checkbox')
+		{
+			if (element.checked == 1)
+			{
+				lsSetVal("hosts", element.id, true);
+			}
+			else
+			{
+				lsSetVal("hosts", element.id, false);
+			}
+
+		}
+	}
+
+	//Selects all filehosting checkboxes
+	function selectAll()
+	{
+		$(":checkbox:visible:not(:checked)").prop("checked",true)
+		.each(function(index, element){lsSetVal("hosts", this.id, true)});
+	}
+
+	//Deselects all filehosting checkboxes
+	function selectNone()
+	{
+		$(":checkbox:visible:checked").prop("checked",false)
+		.each(function(index, element){lsSetVal("hosts", this.id, false)});
+	}
+
+	//Inverts filehosting checkboxes selection
+	function selectInvert()
+	{
+		var $checked = $(":checkbox:visible:checked");
+		var $unchecked = $(":checkbox:visible:not(:checked)");
+
+		$unchecked.prop("checked",true)
+		.each(function(index, element){lsSetVal("hosts", this.id, true)});
+		$checked.prop("checked",false)
+		.each(function(index, element){lsSetVal("hosts", this.id, false)});
+	}
+
+	//Sets anonymizer setting
+	function changeAnonymizer()
+	{
+		var val = $("#redirector").val();
+		lsSetVal("general", "Ref_anonymize_service", (val == ANONYMIZERS.length ? '' : ANONYMIZERS[val]));
+		$('#redirector option[value=' + val + ']').prop('selected', true);
+	}
+
+	//Sets selected redirector option
+	var anonlist = "";
+	$(ANONYMIZERS).each(function(index, value) {
+		anonlist += '<option value=' + index  + (value == ANONYMIZE_SERVICE ? ' selected' : '') + '>' + gimmeHostName2(value) + '</option>';
+	});
+	anonlist += '<option value="' + ANONYMIZERS.length + '">No referer</option>';
+	$('#redirector').html(anonlist);
+
+	//Sets Processbox position setting
+	function changeProgBox(event) {
+		var setting;
+		switch(event.data.set) {
+			case "X": setting = "Processbox_Pos_X"; break;
+			case "Y": setting = "Processbox_Pos_Y"; break;
+			case "Scale": setting = "Progressbox_Scaling"; break;
+		}
+
+		var $setting = $("#" + setting);
+		var newSet = $setting.val().replace("%", "");
+		lsSetVal("general", setting, newSet);
+	}
+
+	//Sets value of Processbox position
+	$("#Processbox_Pos_X").val(Processbox_Pos_X + "%");
+	$("#Processbox_Pos_Y").val(Processbox_Pos_Y + "%");
+	$("#Progressbox_Scaling").val(Progressbox_Scaling + "%");
+
+	function buildSettings()
+	{
+		$("#PLCPreferences :checkbox").each(function(){
+			$(this).prop("checked", genset($(this).attr("id")))
+			.click(function(e){
+				lsSetVal("general", $(this).attr("id"), $(this).prop("checked"));
+				setVariables();
+			});
+		})
+	}
+
+	//Dynamic build of host list
+	//param search         [string]    searches for hostnames matching search substring
+	//param siteNames     [array]        array of site names
+	//param targetNode     [DOM Node]    where the list should be built
+	//                                first child node is replaced
+	function buildSitelist(search, siteNames, targetNode)
+	{
+		var searchRegex = new RegExp("\\|?([\\w\\.-]*" + search.replace(/\./g,"\\.").replace(/-/g, "\\-") + "[\\w\\.-]*)\\|?", "i");
+
+		$(targetNode).empty().append("<fieldset id='PLCHosts1'><legend>Filehosts</legend></fieldset>");
+		var $targetNode = $("#PLCHosts1");
+
+		var searchedSite = "";
+		$.each(siteNames, function(i, site){
+			if (searchedSite = site.match(searchRegex))
+			{
+				var baseSite = site.replace(/\|.+/, ""); //filehosting main domain
+
+				//ensuring backward compatibility with the rest of code, to be refactored later
+				var oldRSLCvalue = "Check_" + baseSite.replace(/\|.+/, "").replace(/\./g,"_dot_").replace(/-/g, "_dash_") + "_links";
+				//
+
+				$targetNode.append('<input type="checkbox" id="' + oldRSLCvalue +'" />\
+				<label for="' + oldRSLCvalue + '">' + searchedSite[1] + '</label>' +
+				((searchedSite[1] != baseSite) ? ('<div id="note"> ( ~ ' + baseSite + ' )</div>') : (""))
+			);
+
+			$("#" + oldRSLCvalue).prop("checked", hostSet(oldRSLCvalue, false))
+			.change(changeConfiguration);
+
+			$targetNode.append('<br />');
+		}
+	});
+
+	$(targetNode).append("<fieldset id='PLCHosts2'><legend>Containers</legend></fieldset>");
+	$targetNode = $("#PLCHosts2");
+
+	searchedSite = "";
+	$.each(allContainerNames, function(i, site) {
+		if (searchedSite = site.match(searchRegex)) {
+			var oldRSLCvalue = "Check_" + searchedSite[1].replace(/\|.+/, "").replace(/\./g,"_dot_").replace(/-/g, "_dash_") + "_links";
+			$targetNode.append('<input type="checkbox" id="' + oldRSLCvalue +'" />\
+			<label for="' + oldRSLCvalue + '">' + searchedSite[1] + '</label>');
+			$("#" + oldRSLCvalue).prop("checked", hostSet(oldRSLCvalue, false))
+			.change(changeConfiguration);
+			$targetNode.append('<br />');
+		}
+	});
+}
+
+//obsolete hosts checkbox
+function appendObsolete(search, siteNames, targetNode) {
+	var searchRegex = new RegExp("\\|?([\\w\\.-]*" + search.replace(/\./g,"\\.").replace(/-/g, "\\-") + "[\\w\\.-]*)\\|?", "i");
+	$(targetNode).append('<fieldset id="PLCHosts3"><legend>Obsolete hosts</legend><input type="checkbox" id="Obsolete_file_hosts" /><label for="Obsolete_file_hosts">Check obsolete file hosts</label><br /></fieldset>');
+	$("#Obsolete_file_hosts").prop("checked", hostSet("Obsolete_file_hosts", false))
+	.change(changeConfiguration);
+
+	var $targetNode = $("#PLCHosts3");
+
+	var foundName = "";
+	$.each(siteNames, function(i, site){
+		if (foundName = siteNames[i].match(searchRegex))
+		{
+			$targetNode.append('<div id="note">' + foundName[1] + '</div>');
+		}
+	})
+}
+
+//event listener binding
+$("#hostSearchBox").keyup(function() {
+	buildSitelist($("#hostSearchBox").val(), allHostNames, elmHostList);
+	appendObsolete($("#hostSearchBox").val(), allObsoleteNames, elmHostList);
+});
+$("#selectAllButton").click(selectAll);
+$("#selectNoneButton").click(selectNone);
+$("#invertButton").click(selectInvert);
+$("#redirector").change(changeAnonymizer);
+$("#Processbox_Pos_X").change({ set: "X" }, changeProgBox);
+$("#Processbox_Pos_Y").change({ set: "Y" }, changeProgBox);
+$("#Progressbox_Scaling").change({ set: "Scale" }, changeProgBox);
+
+//buttons and edit boxes init end
+}
 
 //Objects for linkchecking
 var hostsIDs = {}; //hosts IDs and link regexes
 var hostsCheck = {}; //host status IDs and links
 var foundMirrors = { //mirrors found on the page, listed by type of check
-    BC: [],
-    HC: [],
-    OH: [],
-    RH: [],
-    WC: []
+	BC: [],
+	HC: [],
+	OH: [],
+	RH: [],
+	WC: []
 }
 
 //begin standard link checking algorithm
 function start(filterId)
 {
-    var doNotLinkify = Do_not_linkify_DL_links;
-    var redirectorTypes = { "HTTP_302": 0,
-                            "INNER_LINK": 1};
+	var doNotLinkify = Do_not_linkify_DL_links;
+	var redirectorTypes = { "HTTP_302": 0,
+	"INNER_LINK": 1};
 
-    // USER SELECTED FILE HOSTS INITIALIZATION START
-    if (!filterId) {
-        initFileHosts();
-        initBulkHosts();
-        initRedirectors();
-        initFileHostsHeadersOnly();
-    }
-    // USER SELECTED FILE HOSTS INITIALIZATION END
+	// USER SELECTED FILE HOSTS INITIALIZATION START
+	if (!filterId) {
+		initFileHosts();
+		initBulkHosts();
+		initRedirectors();
+		initFileHostsHeadersOnly();
+	}
+	// USER SELECTED FILE HOSTS INITIALIZATION END
 
-    // LINKIFICATION START
-    linkify(filterId);
-    //LINKIFICATION END
+	// LINKIFICATION START
+	linkify(filterId);
+	//LINKIFICATION END
 
-    //
-    //HANDLING REDIRECTORS START
-    //
-    var redirFunctions = {
-        //HTTP_302
-        tries: 0,
+	//
+	//HANDLING REDIRECTORS START
+	//
+	var redirFunctions = {
+		//HTTP_302
+		tries: 0,
 		processRedirectorLink: function(link, redirectorId) {
 			link.className = 'container_link';
 			var hostname = gimmeHostName2(link.href);
@@ -1789,5499 +1793,5632 @@ function start(filterId)
 					if (filehostsDead.search(hostname) == -1) filehostsDead += hostname + ",";
 
 					if (hostsCheck[redirectorId].cProcessed >= hostsCheck[redirectorId].cTotal)
-						checkLinks('container_link');
+					checkLinks('container_link');
 				}
 			});
 		},
 
-        //INNER_LINK (Hotfile.com/links/)
-        processRedirectorLinkEx: function(link, redirectorId) {
-            link.className = 'container_link';
-
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: link.href,
-                headers: {
-                    'User-agent': rUA(),
-                    'Accept': 'text/xml',
-                    'Referer': ""
-                },
-                onload: function(result) {
-                    link.href = result.responseText.match(hostsCheck[redirectorId].innerLinkRegex)[1];
-
-                    hostsCheck[redirectorId].cProcessed++;
-
-                    if (hostsCheck[redirectorId].cProcessed >= hostsCheck[redirectorId].cTotal)
-                        checkLinks('container_link');
-                }
-            });
-        }
-    }
-
-    foundMirrors.RH = uniqArray(foundMirrors.RH);
-    redirLength = foundMirrors.RH.length;
-    if (redirLength > 0) {
-        //process redirector links
-        var hostID, links, y;
-        for(var redirIdx = 0; redirIdx < redirLength; redirIdx++)
-        {
-            hostID = foundMirrors.RH[redirIdx];
-            links = uniqArray(hostsCheck[hostID].links)
-            hostsCheck[hostID].cTotal = links.length;
-
-            cLinksTotal += links.length;
-            y = links.length;
-
-                while(y--) {
-                    switch(hostsCheck[hostID].type) {
-                        case redirectorTypes.HTTP_302:       redirFunctions.processRedirectorLink(links[y], hostID); break;
-                        case redirectorTypes.INNER_LINK:        redirFunctions.processRedirectorLinkEx(links[y], hostID); break;
-                        default:
-                    }
-                }
-
-            hostsCheck[hostID].links = [];
-        }
-    }
-    foundMirrors.RH = [];
-    //
-    //HANDLING REDIRECTORS END
-    //
-
-    //STANDARD LINKCHECKING START
-    foundMirrors.WC = uniqArray(foundMirrors.WC);
-    var WCLength = foundMirrors.WC.length;
-    if (WCLength > 0) {
-        var hostID, links, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop, y;
-        while(WCLength--) {
-            hostID = foundMirrors.WC[WCLength];
-            links = uniqArray(hostsCheck[hostID].links);
-
-            if (filterId == null)
-            {
-                cLinksTotal += links.length;
-            }
-
-            isAliveRegex = hostsCheck[hostID].liveRegex;
-            isDeadRegex = hostsCheck[hostID].deadRegex;
-            isUnavaRegex = hostsCheck[hostID].unavaRegex;
-            tryLoop = hostsCheck[hostID].tryLoop;
-
-            y = links.length;
-
-            while (y--)
-            {
-                geturl(links[y], isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop);
-            }
-            hostsCheck[hostID].links = [];
-        }
-    }
-    foundMirrors.WC = [];
-    //STANDARD LINKCHECKING END
-
-    //OBSOLETE FILE HOSTS PROCESSING START
-    foundMirrors.OH = uniqArray(foundMirrors.OH);
-    var OHLength = foundMirrors.OH.length;
-    if (OHLength > 0) {
-        var hostID, links, y;
-        while(OHLength--) {
-            hostID = foundMirrors.OH[OHLength];
-            links = uniqArray(hostsCheck[hostID].links);
-
-            if (filterId == null)
-            {
-                cLinksTotal += links.length;
-            }
-
-            y = links.length;
-
-            while (y--)
-            {
-                $(links[y]).attr('warlc_error', 'Cause de l\'erreur: <b>Obsolete filehosting.</b>');
-                displayTheCheckedLink(links[y], "obsolete_link");
-            }
-            hostsCheck[hostID].links = [];
-        }
-    }
-    foundMirrors.OH = [];
-    //OBSOLETE FILE HOSTS PROCESSING END
-
-    //DIRECT LINKCHECKING START
-    foundMirrors.HC = uniqArray(foundMirrors.HC);
-    var HCLength = foundMirrors.HC.length;
-    if (HCLength > 0) {
-        var hostID, links, isAliveRegex, isDeadRegex, y;
-        while(HCLength--) {
-            hostID = foundMirrors.HC[HCLength];
-            links = uniqArray(hostsCheck[hostID].links);
-
-            if (filterId == null)
-            {
-                cLinksTotal += links.length;
-            }
-
-            isAliveRegex = hostsCheck[hostID].liveRegex;
-            isDeadRegex = hostsCheck[hostID].deadRegex;
-
-            y = links.length;
-
-            while (y--)
-            {
-                geturlHeader(links[y], isAliveRegex, isDeadRegex);
-            }
-            hostsCheck[hostID].links = [];
-        }
-    }
-    foundMirrors.HC = [];
-    //DIRECT LINKCHECKING END
-
-    //Bulkcheck hosts controller
-    foundMirrors.BC = uniqArray(foundMirrors.BC);
-    var BCLength = foundMirrors.BC.length;
-    if (BCLength > 0) {
-        var hostID, links, y, corrLink, m, n;
-        while(BCLength--) {
-            hostID = foundMirrors.BC[BCLength];
-            links = uniqArray(hostsCheck[hostID].links);
-            if (filterId == null)
-            {
-                cLinksTotal += links.length;
-            }
-
-            //Replace anchors by href's, and processes link corrections
-            y = links.length;
-            while(y--) {
-                corrLink = links[y].href;
-                if (hostsCheck[hostID].corrMatch && hostsCheck[hostID].corrMatch.test(corrLink)) corrLink = corrLink.match(hostsCheck[hostID].corrMatch)[1]; //link match corrections
-                if (hostsCheck[hostID].corrReplWhat && hostsCheck[hostID].corrReplWith) corrLink = corrLink.replace(hostsCheck[hostID].corrReplWhat, hostsCheck[hostID].corrReplWith); //link replace corrections
-                links[y] = corrLink;
-            }
-
-            //Filter out dupe links
-            links = uniqArray(links);
-
-            m = links.length;
-            n = hostsCheck[hostID].blockSize;
-            if (m > n) {
-                //insert block separators (RAND_STRING) into the array
-                for(var i = n; i < (Math.floor(m/n)+1)*n; i += n + 1)
-                {
-                    links.splice(i, 0, RAND_STRING);
-                }
-            }
-
-            var sep = hostsCheck[hostID].splitSeparator;
-
-            hostsCheck[hostID].func.call({     links:            links.join(sep).replace(new RegExp(sep.replace(/\\/g, "\\") + RAND_STRING + sep.replace(/\\/g, "\\"), "g"), RAND_STRING).replace(new RegExp(RAND_STRING + "$"), "").split(RAND_STRING),
-                                            apiUrl:         hostsCheck[hostID].apiUrl,
-                                            postData:         hostsCheck[hostID].postData,
-                                            resLinkRegex:    hostsCheck[hostID].resLinkRegex,
-                                            resLiveRegex:    hostsCheck[hostID].resLiveRegex,
-                                            resDeadRegex:    hostsCheck[hostID].resDeadRegex,
-                                            resUnavaRegex:     hostsCheck[hostID].resUnavaRegex,
-                                            separator:         sep
-                                        });
-
-            hostsCheck[hostID].links.length = 0;
-        }
-    }
-    foundMirrors.BC = [];
-
-    //Processes link
-    //
-    // [string]        link            link URL
-    // [string]     isAliveRegex    alive link regex
-    // [string]     isDeadRegex        dead link regex
-    // [string]     isUnavaRegex    unavailable link regex
-    // [boolean]    tryLoop            repeats request until succeeded
-    function geturl(link, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop)
-    {
-        //host exceptions
-        if ((link.href.contains("yourfilelink.com/")) && (!link.href.contains("&dv=1"))) link.href += "&dv=1"; //to bypass yourfilelink wait times
-        link.href = link.href.replace("shareplace.com/?", "shareplace.com/index1.php?a="); //to bypass shareplace iframe on shareplace.com/?{id} links
-        link.href = link.href.replace('ultramegabit.com', 'uploadto.us'); //to bypass ultramegabit ssl certificates warnings
-
-        GM_xmlhttpRequest(
-        {
-            method: 'GET',
-            url: link.href,
-            headers: {
-                'User-agent': rUA(),
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
-                'Referer': ""
-            },
-            onload: function (result)
-            {
-                var res = result.responseText;
-
-                //console.log(res);
-
-                if (res.contains(isAliveRegex))
-                {
-                    displayTheCheckedLink(link, 'alive_link');
-                    return;
-                }
-
-                if (res.contains(isDeadRegex))
-                {
-                    displayTheCheckedLink(link, 'adead_link');
-                    return;
-                }
-
-                if (res.contains(isUnavaRegex))
-                {
-                    displayTheCheckedLink(link, 'unava_link');
-                    return;
-                }
-
-                var resStatus = result.status;
-
-                if (resStatus == 404)
-                {
-                    displayTheCheckedLink(link, 'adead_link');
-                    return;
-                }
-
-                if (resStatus == 500 || resStatus == 503 || resStatus == 403 || res.contains('>Too Many Requests')) //not found/available/temp. unava/too many requests: solely for k2s.cc
-                {
-                    if (tryLoop)
-                    {
-                        //wait 1-5 seconds and repeat the request
-                        setTimeout(function(){geturl(link, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop)}, 1000 + (Math.random() * 4000));
-                    }
-                    else
-                    {
-                        displayTheCheckedLink(link, 'unava_link');
-                    }
-
-                    return;
-                }
-
-                displayTheCheckedLink(link, 'unknown_link');
-                res = "";
-            },
-            onerror: function ()
-            {
-                displayTheCheckedLink(link, 'unknown_link');
-            }
-        });
-    }
-
-    function geturlHeader(link, isAliveRegex, isDeadRegex)
-    {
-        if (link.href.contains("disk.karelia.pro/") && !link.href.contains(/karelia\.pro\/fast\/\w+\/.+?/)) {
-            geturl(link, 'diskFile\"', '<div id="center">\n+<\/div>', 'optional--', false);
-            return;
-        }
-
-        if (link.href.contains("demo.ovh.") && link.href.contains("/download/")) {
-            specificOvhCheck(link);
-            return;
-        }
-
-        GM_xmlhttpRequest(
-        {
-            method: 'HEAD',
-            url: link.href,
-            headers: {
-                'User-agent': rUA(),
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
-                'Referer': ""
-            },
-            onload: function (result)
-            {
-                var resStatus = result.status;
-                var resHeaders = "";
-
-                if (resStatus == 403 || resStatus == 404 || resStatus == 500) //not found/available
-                {
-                    displayTheCheckedLink(link, 'adead_link');
-                    return;
-                }
-
-                if (resStatus == 509) //public traffic exhausted
-                {
-                    displayTheCheckedLink(link, 'unava_link');
-                    return;
-                }
-
-                resHeaders = result.responseHeaders;
-                //console.log(resHeaders);
-
-                if (resHeaders.contains(isDeadRegex) && !link.href.contains('archive.org/'))
-                {
-                    displayTheCheckedLink(link, 'adead_link');
-                    return;
-                } else if (link.href.contains('archive.org/') && resHeaders.contains(isDeadRegex)) {
-                    specArchCheck(link);
-                    return;
-                }
-
-                if (resHeaders.contains(isAliveRegex))
-                {
-                    displayTheCheckedLink(link, 'alive_link');
-                    return;
-                }
-
-                if (link.href.contains('rapidgator.net|rg.to')) {
-                    geturl(
-                        link,
-                        /btm" style="height: \d+px;">\s*<p/,
-                        '<h3>File not found</h3>|<span>Get the advantages of premium-account',
-                        'optional--',
-                        true);
-                    return;
-                }
-
-                displayTheCheckedLink(link, 'unknown_link');
-            },
-            onerror: function ()
-            {
-                displayTheCheckedLink(link, 'unknown_link');
-            }
-        });
-    }
-
-    function specArchCheck(link) {
-        var alive = /<title>Index of/;
-        var dead = /<h1>Item not available<\/h1>/;
-        var unava = /optional--/;
-        geturl(link, alive, dead, unava);
-    }
-
-    //Specific handler for demo.ovh.com/download/ direct link
-    function specificOvhCheck(link) {
-        GM_xmlhttpRequest(
-        {
-            method: 'HEAD',
-            url: link.href,
-            headers: {
-                'User-agent': rUA(),
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
-                'Referer': ""
-            },
-            onload: function (result)
-            {
-                var resHeaders = "";
-                resHeaders = result.responseHeaders;
-                if (resHeaders.contains('Content-Type: application/octet-stream'))
-                {
-                    displayTheCheckedLink(link, 'alive_link');
-                    return;
-                }
-
-                if (resHeaders.contains('Content-Type: text/html'))
-                {
-                    var liveRegex = 'download.gif"';
-                    var deadRegex = 'p_point">';
-                    var unavRegex = 'optional--';
-                    geturl(link, liveRegex, deadRegex, unavRegex);
-                    return;
-                }
-
-            },
-            onerror: function ()
-            {
-                displayTheCheckedLink(link, 'unava_link');
-            }
-        });
-    }
-
-    //Delinkfifies the <a> element object
-    function delinkifyLink(link)
-    {
-        var spanElm = document.createElement("span");
-        spanElm.className = link.className;
-        spanElm.innerHTML = link.innerHTML;
-
-        if (Display_tooltip_info)
-        {
-            spanElm.href = link.href;
-            $(spanElm).attr('warlc_error', $(link).attr('warlc_error'));
-
-            switch (link.className){
-            case "alive_link": spanElm.addEventListener("mouseover", displayTooltipInfo, false); break
-            case "adead_link": spanElm.addEventListener("mouseover", displayTooltipError, false); break;
-            case "unava_link": //reserved
-            default:
-            }
-        }
-
-        link.parentNode.replaceChild(spanElm, link);
-    }
-
-    //Assigns result status to the <a> element object and calls delinkifying eventually
-    //Possible result states: adead_link, alive_link, unava_link
-    function displayTheCheckedLink(link, resultStatus)
-    {
-        //console.log(link);
-        link.className = resultStatus;
-        var hostname = gimmeHostName2(link.href);
-        link.href = ANONYMIZE_SERVICE + link.href;
-
-        if (Display_tooltip_info)
-        {
-            switch (resultStatus){
-            case "alive_link": link.addEventListener("mouseover", displayTooltipInfo, false); break;
-            case "adead_link": link.addEventListener("mouseover", displayTooltipError, false); break;
-            case "obsolete_link": link.addEventListener("mouseover", displayTooltipError, false); break;
-            case "unava_link": //reserved
-            default:
-            }
-        }
-
-        if (doNotLinkify)
-        {
-            delinkifyLink(link);
-        }
-
-        cLinksProcessed++;
-
-        if (resultStatus == "alive_link")
-        {
-            cLinksAlive++;
-            updateHosts('live', hostname);
-            return;
-        }
-
-        if (resultStatus == "adead_link")
-        {
-            cLinksDead++;
-            updateHosts('dead', hostname);
-            return;
-        }
-
-        if (resultStatus == "obsolete_link")
-        {
-            cLinksDead++;
-            updateHosts('dead', hostname);
-            return;
-        }
-
-        if (resultStatus == "unava_link")
-        {
-            updateHosts('unava', hostname);
-            cLinksUnava++;
-        }
-
-        if (resultStatus == "unknown_link")
-        {
-            updateHosts('unknown', hostname);
-            cLinksUnknown++;
-        }
-    }
-
-    function DisplayTheCheckedLinks(links, resultStatus, tooltipInfo)
-    {
-        //(a[href*=link_1], a[href*=link_2], ..., a[href*=link_n])
-        var $links = $('a[href*="' + links.join('"], a[href*="') + '"]');
-
-        if (Do_not_linkify_DL_links)
-        {    //TODO into separate jQuery function
-            $links.replaceWith(function(){
-                return '<span href="' + this.href + '">' + $(this).text() + '</span>';
-            });
-
-            $links = $('span[href*="' + links.join('"], span[href*="') + '"]');
-        }
-        $links.removeClass().addClass(resultStatus);
-        if (tooltipInfo && resultStatus == 'unknown_link' && Display_tooltip_info) {
-            $links.mouseover(displayTooltipError);
-            $links.attr('warlc_error', 'Cause de l\'erreur: <b>' + tooltipInfo + '</b>');
-        }
-        var hostname = gimmeHostName2($links[0].href);
-        $links.each(function() {
-            if (!this.href.contains('mega.co.nz')) this.href = ANONYMIZE_SERVICE + $(this).attr("href");
-        });
-
-        switch(resultStatus)
-        {
-            case "alive_link":        cLinksAlive += $links.length;
-                                    if (Display_tooltip_info) $links.mouseover(displayTooltipInfo);
-                                    updateHosts('live', hostname);
-                                    break;
-            case "adead_link":         cLinksDead += $links.length;
-                                    if (Display_tooltip_info) $links.mouseover(displayTooltipError);
-                                    updateHosts('dead', hostname);
-                                    break;
-            case "obsolete_link":    cLinksDead += $links.length;
-                                    if (Display_tooltip_info) $links.mouseover(displayTooltipError);
-                                    updateHosts('dead', hostname);
-                                    break;
-            case "unava_link":         cLinksUnava += $links.length;
-                                    updateHosts('unava', hostname);
-                                    break;
-            case "unknown_link":    cLinksUnknown += $links.length;
-                                    updateHosts('unknown', hostname);
-                                    break;
-            default:
-        }
-
-        cLinksProcessed += $links.length;
-    }
-
-    function initRedirectors()
-    {
-        var aRCount = 1;
-        function addRedirector(hostName, linkRegex, redirType, innerLinkRegex)
-        {
-            hostName = hostName.split("|");
-            var i = hostName.length;
-
-            var hostID = "RH" + aRCount;
-
-            while(i--) {
-                var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
-                if (!hostsIDs[filehost]) {
-                    hostsIDs[filehost] = [];
-                }
-                hostsIDs[filehost].push({
-                    hostID: hostID,
-                    linkRegex: linkRegex,
-                });
-            }
-            var RHObj = {
-                cProcessed: 0,
-                cTotal: 0,
-                type: redirType,
-                innerLinkRegex: innerLinkRegex,
-                links: []
-            }
-
-            hostsCheck[hostID] = RHObj;
-            aRCount++;
-        }
-
-        if (hostSet("Check_safelinking_dot_net_links", false))
-        {
-            addRedirector(
-            'safelinking.net',
-            'safelinking\\.net\/d\/\\w{10}',
-            redirectorTypes.HTTP_302,
-            null);
-        }
-
-    }
-
-    function initBulkHosts()
-    {
-        var aHCount = 1;
-        function addHost(hostName, linkRegex, blockSize, corrMatch, corrReplWhat, corrReplWith, splitSeparator,
-                            apiUrl, postData, resLinkRegex, resLiveRegex, resDeadRegex, resUnavaRegex, func)
-        {
-            hostName = hostName.split("|");
-            var i = hostName.length;
-
-            var hostID = "BC" + aHCount;
-
-            while(i--) {
-                var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
-                if (!hostsIDs[filehost]) {
-                    hostsIDs[filehost] = [];
-                }
-                hostsIDs[filehost].push({
-                    hostID: hostID,
-                    linkRegex: linkRegex,
-                });
-            }
-
-            var BCObj = {
-                blockSize: 50,
-                corrMatch: corrMatch,
-                corrReplWhat: corrReplWhat,
-                corrReplWith: corrReplWith,
-                splitSeparator: '\r\n',
-                apiUrl: apiUrl,
-                postData: postData,
-                resLinkRegex: resLinkRegex,
-                resLiveRegex: resLiveRegex,
-                resDeadRegex: resDeadRegex,
-                resUnavaRegex: resUnavaRegex,
-                func: genBulkCheck,
-                links: []
-            }
-
-            if (blockSize != null) {
-                BCObj.blockSize = blockSize;
-            }
-            if (splitSeparator != null) {
-                BCObj.splitSeparator = splitSeparator;
-            }
-            if (func != null) {
-                BCObj.func = func;
-            }
-
-            hostsCheck[hostID] = BCObj;
-            aHCount++;
-
-        }
-
-        var genType1 = [    {    host: "rodfile.com",             apiurl: "default"                                       },
-                            {    host: "failai.lt",               apiurl: "default"                                       },
-                            {    host: "rarefile.net",            apiurl: "default"                                       },
-                            {    host: "uploadic.com",            apiurl: "default"                                       },
-                            {    host: "filesabc.com",            apiurl: "http://filesabc.com/checkfiles.html"           },
-                            {    host: "sharebeast.com",          apiurl: "default"                                       },
-                            {    host: "uploadbaz.com",           apiurl: "default"                                       },
-                            {    host: "180upload.com",           apiurl: "http://180upload.com/checkfiles.html"          },
-                            {    host: "180upload.nl",            apiurl: "http://180upload.com/checkfiles.html"          },
-                            {    host: "exfilehost.com",          apiurl: "http://exfilehost.com/checkfiles.html"         },
-                            {    host: "asixfiles.com",           apiurl: "default"                                       },
-                            {    host: "zomgupload.com",          apiurl: "default"                                       },
-                            {    host: "filemaze.ws",             apiurl: "default"                                       },
-                            {    host: "upafile.com",             apiurl: "http://upafile.com/checkfiles.html"            },
-                            {    host: "novafile.com",            apiurl: "http://novafile.com/checkfiles.html"           },
-                            {    host: "longfiles.com",           apiurl: "http://longfiles.com/checkfiles.html"          },
-                            {    host: "youwatch.org",            apiurl: "http://youwatch.org/checkfiles.html"           },
-                            {    host: "fileband.com",            apiurl: "http://fileband.com/checkfiles.html"           },
-                            {    host: "speedvid.tv",             apiurl: "http://speedvid.tv/checkfiles.html"            },
-                            {    host: "freestorage.ro",          apiurl: "http://freestorage.ro/checkfiles.html"         },
-                            {    host: "imzupload.com",           apiurl: "default"                                       },
-                            {    host: "allmyvideos.net",         apiurl: "http://allmyvideos.net/checkfiles.html"        },
-                            {    host: "movdivx.com",             apiurl: "default"                                       },
-                            {    host: "gorillavid.in",           apiurl: "http://gorillavid.in/checkfiles.html"          },
-                            {    host: "vidto.me",                apiurl: "http://vidto.me/checkfiles.html"               },
-                            {    host: "filesline.com",           apiurl: "default"                                       },
-                            {    host: "upitus.net",              apiurl: "default"                                       },
-                            {    host: "fastflv.com",             apiurl: "default"                                       },
-                            {    host: "vidhog.com",              apiurl: "http://www.vidhog.com/checkfiles.html"         },
-                            {    host: "file4safe.com",           apiurl: "http://www.file4safe.com/?op=checkfiles"       },
-                            {    host: "uplds.com",               apiurl: "http://uplds.com/checkfiles.html"              },
-                            {    host: "roshare.info",            apiurl: "http://roshare.info/?op=checkfiles"            },
-                            {    host: "netkozmos.com",           apiurl: "http://www.netkozmos.com/checkfiles.html"      },
-                            {    host: "loadpot.net",             apiurl: "http://www.loadpot.net/checkfiles.html"        },
-                            {    host: "vodlocker.com",           apiurl: "http://vodlocker.com/checkfiles.html"          },
-                            {    host: "vidx.to",                 apiurl: "http://vidx.to/?op=checkfiles"                 },
-                            {    host: "foxishare.com",           apiurl: "http://foxishare.com/checkfiles.html"          },
-                            {    host: "uploadzeal.com",          apiurl: "http://www.uploadzeal.com/checkfiles.html"     },
-                            {    host: "played.to",               apiurl: "http://played.to/?op=checkfiles"               },
-                            {    host: "streamin.to",             apiurl: "http://streamin.to/checkfiles.html"            },
-                            {    host: "vidspot.net",             apiurl: "http://vidspot.net/?op=checkfiles"             },
-                            {    host: "bestreams.net",           apiurl: "http://bestreams.net/?op=checkfiles"           },
-                            {    host: "treesfile.com",           apiurl: "http://treesfile.com/checkfiles.html"          },
-                            {    host: "treefiles.com",           apiurl: "http://treesfile.com/checkfiles.html"          }, //same host as treesfile.com
-                            {    host: "treefile.org",            apiurl: "http://treesfile.com/checkfiles.html"          }, //same host as treesfile.com
-                            {    host: "filejoker.net",           apiurl: "https://filejoker.net/checkfiles.html"         },
-                            {    host: 'exashare.com',            apiurl: 'http://www.exashare.com/checkfiles.html'       }
-                        ];
-
-
-        var genType2 = [    {    host: "sanshare.com",            apiurl: "http://sanshare.com/?op=checkfiles"            },
-                            {    host: "mightyupload.com",        apiurl: "http://mightyupload.com/?op=checkfiles"        },
-                            {    host: "megafiles.se",            apiurl: "http://megafiles.se/?op=checkfiles"            },
-                            {    host: "isavelink.com",           apiurl: "http://isavelink.com/?op=checkfiles"           },
-                            {    host: "4savefile.com",           apiurl: "http://4savefile.com/?op=checkfiles"           },
-                            {    host: "daj.to",                  apiurl: "http://daj.to/?op=checkfiles"                  },
-                            {    host: "upfile.biz",              apiurl: "http://upfile.biz/?op=checkfiles"              },
-                            {    host: "cepzo.com",               apiurl: "http://cepzo.com/?op=checkfiles"               },
-                            {    host: "uploadjet.net",           apiurl: "http://uploadjet.net/?op=checkfiles"           },
-                            {    host: "vidup.me",                apiurl: "http://vidup.me/?op=checkfiles"                },
-                            {    host: "verzend.be",              apiurl: "http://verzend.be/?op=checkfiles"              },
-                            {    host: "arabloads.com",           apiurl: "http://www.arabloads.net/?op=checkfiles"       },
-                            {    host: "arabloads.net",           apiurl: "http://www.arabloads.net/?op=checkfiles"       },
-                            {    host: "amonshare.com",           apiurl: "http://amonshare.com/?op=checkfiles"           },
-                            {    host: "filewe.com",              apiurl: "http://nornar.com/?op=checkfiles"              },
-                            {    host: "nornar.com",              apiurl: "http://nornar.com/?op=checkfiles"              }, //same host as filewe.com
-                            {    host: "medoupload.com",          apiurl: "http://medoupload.com/?op=checkfiles"          },
-                            {    host: "filefolks.com",           apiurl: "http://www.filefolks.com/?op=checkfiles"       },
-                            {    host: "file-speed.com",          apiurl: "http://file-speed.com/?op=checkfiles"          },
-                            {    host: "1st-files.com",           apiurl: "http://www.1st-files.com/?op=checkfiles"       },
-                            {    host: "katzfiles.com",           apiurl: "http://katzfiles.com/?op=checkfiles"           },
-                            {    host: "secureupload.eu",         apiurl: "http://www.secureupload.eu/checklinks.html"    },
-                            {    host: "cometfiles.com",          apiurl: "http://www.cometfiles.com/checkfiles.html"     },
-                            {    host: "rockdizfile.com",         apiurl: "http://rockdizfile.com/?op=checkfiles"         },
-                            {    host: "clicktoview.org",         apiurl: "http://clicktoview.org/?op=checkfiles"         },
-                            {    host: "sinhro.net",              apiurl: "http://sinhro.net/checkfiles.html"             },
-                            {    host: "ortofiles.com",           apiurl: "http://www.ortofiles.com/?op=checkfiles"       },
-                            {    host: "blitzfiles.com",          apiurl: "http://blitzfiles.com/?op=checkfiles"          },
-                            {    host: "hulkload.com",            apiurl: "http://www.hulkload.com/?op=checkfiles"        },
-                            {    host: "sharingmaster.com",       apiurl: "http://sharingmaster.com/?op=checkfiles"       },
-                            {    host: "expressleech.com",        apiurl: "http://expressleech.com/?op=checkfiles"        },
-                            {    host: "upshared.com",            apiurl: "http://upshared.com/?op=checkfiles"            },
-                            {    host: "exclusivefaile.com",      apiurl: "http://exclusiveloader.com/?op=checkfiles"     },
-                            {    host: "exclusiveloader.com",     apiurl: "http://exclusiveloader.com/?op=checkfiles"     }, //same host as exclusivefaile.com
-                            {    host: "basicupload.com",         apiurl: "http://www.basicupload.com/?op=checkfiles"     },
-                            {    host: "rapidfileshare.net",      apiurl: "http://www.rapidfileshare.net/?op=checkfiles"  },
-                            {    host: "project-free-upload.com", apiurl: "http://project-free-upload.com/?op=checkfiles" },
-                            {    host: "vidbull.com",             apiurl: "http://vidbull.com/checkfiles.html"            },
-                            {    host: "sendmyway.com",           apiurl: "http://www.sendmyway.com/?op=checkfiles"       },
-                            {    host: "creafile.net",            apiurl: "http://creafile.net/?op=checkfiles"            },
-                            {    host: "unlimitshare.com",        apiurl: "http://www.unlimitshare.com/?op=checkfiles"    },
-                            {    host: "speedshare.eu",           apiurl: "http://speedshare.eu/?op=checkfiles"           },
-                            {    host: "uploadboy.com",           apiurl: "http://uploadboy.com/?op=checkfiles"           },
-                            {    host: "fiberstorage.net",        apiurl: "http://fiberstorage.net/?op=checkfiles"        },
-                            {    host: "shareswift.com",          apiurl: "http://shareswift.com/?op=checkfiles"          },
-                            {    host: "fujifile.me",             apiurl: "http://www.fujifile.me/?op=checkfiles"         },
-                            {    host: "uncapped-downloads.com",  apiurl: "http://uncapped-downloads.com/?op=checkfiles"  },
-                            {    host: "pandamemo.com",           apiurl: "http://www.pandamemo.com/checkfiles.html"      },
-                            {    host: "spicyfile.com",           apiurl: "http://spicyfile.com/checkfiles.html"          },
-                            {    host: "hugefiles.net",           apiurl: "http://www.hugefiles.net/?op=checkfiles"       },
-                            {    host: "hyshare.com",             apiurl: "http://hyshare.com/?op=checkfiles"             },
-                            {    host: "filesear.com",            apiurl: "http://filesear.com/?op=checkfiles"            },
-                            {    host: "megacache.net",           apiurl: "http://megacache.net/?op=checkfiles"           },
-                            {    host: "fileparadox.in",          apiurl: "http://rapidsonic.com/?op=checkfiles"          },
-                            {    host: "fileparadox.com",         apiurl: "http://rapidsonic.com/?op=checkfiles"          },
-                            {    host: "rapidsonic.com",          apiurl: "http://rapidsonic.com/?op=checkfiles"          },
-                            {    host: "rapidstation.com",        apiurl: "http://rapidstation.com/?op=checkfiles"        },
-                            {    host: "potload.com",             apiurl: "http://potload.com/?op=checkfiles"             },
-                            {    host: "sube.me",                 apiurl: "http://sube.me/?op=checkfiles"                 },
-                            {    host: "akafile.com",             apiurl: "http://akafile.com/?op=checkfiles"             },
-                            {    host: "files2upload.net",        apiurl: "http://files2upload.net/?op=checkfiles"        },
-                            {    host: "backin.net",              apiurl: "http://backin.net/?op=checkfiles"              },
-                            {    host: "uploadscenter.com",       apiurl: "http://www.uploadscenter.com/?op=checkfiles"   },
-                            {    host: "guizmodl.net",            apiurl: "http://www.guizmodl.net/?op=checkfiles"        },
-                            {    host: "gigfiles.net",            apiurl: "http://gigfiles.net/?op=checkfiles"            },
-                            {    host: "upload-novalayer.com",    apiurl: "http://upload-novalayer.com/?op=checkfiles"    },
-                            {    host: "todayfile.com",           apiurl: "http://todayfile.com/?op=checkfiles"           },
-                            {    host: "sfshare.se",              apiurl: "http://sfshare.se/?op=checkfiles"              },
-                            {    host: "divxpress.com",           apiurl: "http://divxpress.com/?op=checkfiles"           },
-                            {    host: "upgiga.com",              apiurl: "http://www.upgiga.com/?op=checkfiles"          },
-                            {    host: "koofile.com",             apiurl: "http://koofile.com/op/checkfiles"              },
-                            {    host: "earnupload.eu",           apiurl: "http://earnupload.eu/?op=checkfiles"           },
-                            {    host: "kingfiles.net",           apiurl: "http://www.kingfiles.net/?op=checkfiles"       },
-                            {    host: "shareblue.eu",            apiurl: "http://shareblue.eu/?op=checkfiles"            },
-                            {    host: "grifthost.com",           apiurl: "http://grifthost.com/?op=checkfiles"           },
-                            {    host: "limevideo.net",           apiurl: "http://limevideo.net/?op=checkfiles"           },
-                            {    host: "lunaticfiles.com",        apiurl: "http://lunaticfiles.com/?op=checkfiles"        },
-                            {    host: "vozupload.com",           apiurl: "http://vozupload.com/?op=checkfiles"           },
-                            {    host: "kingsupload.com",         apiurl: "http://kingsupload.com/?op=checkfiles"         },
-                            {    host: "vidplay.net",             apiurl: "http://vidplay.net/?op=checkfiles"             },
-                            {    host: "mydisc.net",              apiurl: "http://mydisc.net/checkfiles.html"             },
-                            {    host: "med1fire.com",            apiurl: "http://med1fire.com/?op=checkfiles"            },
-                            {    host: "stahuj.to",               apiurl: "http://stahuj.to/?op=checkfiles"               },
-                            {    host: "hexupload.com",           apiurl: "http://hexupload.com/?op=checkfiles"           },
-                            {    host: "salefiles.com",           apiurl: "http://salefiles.com/?op=checkfiles"           },
-                            {    host: "anafile.com",             apiurl: "http://www.anafile.com/?op=checkfiles"         },
-                            {    host: "bonanzashare.com",        apiurl: "http://bonanzashare.com/?op=checkfiles"        },
-                            {    host: "imgjungle.com",           apiurl: "http://imgjungle.com/?op=checkfiles"           },
-                            {    host: "unlimitzone.com",         apiurl: "http://unlimitzone.com/?op=checkfiles"         },
-                            {    host: "rosharing.com",           apiurl: "http://rosharing.com/?op=checkfiles"           },
-                            {    host: "storagely.com",           apiurl: "http://storagely.com/?op=checkfiles"           },
-                            {    host: "wipfiles.net",            apiurl: "http://wipfiles.net/?op=checkfiles"            },
-                            {    host: "filemoney.com",           apiurl: "http://filemoney.com/?op=checkfiles"           },
-                            {    host: "filehoot.com",            apiurl: "http://filehoot.com/?op=checkfiles"            },
-                            {    host: "mxua.com",                apiurl: "http://www.mxua.com/?op=checkfiles"            },
-                            {    host: "cloudyvideos.com",        apiurl: "http://cloudyvideos.com/?op=checkfiles"        },
-                            {    host: "idup.in",                 apiurl: "http://idup.in/?op=checkfiles"                 },
-                            {    host: "filedais.com",            apiurl: "http://www.filedais.com/?op=checkfiles"        },
-                            {    host: "fileforever.net",         apiurl: "http://fileforever.net/?op=checkfiles"         },
-                            {    host: "rioupload.com",           apiurl: "http://rioupload.com/?op=checkfiles"           },
-                            {    host: "medofire.co",             apiurl: "http://medofire.co/?op=checkfiles"             },
-                            {    host: "vshare.eu",               apiurl: "http://vshare.eu/?op=checkfiles"               },
-                            {    host: "hellupload.com",          apiurl: "http://www.hellupload.com/checkfiles.html"     },
-                            {    host: "hostingbulk.com",         apiurl: "http://hostingbulk.com/?op=checkfiles"         },
-                            {    host: "movreel.com",             apiurl: "http://movreel.com/?op=checkfiles"             },
-                            {    host: "thefile.me",              apiurl: "http://thefile.me/?op=checkfiles"              },
-                            {    host: "spaceforfiles.com",       apiurl: "http://www.filespace.com/?op=checkfiles"       },
-                            {    host: "filespace.com",           apiurl: "http://www.filespace.com/?op=checkfiles"       }, //same host as spaceforfiles
-                            {    host: "city-upload.com",         apiurl: "http://city-upload.com/?op=checkfiles"         },
-                            {    host: "uploadrocket.net",        apiurl: "http://uploadrocket.net/?op=checkfiles"        },
-                            {    host: "bluehaste.com",           apiurl: "http://bluehaste.com/?op=checkfiles"           },
-                            {    host: "up09.com",                apiurl: "http://file.up09.com/?op=checkfiles"           },
-                            {    host: "4downfiles.com",          apiurl: "http://4downfiles.net/?op=checkfiles"          },
-                            {    host: "4downfiles.net",          apiurl: "http://4downfiles.net/?op=checkfiles"          },
-                            {    host: "filemup.com",             apiurl: "http://www.filemup.com/?op=checkfiles"         },
-                            {    host: "lomafile.com",            apiurl: "http://lomafile.com/?op=checkfiles"            },
-                            {    host: "tuxfile.com",             apiurl: "http://tuxfile.com/?op=checkfiles"             },
-                            {    host: "filecloud.cc",            apiurl: "http://filecloud.cc/?op=checkfiles"            },
-                            {    host: "streamratio.com",         apiurl: "http://www.streamratio.com/?op=checkfiles"     },
-                            {    host: "flexydrive.com",          apiurl: "http://flexydrive.com/?op=checkfiles"          },
-                            {    host: "usersfiles.com",          apiurl: "http://usersfiles.com/?op=checkfiles"          },
-                            {    host: "radicalshare.com",        apiurl: "http://radicalshare.com/checkfiles.html"       },
-                            {    host: "sharemods.com",           apiurl: "http://sharemods.com/?op=checkfiles"           },
-                            {    host: "worldbytez.com",          apiurl: "http://worldbytez.com/?op=checkfiles"          },
-                            {    host: "vipshare.me",             apiurl: "http://vipshare.me/?op=checkfiles"             },
-                            {    host: "loudupload.com",          apiurl: "http://loudupload.net/?op=checkfiles"          },
-                            {    host: "loudupload.net",          apiurl: "http://loudupload.net/?op=checkfiles"          },
-                            {    host: "uploadkadeh.ir",          apiurl: "http://uploadkadeh.ir/?op=checkfiles"          },
-                            {    host: "joinfile.com",            apiurl: "http://joinfile.com/?op=checkfiles"            },
-                            {    host: "fastupload.org",          apiurl: "http://fastupload.org/?op=checkfiles"          },
-                            {    host: "clicknupload.com",        apiurl: "http://clicknupload.com/?op=checkfiles"        },
-                            {    host: "mediafree.co",            apiurl: "http://mediafree.co/?op=checkfiles"            },
-                            {    host: "linestorage.com",         apiurl: "http://linestorage.com/?op=checkfiles"         },
-                            {    host: "filemac.com",             apiurl: "http://www.filemac.com/?op=checkfiles"         },
-                            {    host: "filekom.com",             apiurl: "http://www.filemac.com/?op=checkfiles"         }, //same host as filemac
-                            {    host: "gboxes.com",              apiurl: "http://www.gboxes.com/?op=checkfiles"          },
-                            {    host: "dropvideos.net",          apiurl: "http://dropvideos.net/?op=checkfiles"          },
-                            {    host: "filedust.net",            apiurl: "http://filedust.net/?op=checkfiles"            },
-                            {    host: "brothershare.com",        apiurl: "http://brothershare.com/?op=checkfiles"        },
-                            {    host: "voowl.com",               apiurl: "http://voowl.com/?op=checkfiles"               },
-                            {    host: "fileinz.com",             apiurl: "http://voowl.com/?op=checkfiles"               },
-                            {    host: "xfileload.com",           apiurl: "http://xfileload.com/?op=checkfiles"           },
-                            {    host: "files2share.ch",          apiurl: "http://files2share.ch/?op=checkfiles"          },
-                            {    host: "chayfile.com",            apiurl: "http://www.chayfile.com/checkfiles"            },
-                            {    host: "roottail.com",            apiurl: "http://roottail.com/?op=checkfiles"            },
-                            {    host: "seenupload.com",          apiurl: "http://seenupload.com/?op=checkfiles"          },
-                            {    host: "filetut.com",             apiurl: "http://filetut.com/?op=checkfiles"             },
-                            {    host: "24uploading.com",         apiurl: "http://24uploading.com/?op=checkfiles"         },
-                            {    host: "dogefile.com",            apiurl: "http://dogefile.com/?op=checkfiles"            },
-                            {    host: "ipithos.to",              apiurl: "http://www.ipithos.to/?op=checkfiles"          },
-                            {    host: "iranupload.com",          apiurl: "http://iranupload.com/?op=checkfiles"          },
-                            {    host: "megadrive.tv",            apiurl: "http://megadrive.tv/?op=checkfiles"            },
-                            {    host: "mrfile.me",               apiurl: "http://mrfile.me/?op=checkfiles"               },
-                            {    host: "tikfile.com",             apiurl: "http://tikfile.com/?op=checkfiles"             },
-                            {    host: "uplod.ir",                apiurl: "http://uplod.ir/?op=checkfiles"                },
-                            {    host: "2drive.net",              apiurl: "https://2drive.net/?op=checkfiles"             },
-                            {	 host: "userscloud.com",          apiurl: "http://userscloud.com/?op=checkfiles"          },
-                            {    host: "ozofiles.com",            apiurl: "http://ozofiles.com/?op=checkfiles"			  },
-                            {    host: "up4.im",                  apiurl: "http://up4.im/?op=checkfiles"      	          },
-                            {    host: "indishare.com",           apiurl: "http://www.indishare.com/?op=checkfiles"       },
-                            {    host: "fileown.com",             apiurl: "http://fileown.com/?op=checkfiles"             },
-                            {    host: 'bdupload.net',            apiurl: 'http://bdupload.net/?op=checkfiles'            },
-                            {    host: 'faststore.org',           apiurl: 'http://faststore.org/?op=checkfiles'           },
-                            {    host: 'geupload.com',            apiurl: 'http://geupload.com/?op=checkfiles'            },
-                            {    host: 'lenfile.com',             apiurl: 'http://geupload.com/?op=checkfiles'            },
-                            {    host: 'up07.net',                apiurl: 'http://up07.net/?op=checkfiles'                },
-                            {    host: 'themediastorage.com',     apiurl: 'http://www.themediastorage.com/?op=checkfiles' },
-                            {    host: 'rockfile.eu',             apiurl: 'http://rockfile.eu/checklinks'                 },
-                            {    host: 'bankupload.com',          apiurl: 'http://bankupload.com/?op=checkfiles'          },
-                            {    host: 'jumbofile.net',           apiurl: 'http://jumbofile.net/?op=checkfiles'           },
-                            {    host: 'rziz.net',                apiurl: 'http://www.rziz.net/?op=checkfiles'            },
-                            {    host: 'filerock.net',            apiurl: 'http://filerock.net/?op=checkfiles'            },
-                            {    host: 'zorofiles.com',           apiurl: 'http://zorofiles.com/?op=checkfiles'           }
-                        ];
-
-        //xfilesharing 1.0
-        function addGenericType1()
-        {
-            var i = genType1.length;
-
-            while(i--)
-            {
-                var host = genType1[i].host;
-                var apiUrl = genType1[i].apiurl;
-
-                if (apiUrl == "default") apiUrl = "http://www." + host + "/checkfiles.html";
-
-                if (hostSet("Check_" + host.replace(/\./g, "_dot_").replace(/-/g, "_dash_") + "_links", false))
-                {
-                    var regexSafe = host.replace(/\./g, "\\.").replace(/-/g, "\\-");
-
-                    addHost(
-                        host, //hostname
-                        regexSafe + "\/\\w+", //linkregex
-                        null, //blocksize
-                        new RegExp("(https?:\/\/(?:|www\\.)" + regexSafe + "\/\\w+)",""), //corrmatch
-                        null, //corrreplwhat
-                        null, //corrreplwith
-                        null, //separator
-                        apiUrl, //api url
-                        "op=checkfiles&process=Check+URLs&list=", //postdata
-                        new RegExp("(" + regexSafe + "\/\\w+)",""), //linkregex
-                        new RegExp("<font color='green'>https?:\/\/(?:|www\.)" + regexSafe + "\/\\w+","g"), //liveregex
-                        new RegExp("<font color='red'>https?:\/\/(?:|www\.)" + regexSafe + "\/\\w+","g"), //deadregex
-                        new RegExp("<font color='orange'>https?:\/\/(?:|www\.)" + regexSafe + "\/\\w+","g"), //unavaregex
-                        null //function delegate
-                    )
-                }
-            }
-        }
-
-        //xfilesharing 2.0
-        function addGenericType2()
-        {
-            var i = genType2.length;
-
-            while(i--)
-            {
-                var host = genType2[i].host;
-                var apiUrl = genType2[i].apiurl;
-
-                if (hostSet("Check_" + host.replace(/\./g, "_dot_").replace(/-/g, "_dash_") + "_links", false))
-                {
-                    var regexSafe = host.replace(/\./g, "\\.").replace(/-/g, "\\-");
-
-                    addHost(
-                        host, //hostname
-                        "https?:\/\/(?:www\\.|file\\.)?" + regexSafe + "\/\\w+", //linkregex
-                        null, //blocksize
-                        new RegExp("(https?:\/\/(?:|www\\.)" + regexSafe + "\/\\w+)",""), //corrmatch
-                        null, //corrreplwhat
-                        null, //corrreplwith
-                        null, //separator
-                        apiUrl, //api url
-                        "op=checkfiles&process=Check+URLs&list=", //postdata
-                        new RegExp("(" + regexSafe + "\/\\w+)",""), //linkregex
-                        new RegExp(regexSafe + "\/\\w+.*?\\s*<\/td>\\s*<td style=\\s*\"color:(?:green|#00f100);","g"), //liveregex
-                        new RegExp(regexSafe + "\/\\w+.*?\\s*<\/td>\\s*<td style=\\s*\"color:(?:red|#f10000);","g"), //deadregex
-                        new RegExp(regexSafe + "\/\\w+.*?\\s*<\/td>\\s*<td style=\\s*\"color:orange;","g"), //unavaregex
-                        null //function delegate
-                    )
-                }
-            }
-        }
-
-        // TEMPLATE
-        // if (hostSet("Check__dot_com_links", false))
-        // {
-            // addHost(
-                // "", //hostname
-                // "", //linkregex
-                // null, //blocksize
-                // null, //corrmatch
-                // null, //corrreplwhat
-                // null, //corrreplwith
-                // null, //separator
-                // "", //api url
-                // "", //postdata
-                // /()/, //linkregex
-                // //liveregex
-                // //deadregex
-                // //unavaregex
-                // null //function delegate
-            // )
-        // }
-
-
-        addGenericType1();
-        addGenericType2();
-
-        if (hostSet("Check_myvdrive_dot_com_links", false))
-        {
-            addHost(
-                "myvdrive.com|fileserving.com", //hostname
-                "(?:fileserving|myvdrive)\\.com\/files\/[\\w-]+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://www.myvdrive.com/Public/linkchecker", //api url
-                "links=", //postdata
-                /(?:fileserving|myvdrive)\.com\/(files\/[\w-]+)/, //linkregex
-                /icon_file_check_valid"><\/span>\s*http:\/\/(?:www\.)?(?:fileserving|myvdrive)\.com\/files\/[\w-]+/g, //liveregex
-                /icon_file_check_(?:removed|notvalid)"><\/span>\s*http:\/\/(?:www\.)?(?:fileserving|myvdrive)\.com\/files\/[\w-]+/g, //deadregex
-                null, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_filepost_dot_com_links", false))
-        {
-            addHost(
-                "filepost.com|fp.io", //hostname
-                "(?:filepost\\.com\/files|fp\\.io)\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                "\n", //separator
-                'http://filepost.com/files/checker/?JsHttpRequest=0-xml',
-                'urls=',
-                /\\\/files\\\/(\w+)/,
-                />http:\\\/\\\/filepost\.com\\\/files\\\/\w+(?:[^>]+>){5}(?:\\n|\\t)+<span class=\\"v\\"/g,
-                />http:\\\/\\\/filepost\.com\\\/files\\\/\w+(?:[^>]+>){5}(?:\\n|\\t)+<span class=\\"x\\"/g,
-                null,
-                null //function delegate
-            )
-        }
-
-        /*if (hostSet("Check_edisk_dot_cz_links", false))
-        {
-            addHost(
-                "edisk.cz|edisk.sk|edisk.eu", //hostname
-                "(?:(?:muj|data)\\d*\\.|)edisk\\.(?:cz|sk|eu)\/(?:|(?:cz|sk|en|pl)\/)", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                /edisk\.\w{2}\/(?:|\w{2}\/)stahni/, //corrreplwhat
-                'edisk.cz/stahni', //corrreplwith
-                null, //separator
-                'http://www.edisk.cz/zkontrolovat-odkazy',
-                'submitBtn=Zkontrolovat&checkFiles=',
-                /((?:download|stahn(?:i|out-soubor))\/\d+)/,
-                /"ano"\/>\s*<\/td>\s*<td>\s*http:\/\/.+/g,
-                /"ne"\/>\s*<\/td>\s*<td>\s*http:\/\/.+/g,
-                null,
-                null //function delegate
-            )
-        }*/
-
-        if (hostSet("Check_bezvadata_dot_cz_links", false))
-        {
-            addHost(
-                "bezvadata.cz", //hostname
-                "(?:beta\\.|)bezvadata\.cz\/stahnout\/\\d+\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://bezvadata.cz/nastroje/kontrola-odkazu?do=kontrolaOdkazuForm-submit',
-                'zkontrolovat=Zkontrolovat&odkazy=',
-                /(bezvadata\.cz\/stahnout\/\d+)/,
-                /bezvadata\.cz\/stahnout\/.+?<\/td>\s*<td style="background-color: #d9ffb2/g,
-                /bezvadata\.cz\/stahnout\/.+?<\/td>\s*<td style="background-color: #ffb2b2/g,
-                null,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_depositfiles_dot_com_links", false))
-        {
-            addHost(
-                "depositfiles.com|dfiles.eu|dfiles.ru|depositfiles.org|depositfiles.lt", //hostname
-                "(?:depositfiles\\.(?:com|lt|org)|dfiles\\.(?:eu|ru))\/(?:en\/|ru\/|de\/|es\/|pt\/|)files\/\\w+", //linkregex
-                100000, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                depositfilesBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_videobb_dot_com_links", false))
-        {
-            addHost(
-                "videobb.com", //hostname
-                "videobb\\.com\/(?:video\/|watch_video\\.php\\?v=)\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://www.videobb.com/link_checker.php',
-                'links=',
-                /(videobb\.com\/(?:watch_video\.php\?v?=|video\/)\w+)/,
-                /<td>http:\/\/(?:www\.|)videobb.com\/(?:watch_video\.php\?v?=|video\/)\w+<\/td>\s+<td>.+?<\/td>\s+<td>\d+:\d+<\/td>\s+<td>Available/g,
-                /<td>http:\/\/(?:www\.|)videobb.com\/(?:watch_video\.php\?v?=|video\/)\w+<\/td>\s+<td>(?:|.+?)<\/td>\s+<td>N\/A<\/td>\s+<td>Not Available/g,
-                null,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_queenshare_dot_com_links", false))
-        {
-            addHost(
-                "queenshare.com|10upload.com", //hostname
-                "(?:queenshare|10upload)\\.com\/\\w+", //linkregex
-                null, //blocksize
-                /(http:\/\/(?:www\.|)(?:queenshare|10upload)\.com\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://www.queenshare.com/?op=checkfiles', //api url
-                'op=checkfiles&process=Check+URLs&list=', //postdata
-                /((?:queenshare|10upload)\.com\/\w+)/, //linkregex
-                /(?:queenshare|10upload)\.com\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
-                /(?:queenshare|10upload)\.com\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
-                /(?:queenshare|10upload)\.com\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_filerio_dot_com_links", false))
-        {
-            addHost(
-                "filekeen.com|filerio.in|filerio.com", //hostname
-                "file(?:keen|rio)\\.(?:com|in)\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                "\n", //separator
-                'http://filerio.in/checkfiles.html',
-                'op=checkfiles&process=Check+URLs&list=',
-                /(file(?:keen|rio)\.(?:com|in)\/\w+)/,
-                /green'>http:\/\/(?:www\.|)file(?:keen|rio)\.(?:com|in)\/\w+/g,
-                /red'>http:\/\/(?:www\.|)file(?:keen|rio)\.(?:com|in)\/\w+/g,
-                /orange'>http:\/\/(?:www\.|)file(?:keen|rio)\.(?:com|in)\/\w+/g,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_share_dash_online_dot_biz_links", false))
-        {
-            addHost(
-                "share-online.biz|egoshare.com", //hostname
-                "(?:share-online\\.biz|egoshare\\.com)\/(?:dl\/|download\\.php\\?id=|\\?d=)\\w+", //linkregex
-                100, //blocksize
-                /http:\/\/(?:www\.|)(?:share-online\.biz|egoshare\.com)\/(?:d(?:l\/|ownload\.php\?id=)|\?d=)(?:\d{1}\/|)(\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                "\n", //separator
-                'http://api.share-online.biz/linkcheck.php',
-                'links=',
-                /(\w+);(?:OK|NOTFOUND|DELETED)/,
-                /(\w+);OK/g,
-                /(\w+);(?:DELETED|NOTFOUND)/g,
-                null,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_netload_dot_in_links", false))
-        {
-            addHost(
-                "netload.in", //hostname
-                "netload\\.in\/datei\\w{10}", //linkregex
-                100, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                "\n", //separator
-                "http://api.netload.in/index.php?id=2", //api url
-                "send=Absenden&links=", //postdata
-                /(\w+);/, //linkregex
-                /\w{10,};.+?;.+?;online/g, //liveregex
-                /\w{10,};.+?;.+?;offline/g, //deadregex
-                null, //unavaregex
-                netloadBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_filefactory_dot_com_links", false) && genset("Filefactory_API_Check", false))
-        {
-            addHost(
-                "filefactory.com", //hostname
-                "filefactory\\.com\/+file\/[a-z0-9]", //linkregex
-                100, //blocksize
-                null, //corrmatch
-                /(?:www\.|)filefactory\.com\/+file/, //corrreplwhat
-                'www.filefactory.com/file', //corrreplwith
-                "\n", //separator
-                "http://www.filefactory.com/account/tools/link-checker.php", //api url
-                "Submit=Check+Links&links=", //postdata
-                /filefactory\.com\/(file\/\w+)/, //linkregex
-                /<i class="icon-ok.+\n.+\n.+http:\/\/(?:www\.)?filefactory\.com\/file\/\w+/g, //liveregex
-                /<i class="icon-remove.+\n.+\n.+http:\/\/(?:www\.)?filefactory\.com\/file\/\w+/g, //deadregex
-                /<i class="icon-wrench.+\n.+\n.+http:\/\/(?:www\.)?filefactory\.com\/file\/\w+/g, //unavaregex
-                null //function delegate
-            );
-        }
-
-        if (hostSet("Check_videopremium_dot_net_links", false))
-        {
-            addHost(
-                "videopremium.net|videopremium.tv|videopremium.me", //hostname
-                "videopremium\\.(?:net|tv|me)\/\\w+", //linkregex
-                null, //blocksize
-                /(http:\/\/(?:www\.|)videopremium\.(?:net|tv|me)\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://videopremium.me/?op=checkfiles',
-                'op=checkfiles&process=Check+URLs&list=',
-                /(videopremium\.(?:net|tv|me)\/\w+)/,
-                /videopremium\.(?:net|tv|me)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
-                /videopremium\.(?:net|tv|me)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
-                /videopremium\.(?:net|tv|me)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
-                null //function delegate
-
-            )
-        }
-
-        if (hostSet("Check_eyesfiles_dot_com_links", false))
-        {
-            addHost(
-                "eyesfiles.com|eyesfile.net|eyesfile.com|eyesfile.co|eyesfile.org|eyesfile.ca", //hostname
-                "(?:eyesfile\\.(?:ca|org|net|com?)|eyesfiles\\.com)\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://www.eyesfile.ca/checkfiles.html',
-                'op=checkfiles&process=Check+URLs&list=',
-                /(eyesfiles?\.(?:com?|net|org|ca)\/\w+)/,
-                /green'>http:\/\/(?:www\.|)eyesfiles?\.(?:com?|net|org|ca)\/\w+/g,
-                /red'>http:\/\/(?:www\.|)eyesfiles?\.(?:com?|net|org|ca)\/\w+/g,
-                /orange'>http:\/\/(?:www\.|)eyesfiles?\.(?:com?|net|org|ca)\/\w+/g,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_uploading_dot_com_links", false))
-        {
-            addHost(
-                "uploading.com",
-                "http:\/\/(?:www\\.|)uploading\\.com\/(?:files\/)?\\w+",
-                500, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://uploading.com/filechecker?ajax",
-                "urls=",
-                /uploading\.com\\\/(\w+)/,
-                /ok\\">\\n\\t\\t<span class=\\"num\\">\d+<\\\/span>\\n\\t\\t<i><\\\/i>\\n\\t\\t<div>\\n\\t\\t\\t<a href=\\"http:\\\/\\\/(?:www\.|)uploading\.com\\\/\w+/g,
-                /failed\\">\\n\\t\\t<span class=\\"num\\">\d+<\\\/span>\\n\\t\\t<i><\\\/i>\\n\\t\\t<div>\\n\\t\\t\\t<a href=\\"http:\\\/\\\/(?:www\.|)uploading\.com\\\/\w+/g,
-                null,
-                uploadingBulkCheck
-            )
-        }
-
-        if (hostSet("Check_megashares_dot_com_links", false))
-        {
-            addHost(
-                "megashares.com",
-                "(?:d01\.)?megashares\.com\/(?:dl\/|(?:index\\.php)?\\?d01=)\\w+",
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://d01.megashares.com/checkit.php",
-                "submit_links=Check+Links&check_links=",
-                /megashares\.com\/(?:dl\/|(?:index\.php)?\?d01=)(\w+)/,
-                /megashares\.com\/(?:dl\/|(?:index\.php)?\?d01=)\w+.*?\s*-\s*ok/g,
-                /megashares\.com\/(?:dl\/|(?:index\.php)?\?d01=)\w+.*?\s*-\s*invalid/g,
-                null,
-                null
-            )
-        }
-
-        if (hostSet("Check_mega_dot_co_dot_nz_links", false))
-        {
-            addHost(
-                "mega.co.nz",
-                "mega\\.co\\.nz\/#!\\w+",
-                100000, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                megaBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_4upfiles_dot_com_links", false))
-        {
-            addHost(
-                "4up.me|4up.im|4upfiles.com",
-                "(?:4upfiles\\.com|4up\\.(?:me|im))\/\\w+",
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://4upfiles.com/?op=checkfiles", //api url
-                "op=checkfiles&process=Check+URLs&list=", //postdata
-                /(4up(?:files)?\.(?:com|me|im)\/\w+)/, //linkregex
-                /4up(?:files)?\.(?:com|me|im)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
-                /4up(?:files)?\.(?:com|me|im)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
-                /4up(?:files)?\.(?:com|me|im)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_uploaded_dot_to_links", false))
-        {
-            addHost(
-                "uploaded.to|uploaded.net|ul.to",
-                '(?:uploaded\\.(?:to|net)|ul\\.to)\/(?:files?\/|\\?(?:lang=\\w{2}&)?id=|folder\/)?(?!img\/|coupon\/)\\w{8}',
-                1000,
-                /(?:uploaded|ul)\.(?:to|net)\/(?:files?|\?(?:lang=\w{2}&)?id=|f\/|folder)?\/*(?!img\/|coupon\/)(\w{8})/,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                uploadedBulkCheck
-            )
-        }
-
-        if (hostSet("Check_junocloud_dot_me_links", false))
-        {
-            addHost(
-                "junocloud.me",
-                "junocloud\\.me\/\\w+",
-                null,
-                null,
-                null,
-                null,
-                null,
-                "http://junocloud.me/checkfiles.html",
-                "op=checkfiles&process=Check+URLs&list=",
-                /(junocloud\.me\/\w+)/,
-                /junocloud\.me\/\w+.*?<span style="color: green;/g,
-                /junocloud\.me\/\w+.*?<span style="color: red;/g,
-                /junocloud\.me\/\w+.*?<span style="color: orange;/g,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_flashdrive_dot_it_links", false))
-        {
-            addHost(
-                "flashdrive.it|flashdrive.uk.com",
-                "flashdrive\\.(?:it|uk\\.com)\/\\w+",
-                null,
-                null,
-                null,
-                null,
-                null,
-                "http://flashdrive.uk.com/?op=checkfiles",
-                "op=checkfiles&process=Check+URLs&list=",
-                /(flashdrive\.(?:it|uk\.com)\/\w+)/,
-                /flashdrive\.(?:it|uk\.com)\/\w+.*?<\/td><td style="color:green;">/g,
-                /flashdrive\.(?:it|uk\.com)\/\w+.*?<\/td><td style="color:red;">/g,
-                /flashdrive\.(?:it|uk\.com)\/\w+.*?<\/td><td style="color:orange;">/g,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_datei_dot_to_links", false))
-        {
-            addHost(
-                "datei.to",
-                "datei\\.to\/(?:datei\/|files\/|1,|\\?)\\w+",
-                100000,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                dateiToBulk
-            )
-        }
-
-        if (hostSet("Check_medafire_dot_net_links", false))
-        {
-            addHost(
-                "medafire.net",
-                "medafire\\.net\/(?:up\/)?\\w+",
-                null,
-                null,
-                null,
-                null,
-                null,
-                "http://medafire.net/?op=checkfiles",
-                "op=checkfiles&process=Check+URLs&list=",
-                /(medafire\.net\/(?:up\/)?\w+)/,
-                /medafire\.net\/(?:up\/)?\w+.*?<\/td><td style="color:green;">/g,
-                /medafire\.net\/(?:up\/)?\w+.*?<\/td><td style="color:red;">/g,
-                /medafire\.net\/(?:up\/)?\w+.*?<\/td><td style="color:orange;">/g,
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_datafile_dot_com_links", false))
-        {
-            addHost(
-                "datafile.com", //hostname
-                "datafile\\.com\/d\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://www.datafile.com/linkchecker.html', //api url
-                'btn=&links=', //postdata
-                /(datafile.com\/d\/\w+)/, //linkregex
-                /datafile.com\/d\/\w+.*?<\/td>[\s\n]+.+[\s\n]*?<td class="aligncenter" title="Status">[\s\n]*Ok/g, //liveregex
-                /datafile.com\/d\/\w+.*?<\/td>[\s\n]+.+[\s\n]*?<td class="aligncenter" title="Status">[\s\n]*Not found/g, //deadregex
-                null, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_depfile_dot_com_links", false))
-        {
-            addHost(
-                "depfile.com", //hostname
-                "depfile\\.com\/(?:downloads\/i\/\\d+\/f\/|\\w+)", //linkregex
-                22, //blocksize //unsure if right number
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'https://depfile.com/checkfiles', //api url
-                'send=Check&files=', //postdata
-                /(depfile\.com\/(?:downloads\/i\/\d+|\w+))/, //linkregex
-                /depfile\.com\/(?:downloads\/i\/\d+|\w+)[^<]*?<\/td><td><span class='active/g, //liveregex
-                /depfile\.com\/(?:downloads\/i\/\d+|\w+)[^<]*?<\/td><td><span class='(?:notfound|badurl)/g, //deadregex
-                null, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_terafile_dot_co_links", false))
-        {
-            addHost(
-                "terafile.co|lumfile.com|lumfile.eu|lumfile.se", //hostname
-                "(?:terafile\\.co|lumfile\\.(?:com|eu|se))\/\\w+", //linkregex
-                null, //blocksize
-                /(http:\/\/(?:www\.|)(?:lumfile\.(?:com|eu|se)|terafile\.co)\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://www.terafile.co/?op=checkfiles',
-                'op=checkfiles&process=Check+URLs&list=',
-                /((?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+)/,
-                /(?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+.*?<\/td>\s*<td style="color:green;">/g, //liveregex
-                /(?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+.*?<\/td>\s*<td style="color:red;">/g, //deadregex
-                /(?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+.*?<\/td>\s*<td style="color:orange;">/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_filedwon_dot_com_links", false))
-        {
-            addHost(
-                "filedwon.com|filedwon.net|filedwon.info", //hostname
-                "filedwon\\.(?:com|net|info)\/\\w+", //linkregex
-                null, //blocksize
-                /(http:\/\/(?:www\.|)filedwon\.(?:com|net|info)\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://filedwon.info/?op=checkfiles',
-                'op=checkfiles&process=Check+URLs&list=',
-                /(filedwon\.(?:com|net|info)\/\w+)/,
-                /filedwon\.(?:com|net|info)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
-                /filedwon\.(?:com|net|info)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
-                /filedwon\.(?:com|net|info)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_ge_dot_tt_links", false))
-        {
-            addHost(
-                "ge.tt", //hostname
-                "ge\\.tt\/(?:api\/1\/files\/)?\\w+", //linkregex
-                1000000, //blocksize
-                /ge\.tt\/(?:api\/1\/files\/)?(\w+.*)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'https://open.ge.tt/1/files/', //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                gettBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_filesbomb_dot_com_links", false))
-        {
-            addHost(
-                "filesbomb.com|filesbomb.biz|filesbomb.in", //hostname
-                "filesbomb\\.(?:com|biz|in)\/\\w+", //linkregex
-                null, //blocksize
-                /(http:\/\/(?:www\.|)filesbomb\.(?:com|biz|in)\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://filesbomb.in/?op=checkfiles',
-                'op=checkfiles&process=Check+URLs&list=',
-                /(filesbomb\.(?:com|biz|in)\/\w+)/,
-                /filesbomb\.(?:com|biz|in)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
-                /filesbomb\.(?:com|biz|in)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
-                /filesbomb\.(?:com|biz|in)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_restfile_dot_ca_links", false))
-        {
-            addHost(
-                "restfile.ca|restfile.com|restfile.cc|restfile.org|restfile.net|restfile.co|restfile.bz|restfile.ws|restfiles.com|restfiles.net|restfilee.com", //hostname
-                "(?:restfile\\.(?:com|cc|org|net|ws|co|bz|ca)|restfile(?:s|e)\\.(?:com|net))\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://www.restfilee.com/?op=checkfiles", //api url
-                "op=checkfiles&process=Check+URLs&list=", //postdata
-                /(restfile(?:e|s)?\.\w{2,3}\/\w+)/, //linkregex
-                /green'>http:\/\/(?:|www\.)restfile(?:e|s)?\.\w{2,3}\/\w+/g, //liveregex
-                /red'>http:\/\/(?:|www\.)restfile(?:e|s)?\.\w{2,3}\/\w+/g, //deadregex
-                /orange'>http:\/\/(?:|www\.)restfile(?:e|s)?\.\w{2,3}\/\w+/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_filepup_dot_net_links", false))
-        {
-            addHost(
-                "filepup.net", //hostname
-                "filepup\\.net\/(?:files|get)\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                /\/get\/(\w+)\/.+/, //corrreplwhat
-                "/files/$1.html", //corrreplwith
-                null, //separator
-                'http://www.filepup.net/link_checker.php', //api url
-                'task=doCheck&submit=Check+Links&urls=', //postdata
-                /filepup\.net\/files(\/\w+)/, //linkregex
-                /green">http:\/\/(?:www\.)?filepup\.net\/files\/\w+/g, //liveregex
-                /red">http:\/\/(?:www\.)?filepup\.net\/files\/\w+/g, //deadregex
-                /orange">http:\/\/(?:www\.)?filepup\.net\/files\/\w+/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_media1fire_dot_com_links", false))
-        {
-            addHost(
-                "media1fire.com", //hostname
-                "up\\.media1fire\\.com\/\\w+", //linkregex
-                null, //blocksize
-                /(http:\/\/up\.media1fire\.com\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://up.media1fire.com/?op=checkfiles", //api url
-                "op=checkfiles&process=Check+URLs&list=", //postdata
-                /(up\.media1fire\.com\/\w+)/, //linkregex
-                /up\.media1fire\.com\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
-                /up\.media1fire\.com\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
-                /up\.media1fire\.com\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_ezfile_dot_ch_links", false))
-        {
-            addHost(
-                "ezfile.ch|filecloud.io", //hostname
-                "(?:ezfile\\.ch|filecloud\\.io)\/\\w{6,10}", //linkregex
-                100000000, //blocksize
-                /(?:ezfile\.ch|filecloud\.io)\/(\w{6,10})/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null, //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                ezfileBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_maskfile_dot_com_links", false))
-        {
-            addHost(
-                "maskfile.com", //hostname
-                "[mM]ask[Ff]ile\\.com\/\\w+", //linkregex
-                null, //blocksize
-                /(https?:\/\/(?:www\.)?maskfile\.com\/\w+)/i, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'https://www.maskfile.com/?op=checkfiles', //api url
-                'op=checkfiles&process=Check+URLs&list=', //postdata
-                /maskfile\.com\/(\w+)/i, //linkregex
-                /maskfile\.com\/\w+.*?<\/td>\s*<td style="color:green;">/gi, //liveregex
-                /maskfile\.com\/\w+.*?<\/td>\s*<td style="color:red;">/gi, //deadregex
-                /maskfile\.com\/\w+.*?<\/td>\s*<td style="color:orange;">/gi, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_anysend_dot_com_links", false))
-        {
-            addHost(
-                "anysend.com", //hostname
-                "anysend\\.com\/\\w{32}", //linkregex
-                100000, //blocksize
-                /anysend\.com\/(\w{32})/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null, //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                anysendBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_webshare_dot_cz_links", false))
-        {
-            addHost(
-                "webshare.cz", //hostname
-                "webshare\\.cz\/(?:(?:#/)?file/\\w+|\\w+-.*)", //linkregex
-                100000, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null, //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                webshareBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_uploadable_dot_ch_links", false))
-        {
-            addHost(
-                "uploadable.ch", //hostname
-                "uploadable\\.ch\/file\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                'http://www.uploadable.ch/check.php', //api url
-                'urls=', //postdata
-                /(uploadable\.ch\/file\/\w+)/, //linkregex
-                /<div class="col1"><a href="">http:\/\/(?:www\.)?uploadable\.ch\/file\/\w+.*<\/a><\/div>\s+<div class="col2">.+<\/div>\s+<div class="col3">.+<\/div>\s+<div class="col4"><span class="[\w\s]+">&nbsp;<\/span>\s+<span class="left">Available<\/span>/g, //liveregex
-                /<div class="col1"><a href="">http:\/\/(?:www\.)?uploadable\.ch\/file\/\w+.*<\/a><\/div>\s+<div class="col2">.+<\/div>\s+<div class="col3">.+<\/div>\s+<div class="col4"><span class="[\w\s]+">&nbsp;<\/span>\s+<span class="left">Not Available<\/span>/g, //deadregex
-                null, //unavaregex
-                null //function delegate
-            )
-        }
-
-        if (hostSet("Check_prefiles_dot_com_links", false))
-        {
-            addHost(
-                "prefiles.com", //hostname
-                "prefiles\\.com\/\\w+", //linkregex
-                null, //blocksize
-                /(https?:\/\/(?:www\.)?prefiles\.com\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://prefiles.com/checker", //api url
-                "op=checkfiles&list=", //postdata
-                /(prefiles\.com\/\w+)/, //linkregex
-                /prefiles\.com\/\w+.*<\/div>\s*<div class="copy" style="color:#6ab621;">/g, //liveregex
-                /prefiles\.com\/\w+.*<\/div>\s*<div class="copy" style="color:#f10000;">/g, //deadregex
-                null, //unavaregex
-                null //function delegate
-            )
-        }
-
-        /*if (hostSet("Check_rapidu_dot_net_links", false))
-        {
-            addHost(
-                "rapidu.net", //hostname
-                "rapidu\\.net\/\\d+", //linkregex
-                1000000, //blocksize
-                /rapidu\.net\/(\d+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://rapidu.net/api/getFileDetails/", //api url
-                "id=", //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                rapiduBulkCheck //function delegate
-            )
-        }*/
-
-        if (hostSet("Check_uplea_dot_com_links", false))
-        {
-            addHost(
-                "uplea.com", //hostname
-                "uplea\\.com\/dl\/\\w+", //linkregex
-                1000000, //blocksize
-                /(https?:\/\/(?:www\.)?uplea\.com\/dl\/\w+)/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://api.uplea.com/api/check-my-links", //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                upleaBC //function delegate
-            )
-        }
-
-        if (hostSet("Check_oboom_dot_com_links", false))
-        {
-            addHost(
-                "oboom.com", //hostname
-                "oboom\\.com\/#?\\w{8}", //linkregex
-                null, //blocksize
-                /oboom\.com\/#?(\w{8})/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null, //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                oboomBulk //function delegate
-            )
-        }
-
-        if (hostSet("Check_updown_dot_bz_links", false))
-        {
-            addHost(
-                "updown.bz", //hostname
-                "updown\\.bz\/\\w{10}", //linkregex
-                null, //blocksize
-                /\.bz\/(\w{10})/, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null, //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                updownBulkCheck //function delegate
-            )
-        }
-
-        if (hostSet("Check_1fichier_dot_com_links", false))
-        {
-            addHost(
-                "1fichier.com", //hostname
-                "(?:\\w+\\.)?1fichier\\.com(?:\/\\?\\w+)?", //linkregex
-                100, //blocksize
-                /(https?:\/\/(?:\w+\.)?1fichier\.com(?:\/\?\w{5,})?)/, //corrmatch
-                /https?:\/\/(?:www\.)?1fichier\.com\/\?(\w{5,})/, //corrreplwhat
-                'https://$1.1fichier.com', //corrreplwith
-                null, //separator
-                'https://1fichier.com/check_links.pl', //api url
-                'links[]=', //postdata
-                /https?:\/\/(\w+)\.1fichier.com;/, //linkregex
-                /https?:\/\/\w+\.1fichier.com.*;.+;\d+/g, //liveregex
-                /https?:\/\/\w+\.1fichier.com.*;;;NOT FOUND/g, //deadregex
-                /https?:\/\/\w+\.1fichier.com.*;;;PRIVATE/g, //unavaregex
-                OnefichierCheck //function delegate
-            );
-        }
-
-        if (hostSet("Check_inclouddrive_dot_com_links", false))
-        {
-            addHost(
-                "inclouddrive.com", //hostname
-                "inclouddrive\\.com\/(?:file|#\/file_download)\/[a-zA-Z0-9_-]+", //linkregex
-                100000000, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                null, //api url
-                null, //postdata
-                null, //linkregex
-                null, //liveregex
-                null, //deadregex
-                null, //unavaregex
-                inclouddriveCheck //function delegate
-            );
-        }
-
-        if (hostSet("Check_loadster_dot_sx_links", false))
-        {
-            addHost(
-                "loadster.sx", //hostname
-                "loadster\\.sx\/file\/\\w+", //linkregex
-                null, //blocksize
-                null, //corrmatch
-                null, //corrreplwhat
-                null, //corrreplwith
-                null, //separator
-                "http://loadster.sx/linkchecker", //api url
-                "checklinks=Check+links&links=", //postdata
-                /(loadster\.sx\/file\/\w+)/, //linkregex
-                /<i class="icon-check"><\/i><a target="blank" href="https?:\/\/(?:www\.)loadster\.sx\/file\/\w+\n*">/g, //liveregex
-                /<i class="icon-cancel"><\/i>https?:\/\/(?:www\.)?loadster\.sx\/file\/\w+<\/p>/g, //deadregex
-                null, //unavaregex
-                null //function delegate
-            );
-        }
-
-        if (hostSet("Check_rapidturk_dot_com_links", false))
-        {
-            addHost(
-                "rapidturk.com",
-                "rapidturk\\.com\/download\/\\d{10}\\.php",
-                null,
-                null,
-                null,
-                null,
-                null,
-                'http://www.rapidturk.com/tools/link-checker',
-                'task=doCheck&submit=Check+Links&urls=',
-                /(rapidturk.com\/download\/\d{10}\.php)/,
-                />http:\/\/www.rapidturk.com\/download\/\d{10}\.php<\/a> - <font color="green">/g,
-                />http:\/\/www.rapidturk.com\/download\/\d{10}\.php<\/a> - <font color="red">/g, //assumption
-                />http:\/\/www.rapidturk.com\/download\/\d{10}\.php<\/a> - <font color="orange">/g, //assumption
-                null
-            );
-        }
-
-        function genBulkCheck()
-        {
-            var blockIdx = this.links.length;
-
-            while (blockIdx--)
-            {
-                postRequest(this.apiUrl, this.postData, this.links[blockIdx],
-                    this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.resUnavaRegex, this.separator);
-
-            }
-
-            function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex, sep)
-            {
-                GM_xmlhttpRequest(
-                {
-                    method: 'POST',
-                    url: api,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': api,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    data: postData + encodeURIComponent(links),
-                    onload: function (result)
-                    {
-                        var res = result.responseText;
-
-                        //console.log(res);
-
-                        if ((res.contains(">DDoS protection by CloudFlare") && res.contains(">Checking your browser before accessing<")) || res.contains('<iframe src="/_Incapsula_Resource?') || res.contains('>Please complete the security check')) {
-                            DisplayTheCheckedLinks(links.split(sep), 'unknown_link', 'Captcha required to check links');
-                            sendMessage('Some links require you to fill out a captcha! Please open them manually.')
-                        }
-
-                        var i;
-
-                        var livelinks = res.match(liveRegex);
-                        var deadlinks = res.match(deadRegex);
-
-                        //console.log(livelinks);
-                        //console.log(deadlinks);
-
-                        if (livelinks != null)
-                        {
-                            i = livelinks.length - 1;
-                            do
-                            {
-                                livelinks[i] = livelinks[i].match(linkRegex)[1];
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(livelinks, 'alive_link');
-                        }
-
-                        if (deadlinks != null)
-                        {
-                            i = deadlinks.length - 1;
-                            do
-                            {
-                                deadlinks[i] = deadlinks[i].match(linkRegex)[1];
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                        }
-
-                        if (unavaRegex != null)
-                        {
-                            var unavalinks = res.match(unavaRegex)
-                            if (unavalinks)
-                            {
-                                i = unavalinks.length - 1;
-                                do
-                                {
-                                    unavalinks[i] = unavalinks[i].match(linkRegex)[1];
-                                }
-                                while (i--);
-                                DisplayTheCheckedLinks(unavalinks, 'unava_link');
-                            }
-                        }
-                    },
-                    onerror: function (e) {
-                        var linkArr = links.split(sep);
-                        DisplayTheCheckedLinks(linkArr, "unknown_link");
-                    }
-                });
-
-            }
-        }
-
-        //specialized bulkchecking handlers follow
-        function OnefichierCheck() {
-            var blockIdx = this.links.length;
-
-            while (blockIdx--)
-            {
-                postRequest(this.apiUrl, this.postData, this.links[blockIdx].split(this.separator).join('&links[]='),
-                    this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.resUnavaRegex, '&links[]=');
-
-            }
-
-            function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex, sep)
-            {
-                GM_xmlhttpRequest(
-                {
-                    method: 'POST',
-                    url: api,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': api,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    data: postData + encodeURIComponent(links).replace(/%26links%5B%5D%3D/g, '&links[]='), //replace for 1Fichier (Doesn't recognize different request parameters)
-                    onload: function (result)
-                    {
-                        var res = result.responseText;
-
-                        //console.log(res);
-
-                        var i;
-
-                        var livelinks = res.match(liveRegex);
-                        var deadlinks = res.match(deadRegex);
-
-                        //console.log(livelinks);
-                        //console.log(deadlinks);
-
-                        if (livelinks != null)
-                        {
-                            i = livelinks.length - 1;
-                            do
-                            {
-                                livelinks[i] = livelinks[i].match(linkRegex)[1];
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(livelinks, 'alive_link');
-                        }
-
-                        if (deadlinks != null)
-                        {
-                            i = deadlinks.length - 1;
-                            do
-                            {
-                                deadlinks[i] = deadlinks[i].match(linkRegex)[1];
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                        }
-
-                        if (unavaRegex != null)
-                        {
-                            var unavalinks = res.match(unavaRegex)
-                            if (unavalinks)
-                            {
-                                i = unavalinks.length - 1;
-                                do
-                                {
-                                    unavalinks[i] = unavalinks[i].match(linkRegex)[1];
-                                }
-                                while (i--);
-                                DisplayTheCheckedLinks(unavalinks, 'unava_link');
-                            }
-                        }
-
-                        var unknownlinks = res.match(/https?:\/\/\w+\.1fichier.com.*;;;BAD LINK/g);
-                        if (unknownlinks) {
-                            i = unknownlinks.length - 1;
-                                do
-                                {
-                                    unknownlinks[i] = unknownlinks[i].match(linkRegex)[1];
-                                }
-                                while (i--);
-                                DisplayTheCheckedLinks(unknownlinks, 'unknown_link');
-                        }
-                    },
-                    onerror: function (e) {
-                        var linkArr = links.split(sep);
-                        DisplayTheCheckedLinks(linkArr, "unknown_link");
-                    }
-                });
-
-            }
-        }
-
-        function inclouddriveCheck() {
-            var links = this.links[0].split('\r\n');
-            var x = links.length;
-            var link;
-            while (x--) {
-                checkLink(links[x]);
-            }
-
-            function checkLink(link) {
-                GM_xmlhttpRequest({
-                    method: 'GET',
-                    url: link.replace('/file/', '/index.php/file_download/').replace('/#/', '/index.php/'),
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    onload: function (result) {
-                        var res = result.responseText;
-                        if (res.contains('<p style="font-size:17px;">The requested file isn\'t anymore!</p>')) {
-                            DisplayTheCheckedLinks([link], 'adead_link');
-                        } else if (res.contains('<button style="border:none;" id="download_from_link"')) {
-                            DisplayTheCheckedLinks([link], 'alive_link');
-                        } else {
-                            DisplayTheCheckedLinks([link], 'unknown_link');
-                        }
-                    }
-                });
-            }
-        }
-
-        function updownBulkCheck() {
-            var res = '',
-                a = [],
-                b = [],
-                links = this.links,
-                blockIdx = links.length,
-                obj = new Object;
-                obj.m = 'chkr'
-                obj.a = 'chk',
-                obj.d = new Object();
-
-            while (blockIdx--) {
-                obj.d.id = links[blockIdx].split('\r\n');
-                console.log(obj);
-
-                GM_xmlhttpRequest({
-                    method: 'POST',
-                    url: 'https://api.updown.bz/',
-                    headers: {
-                        'Content-type': 'application/json; charset=utf-8',
-                        'Referer': 'https://updown.bz/'
-                    },
-                    data: JSON.stringify(obj),
-                    onload: function(result) {
-                        var res = JSON.parse(result.responseText);
-                        console.log(res)
-                        if (res.c === 1) {
-                            for (var i = res.d.length - 1; i >= 0; i--) {
-                                if (res.d[i].online) {
-                                    a.push(res.d[i].id);
-                                } else if (!res.d[i].online) {
-                                    b.push(res.d[i].id);
-                                }
-                            };
-                        }
-
-                        if (a.length > 0) DisplayTheCheckedLinks(a, 'alive_link');
-                        if (b.length > 0) DisplayTheCheckedLinks(b, 'adead_link');
-                    }
-
-                });
-            }
-        }
-
-        function oboomBulk() {
-            var a = [], b = [], c = [];
-            var array = this.links;
-
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: 'https://www.oboom.com/1/guestsession',
-                headers: {
-                    'User-agent': rUA(),
-                    'Content-type': 'application/x-www-form-urlencoded',
-                    'Referer': 'https://www.oboom.com'
-                },
-                onload: function(result) {
-                    //console.log(result);
-                    var blockIdx = array.length;
-                    var token = JSON.parse(result.responseText)[1];
-                    while (blockIdx--) {
-                        startCheck(array[blockIdx].split('\r\n'), token);
-                    }
-                }
-            });
-
-            function startCheck(links, token) {
-                GM_xmlhttpRequest({
-                        method: 'POST',
-                        url: "https://api.oboom.com/1/info",
-                        headers: {
-                            'User-agent': rUA(),
-                            'Content-type': 'application/x-www-form-urlencoded',
-                            'Referer': 'https://www.oboom.com/',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        data: "token=" + token + "&items=" + links.join(","),
-                        onload: function(result) {
-                            var res = JSON.parse(result.responseText)[1];
-                            var i = res.length, s;
-
-                            while (i--) {
-                                s = res[i].state;
-                                if (s == 'online') a.push(res[i].id);
-                                else if (s == 'blocked' || s == 'abused' || s == 'lost' || s == 'not_found' || s =='expired') b.push(res[i].id);
-                                else c.push(res[i].id);
-                            }
-
-                            if (a.length > 0) DisplayTheCheckedLinks(a, 'alive_link');
-                            if (b.length > 0) DisplayTheCheckedLinks(b, 'adead_link');
-                            if (c.length > 0) DisplayTheCheckedLinks(c, 'unknown_link');
-                        }
-                    });
-            }
-        }
-
-        function upleaBC() {
-            var json = {
-                links: this.links[0].split('\r\n')
-            };
-
-            GM_xmlhttpRequest({
-                method: 'POST',
-                url: this.apiUrl,
-                data: 'json=' + JSON.stringify(json),
-                headers: {
-                    'User-agent': rUA(),
-                    'Content-type': 'application/x-www-form-urlencoded',
-                    'Referer': 'http://uplea.com/checker',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                onload: function(result) {
-                    var res = JSON.parse(result.responseText);
-
-                    if (res.error.length > 0) {
-                        var mes = 'Error in checking Uplea.com! Error message(s):';
-                        $.each(res.error, function(key, val) { mes += '\r\n' + val; });
-                        console.warn(mes); return;
-                    }
-
-                    var deadlinks = [], alivelinks = [], unavalinks = [];
-                    $.each(res.result, function(key, val) {
-                        if (val.status == 'OK') alivelinks.push(val.link);
-                        else if (val.status == 'DELETE') deadlinks.push(val.link);
-                        else unknownlinks.push(val.link);
-                    });
-
-                    if (deadlinks.length > 0) DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                    if (alivelinks.length > 0) DisplayTheCheckedLinks(alivelinks, 'alive_link');
-                    if (unknownlinks.length > 0) DisplayTheCheckedLinks(unavalinks, 'unknown_link');
-                }
-            });
-        }
-
-        /*function rapiduBulkCheck() {
-            var arr = this.links[0].split('\r\n').join(',');
-            GM_xmlhttpRequest({
-                method: 'POST',
-                url: this.apiUrl,
-                data: this.postData + arr,
-                headers: {
-                    'User-agent': rUA(),
-                    'Content-type': 'application/x-www-form-urlencoded',
-                    'Referer': 'http://rapidu.net',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                onload: function(result) {
-                    var res = JSON.parse(result.responseText);
-                    var deadlinks = [], alivelinks = [];
-                    $.each(res, function(key, value) {
-                        if (value.fileStatus && value.fileStatus == 1) {
-                            alivelinks.push(value.fileId);
-                        } else if (value.fileStatus && value.fileStatus == 0) {
-                            deadlinks.push(value.fileId);
-                        }
-                    });
-
-                    if (deadlinks.length > 0) DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                    if (alivelinks.length > 0) DisplayTheCheckedLinks(alivelinks, 'alive_link');
-                }
-            });
-        }*/
-
-        function webshareBulkCheck()
-        {
-            var arr = this.links[0].split('\r\n');
-            var i = arr.length;
-
-            while(i--)
-            {
-                postRequest(arr[i]);
-            }
-
-            function postRequest(wsLink) {
-                var id = wsLink.match(/webshare\.cz\/(?:(?:#\/)?file\/)?(\w+)/)[1];
-
-                GM_xmlhttpRequest({
-                    method: 'POST',
-                    url: "http://webshare.cz/api/file_info/",
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': "",
-                    },
-                    data: "wst=&ident=" + id,
-                    onload: function (result) {
-                        var res = result.responseText;
-
-                        if (res.contains(/<name>.+?<\/name>/))
-                        {
-                            DisplayTheCheckedLinks([id], 'alive_link');
-                        }
-                        else
-                        {
-                            DisplayTheCheckedLinks([id], 'adead_link');
-                        }
-                    }
-                });
-            }
-        }
-
-        function anysendBulkCheck() {
-            var arr = this.links[0].split('\r\n');
-            var blockIdx = arr.length;
-            while (blockIdx--) {
-                check(arr[blockIdx]);
-            }
-
-            function check(id) {
-                GM_xmlhttpRequest({
-                    url: 'http://im.anysend.com/check_file.php?key=' + id,
-                    method: 'GET',
-                    onload: function(result) {
-                        var res = result.responseText;
-                        if (res.contains(/"[0-9\.]+"/)) {
-                            DisplayTheCheckedLinks([id], 'alive_link');
-                        } else if (res.contains('<a href="/download.php" class="btn btn-large btn-success"')) { //request has redirected to homepage => link dead
-                            DisplayTheCheckedLinks([id], 'adead_link');
-                        } else {
-                            DisplayTheCheckedLinks([id], 'unknown_link');
-                        }
-
-                    }
-                });
-            }
-        }
-
-        function ezfileBulkCheck() {
-            var arr = this.links[0].split(this.separator);
-            var blockIdx = arr.length;
-            while (blockIdx--) {
-                check(arr[blockIdx]);
-            }
-
-            function check(ukey) {
-                GM_xmlhttpRequest({
-                    method: 'GET', //api seems to only work with GET
-                    url: 'https://ezfile.ch/?m=api&a=exists&fkey=' + encodeURIComponent(ukey),
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': 'http://ezfile.ch',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    onload: function(result) {
-                        var res = JSON.parse(result.responseText);
-
-                        if (res.status == 'ok' && res.exists) {
-                            DisplayTheCheckedLinks([ukey], 'alive_link');
-                        } else if (res.status == 'ok' && !res.exists) {
-                            DisplayTheCheckedLinks([ukey], 'adead_link');
-                        } else DisplayTheCheckedLinks([ukey], 'unknown_link');
-                    },
-                    onerror: function() {
-                        DisplayTheCheckedLinks([ukey], 'unknown_link');
-                    }
-                });
-            }
-        }
-
-        function gettBulkCheck() {
-            var arr = this.links[0].split("\r\n");
-            var i = arr.length;
-            var params, sharename, fileid;
-            while (i--) {
-                params = arr[i].match(/(\w+)(?:\/v\/(\d+))?/);
-                sharename = params[1], fileid = params[2] ? params[2] : 0;
-                GM_xmlhttpRequest({
-                    method:"GET",
-                    url: this.apiUrl + sharename + "/" + fileid,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': this.apiUrl,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    onload: function(result) {
-                        var res = JSON.parse(result.responseText);
-                        if (res.readystate == "uploaded") {
-                            DisplayTheCheckedLinks([res.sharename], 'alive_link');
-                        } else if (res.readystate == "removed") {
-                            DisplayTheCheckedLinks([res.sharename], 'adead_link');
-                        } else {
-                            DisplayTheCheckedLinks([res.sharename], 'unknown_link');
-                        }
-                    }
-                });
-            }
-        }
-
-        function uploadingBulkCheck()
-        {
-            var blockIdx = this.links.length;
-
-            while (blockIdx--)
-            {
-                postRequest(this.apiUrl, this.postData, this.links[blockIdx],
-                    this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.resUnavaRegex);
-
-            }
-
-            function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex)
-            {
-                GM_xmlhttpRequest(
-                {
-                    method: 'POST',
-                    url: api,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': api,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    data: postData + encodeURIComponent(links),
-                    onload: function (result)
-                    {
-                        var res = result.responseText;
-
-                        var i;
-
-                        var livelinks = res.match(liveRegex);
-                        var deadlinks = res.match(deadRegex);
-                        var allLinks = links.split("\r\n");
-                        for(i=0;i<allLinks.length;i++) {
-                            allLinks[i] = allLinks[i].match(/uploading\.com\/(?:files\/|\w+\/\?get=)?(\w+)/)[1];
-                        }
-
-                        if (livelinks != null)
-                        {
-                            i = livelinks.length - 1;
-                            do
-                            {
-                                livelinks[i] = livelinks[i].match(linkRegex)[1].toLowerCase();
-                                livelinks.push(livelinks[i].toUpperCase());
-                                allLinks.splice($.inArray(livelinks[i], allLinks), 1);
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(livelinks, 'alive_link');
-                        }
-
-                        if (deadlinks != null)
-                        {
-                            i = deadlinks.length - 1;
-                            do
-                            {
-                                deadlinks[i] = deadlinks[i].match(linkRegex)[1].toLowerCase();
-                                deadlinks.push(deadlinks[i].toUpperCase());
-                                allLinks.splice($.inArray(deadlinks[i], allLinks), 1);
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                        }
-
-                        if (allLinks.length > 0)
-                        {
-                            i = allLinks.length - 1;
-                            do
-                            {
-                                websiteCheck(allLinks[i]);
-                            }
-                            while (i--);
-                        }
-                    }
-                });
-
-            }
-
-            function websiteCheck(link) {
-                var realLink = "http://uploading.com/files/" + link;
-                GM_xmlhttpRequest({
-                    method: 'GET',
-                    url: realLink,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': realLink,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    onload: function (result) {
-                        if (result.status == 503) websiteCheck(link);
-                        res = result.responseText;
-                        if (res.contains('file_error">|error_404">')) {
-                            DisplayTheCheckedLinks([link], 'adead_link');
-                        }
-                        else if (res.contains('free_method">')) {
-                            DisplayTheCheckedLinks([link], 'alive_link');
-                        }
-                    }
-                });
-            }
-        }
-
-        function dateiToBulk()
-        {
-            var arr = this.links[0].split("\r\n");
-            var data = "key=YYMHGBR9SFQA0ZWA&info=STATUS&datei=";
-            var i = arr.length;
-
-            while(i--)
-            {
-                var token = arr[i].match(/\.to\/(?:datei\/|files\/|1,|\?)(\w+)/)[1];
-                postRequest(token);
-            }
-
-            function postRequest(token) {
-                data += token;
-                GM_xmlhttpRequest({
-                    method:"POST",
-                    url:"http://api.datei.to/",
-                    data:data,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': ""
-                    },
-                    onload: function(result) {
-                        var res = result.responseText;
-                        if (res.contains('offline')) {
-                            DisplayTheCheckedLinks([token],'adead_link');
-                        }
-                        else if (res.contains('online')) {
-                            DisplayTheCheckedLinks([token], 'alive_link');
-                        }
-                    }
-                });
-            }
-        }
-
-        function uploadedBulkCheck()
-        {
-            var t = this.links.length;
-            while (t--) {
-                var arr = this.links[t].split("\r\n");
-                var data = "apikey=lhF2IeeprweDfu9ccWlxXVVypA5nA3EL";
-
-                $.each(arr, function (key, value) {
-                    data += '&id_' + key + '=' + value;
-                });
-
-                GM_xmlhttpRequest(
-                    {
-                        method: "POST",
-                        url: "https://uploaded.net/api/filemultiple",
-                        data: data,
-                        headers: {
-                            'User-agent': rUA(),
-                            'Content-type': 'application/x-www-form-urlencoded',
-                            'Referer': ""
-                        },
-                        onload: function (result)
-                        {
-                            var res = result.responseText;
-
-                            var i;
-
-                            var livelinks = res.match(/online,\w+,/g);
-                            var deadlinks = res.match(/offline,\w+,/g);
-
-                            if (livelinks)
-                            {
-                                var i = livelinks.length - 1;
-                                do
-                                {
-                                    livelinks[i] = livelinks[i].match(/,(\w+),/)[1];
-                                }
-                                while (i--);
-                                DisplayTheCheckedLinks(livelinks, 'alive_link');
-                            }
-
-                            if (deadlinks)
-                            {
-                                var i = deadlinks.length - 1;
-                                do
-                                {
-                                    deadlinks[i] = deadlinks[i].match(/,(\w+),/)[1];
-                                }
-                                while (i--);
-                                DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                            }
-                        }
-                    });
-            }
-        }
-
-        function megaBulkCheck()
-        {
-            var arr = this.links[0].split("\r\n");
-            var i = arr.length;
-            var seqno = Math.floor(Math.random()*1000000000);
-
-            while(i--)
-            {
-                postRequest(arr[i]);
-            }
-
-            function postRequest(megaLink)
-            {
-                var id = megaLink.match(/mega\.co\.nz\/#!(\w+)(?:!\w+)?/)[1];
-
-                GM_xmlhttpRequest(
-                {
-                    method: "POST",
-                    url: 'https://g.api.mega.co.nz/cs?id=' + seqno++,
-                    data: '[{"a":"g","p":"' + id + '","ssl": "1"}]',
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-Type': 'application/xml',
-                        'Referer': "https://mega.co.nz/"
-                    },
-                    onload: function (result)
-                    {
-                        var res = $.parseJSON(result.responseText.match(/\[(.+?)\]/)[1]);
-
-                        if ((typeof res == "number" && (res == -9 || res == -16 || res == -6)) || res.d) {
-                            DisplayTheCheckedLinks([id], 'adead_link');
-                        } else if (res.e == "ETEMPUNAVAIL") {
-                            DisplayTheCheckedLinks([id], 'unava_link');
-                        } else if (res.at) {
-                            DisplayTheCheckedLinks([id], 'alive_link');
-                        } else {
-                            console.warn("Error in checking Mega.co.nz! Please notify devs.\r\nError code: " + result.responseText);
-                        }
-                    }
-                });
-            }
-        }
-
-
-        function netloadBulkCheck()
-        {
-            var blockIdx = this.links.length;
-
-            while (blockIdx--)
-            {
-                postRequest(this.apiUrl, this.postData, this.links[blockIdx],
-                    this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.unavaRegex);
-
-            }
-
-            function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex)
-            {
-                GM_xmlhttpRequest(
-                {
-                    method: 'POST',
-                    url: api,
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-type': 'application/x-www-form-urlencoded',
-                        'Referer': ""
-                    },
-                    data: postData + encodeURIComponent(links),
-                    onload: function (result)
-                    {
-                        var res = result.responseText;
-
-                        //console.log(res);
-
-                        if (res.contains('<title>403 - Forbidden</title>')){
-                            postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex);
-                        }
-
-                        var i;
-
-                        var livelinks = res.match(liveRegex);
-                        var deadlinks = res.match(deadRegex);
-
-                        //console.log(livelinks);
-                        //console.log(deadlinks);
-
-                        if (livelinks != null)
-                        {
-                            i = livelinks.length - 1;
-                            do
-                            {
-                                recheckLink(livelinks[i].match(linkRegex)[1]);
-                                //livelinks[i] = livelinks[i].match(linkRegex)[1];
-                            }
-                            while(i--);
-                            //DisplayTheCheckedLinks(livelinks, "alive_link");
-                        }
-
-                        if (deadlinks != null)
-                        {
-                            i = deadlinks.length - 1;
-                            do
-                            {
-                                deadlinks[i] = deadlinks[i].match(linkRegex)[1];
-                            }
-                            while (i--);
-                            DisplayTheCheckedLinks(deadlinks, 'adead_link');
-                        }
-                    }
-                });
-            }
-
-            function recheckLink(link)
-            {
-                var link = link;
-
-                GM_xmlhttpRequest(
-                {
-                    method: 'GET',
-                    url: 'http://netload.in/datei' + link + '.htm',
-                    headers: {
-                        'User-agent': rUA(),
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                        'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
-                        'Referer': ""
-                    },
-                    onload: function (result)
-                    {
-                        var res = result.responseText;
-                        //console.log(res);
-
-                        if (res.contains('dl_first_file_download">|download_limit.gif'))
-                        {
-                            DisplayTheCheckedLinks([link], 'alive_link');
-                            return;
-                        }
-
-                        if (res.contains('achtung.jpg"'))
-                        {
-                            DisplayTheCheckedLinks([link], 'adead_link');
-                            return;
-                        }
-
-                        if (res.contains('>403 - Forbidden<')) {
-                            recheckLink(link);
-                        }
-                    },
-                    onerror: function ()
-                    {
-                        displayTheCheckedLink(link, 'unava_link');
-                    }
-                });
-            }
-        }
-
-        function depositfilesBulkCheck()
-        {
-            var arr = this.links[0].split("\r\n");
-            var i = arr.length;
-
-            while(i--)
-            {
-                postRequest(arr[i]);
-            }
-
-            function postRequest(dfLink)
-            {
-                var id = dfLink.match(/(?:depositfiles\.(?:com|lt|org)|dfiles\.(?:eu|ru))\/(?:en\/|ru\/|de\/|es\/|pt\/|)files\/(\w+)/)[1];
-
-                GM_xmlhttpRequest(
-                {
-                    method: "POST",
-                    url: 'http://depositfiles.com/api/get_download_info.php?id=' + id + "&format=json",
-                    headers: {
-                        'User-agent': rUA(),
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Referer': ""
-                    },
-                    onload: function (result)
-                    {
-                        var res = result.responseText;
-                        //console.log(res);
-
-                        if (res == "") {
-                            postRequest(dfLink);
-                        }
-
-                        if (res.contains('no_file'))
-                        {
-                            DisplayTheCheckedLinks(["files/" + id], 'adead_link');
-                            return;
-                        }
-
-                        if (res.contains('file_ban')) {
-                            DisplayTheCheckedLinks(["files/" + id], 'unknown_link');
-                            return;
-                        }
-
-                        if (res.contains(/download_li(?:nk|mit)|password_check|file_storage/))
-                        {
-                            DisplayTheCheckedLinks(["files/" + id], 'alive_link');
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    function initFileHosts()
-    {
-        var aOHCount = "1";
-        function addObsoleteHost(hostName, linkRegex)
-        {
-            hostName = hostName.split("|");
-            var i = hostName.length;
-
-            var hostID = "OH" + aOHCount;
-
-            while(i--) {
-                var filehost = gimmeHostName(hostName[i]).replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
-                if (!hostsIDs[filehost]) {
-                    hostsIDs[filehost] = [];
-                }
-                hostsIDs[filehost].push({
-                    hostID: hostID,
-                    linkRegex: linkRegex,
-                });
-            }
-
-            var OHObj = {
-                links: []
-            }
-
-            hostsCheck[hostID] = OHObj;
-            aOHCount++;
-        }
-
-        //obsolete file hosts init start
-        if (hostSet("Obsolete_file_hosts", false))
-        {
-            addObsoleteHost("superfastfile.com", "superfastfile\\.com\/\\w+");
-            addObsoleteHost("uploadlab.com", "files\\.uploadlab\\.com\/\\w+");
-            addObsoleteHost("zupload.com", "z\\d+\\.zupload\\.com\/\\w+");
-            addObsoleteHost("filesdump.com", "(?:s\\d+\\.|)filesdump\\.com\/file\/\\w+");
-            addObsoleteHost("speedie-host.com", "uploads\\.speedie\\-host\\.com\/\\w+");
-            addObsoleteHost("turboupload.com", "(?:d\\.|)turboupload\\.com\/\\w+");
-            addObsoleteHost("share2u.net", "dl\\.share2u\\.net\/\\w+");
-            addObsoleteHost("filestock.net|filestock.ru", "(?:download\\.)?filestock\\.(?:net|ru)\/\\w+");
-            addObsoleteHost("ex.ua", "(?:fs\\d{1,2}\\.)?(?:www\\.|)ex\\.ua\/\\w+");
-            addObsoleteHost("omxira.com", "(?:get\\.|)omxira\\.com\/\\w+");
-            addObsoleteHost("uploadtornado.com", "(?:\\w{2}\\.)uploadtornado\\.com\/\\w+");
-            addObsoleteHost("bgdox.com", "(?:turbo\\.)?bgdox\\.com\/\\w+");
-            addObsoleteHost("fshare.eu", "www\\d?\\.fshare\\.eu\/\\w+");
-            var i = allObsoleteNames.length;
-            while(i--)
-            {
-                addObsoleteHost(
-                    allObsoleteNames[i],
-                    "https?:\/\/(?:[a-zA-Z0-9-]+\\.)?(?:" + allObsoleteNames[i].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/"
-                );
-            }
-
-            if (PW_MODE) {
-                var x = pwCensoredHosts.length;
-                while (x--) {
-                    addObsoleteHost(
-                        pwCensoredHosts[x],
-                        "https?:\/\/(?:[a-zA-Z0-9-]+\\.)?(?:" + pwCensoredHosts[x].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/"
-                    );
-                }
-                addObsoleteHost("hellshare.com|hellshare.sk|hellshare.pl|hellshare.cz|hellshare.hu","(?:|download\\.(?:\\w{2}\\.|)|www\\.)hellshare\\.(?:\\w{2,3})\/[\\w-\\.]+");
-            }
-        }
-        //obsolete file hosts init end
-        var aFHCount = 1;
-        function addFileHost(hostName, linkRegex, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop)
-        {
-            hostName = hostName.split("|");
-            var i = hostName.length;
-
-            var hostID = "WC" + aFHCount;
-
-            while(i--) {
-                var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
-
-                if (!hostsIDs[filehost]) {
-                    hostsIDs[filehost] = [];
-                }
-                hostsIDs[filehost].push({
-                    hostID: hostID,
-                    linkRegex: linkRegex,
-                });
-            }
-
-            var WCObj = {
-                liveRegex: isAliveRegex,
-                deadRegex: isDeadRegex,
-                unavaRegex: isUnavaRegex,
-                tryLoop: false,
-                links: []
-            }
-
-            if (tryLoop) WCObj.tryLoop = true;
-
-            hostsCheck[hostID] = WCObj;
-            aFHCount++;
-        }
-
-        var genericWC = [   'host4files.com', 'rabidfiles.com', 'free4share.de', 'box4up.com', 'upfile.vn', 'weshare.me',
-                            'sv-esload.com', 'up-loading.net', 'yonzy.com', 'jumbofiles.net', 'forlaughs.net', 'warped.co',
-                            'iguanashare.com'];
-
-        var XFSPWC =     [     "fileplanet.com.ua|fileplaneta.com", "xvidstage.com", "midupload.com", "ex-load.com", "share.az", "sharesix.com",
-                            "interfile.net", "medofire.com", "downloadani.me", "uptobox.com", "uppit.com|up.ht", "filenuke.com", 'toofile.com',
-                            "filecore.co.nz|fcore.eu", "1000shared.com", "tusfiles.net|tusfiles.com", "lafiles.com", "redbunker.net", 'happystreams.net'];
-
-        var genThird =    [    "jumbofiles.org|jumbofilebox.com", "10shared.com", "4bigbox.com", "skyfilebox.com"]
-
-        var gWC = genericWC.length;
-        while(gWC--) {
-            if (hostSet("Check_" + genericWC[gWC].replace(/\./g, "_dot_").replace(/\-/g, "_dash_") + "_links", false))
-            {
-                addFileHost(
-                    genericWC[gWC],
-                    genericWC[gWC].replace(/\./g, "\\.").replace(/\-/g, "\\-") + "\/\\w+",
-                    '$(\'.download-timer\').html("<a class=\'btn btn-|<a class="link btn-free"',
-                    /<ul class='pageErrors'><li>(?:Datei wurde entfernt|File has been removed)/,
-                    'optional--'
-                );
-            }
-        }
-
-        var xWC = XFSPWC.length;
-        while (xWC--) {
-            if (hostSet("Check_" + XFSPWC[xWC].match(/[\w\.\-]+/)[0].replace(/\./g, "_dot_").replace(/\-/g, "_dash_") + "_links", false))
-            {
-                addFileHost(
-                XFSPWC[xWC],
-                "(?:" + XFSPWC[xWC].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/\\w+",
-                'name="method_free"|id="btn_download"|value="Free Download"',
-                />(?:File not found|We're sorry, the file you are looking for could not be found.|The file was removed by administrator|Datei nicht gefunden|No such file|The file you are trying to download is no longer available)\s*<|<div id="div_file" class="upload_block">/i,
-                '>This server is in maintenance mode|<img src="/images/under.gif"',
-                true);
-            }
-        }
-
-        var tWC = genThird.length;
-        while (tWC--) {
-            if (hostSet("Check_" + genThird[tWC].match(/[\w\.\-]+/)[0].replace(/\./g, "_dot_").replace(/\-/g, "_dash_") + "_links", false))
-        {
-            addFileHost(
-            genThird[tWC],
-            "(?:" + genThird[tWC].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/newfile\\?n=\\w+",
-            '<div class="downloadfree">',
-            'div_file"',
-            'optional--'
-            );
-        }
-        }
-
-        if (hostSet("Check_megafileupload_dot_com_links", false))
-        {
-            addFileHost(
-            "megafileupload.com",
-            "megafileupload\.com\/..\/file\/",
-            'downloadbtn',
-            'is not found',
-            'optional--');
-        }
-
-        if (hostSet("Check_uploadto_dot_us_links", false))
-        {
-            addFileHost(
-            "uploadto.us|ultramegabit.com",
-            "(?:uploadto\\.us|ultramegabit\\.com)\/file\/details\/[\\w+-]",
-            '>Your download is ready<|>We\'re sorry. This file is temporarily unavailable',
-            '>File has been deleted|<img src="/images/drag_to_upload.png|>File not available',
-            '>This download server is overloaded<',
-            true);
-        }
-
-        if (hostSet("Check_fastshare_dot_cz_links", false))
-        {
-            addFileHost(
-            "fastshare.cz",
-            "fastshare\\.cz\/\\d+\/\\w*",
-            'dwntable">',
-            'nebyla nalezena|nebola nájdená|nie została odnaleziona|color:red;font-weight:bold;border-style:dashed|<b>Requested page not found.',
-            'optional--');
-        }
-
-        if (hostSet("Check_fastshare_dot_org_links", false))
-        {
-            addFileHost(
-            "fastshare.org|FastShare.org",
-            "[fF]ast[sS]hare\\.org\/download",
-            'Download ">',
-            'Diese Datei wurde wegen|wurde kein Dateiname',
-            'optional--');
-        }
-
-        if (hostSet("Check_partage_dash_facile_dot_com_links", false))
-        {
-            addFileHost(
-            "partage-facile.com",
-            "partage-facile\.com\/\\w+",
-            '/dl-view.php"',
-            'Erreur 404|equiv="refresh',
-            'optional--');
-        }
-
-        /*if (hostSet("Check_1fichier_dot_com_links", false))
-        {
-            addFileHost(
-            "1fichier.com|dl4free.com",
-            "\\w+\\.(?:1fichier|dl4free)\\.com\/?",
-            'Download tag"|countdown">|class="form-button"|<input type="submit" value="Download"',
-            'errorDiv"|File not found|Fichier introuvable',
-            'optional--');
-        }*/
-
-        if (hostSet("Check_rapidgator_dot_net_links", false) && chromeBrowser)
-        {
-            addFileHost(
-            "rapidgator.net|rg.to",
-            "(?:rapidgator\\.net|rg.to)\/file\/\\w+",
-            /btm" style="height: \d+px;">\s*<p/,
-            '<h3>File not found</h3>|<span>Get the advantages of premium-account',
-            'optional--',
-            true
-            );
-        }
-
-        if (hostSet("Check_relink_dot_us_links", false))
-        {
-            addFileHost(
-            "relink.us",
-            "relink\\.us\/(?:f\/\\w+|go\\.php\\?id=\\d+|view\\.php\\?id=\\d+)",
-            'online_detail.png" alt="Status',
-            /(?:offline|partially)_detail\.png" alt="Status|File deleted/,
-            'unknown_detail.png" alt="Status'
-            );
-        }
-
-        if (hostSet("Check_flyfiles_dot_net_links", false))
-        {
-            addFileHost(
-            "flyfiles.net",
-            "flyfiles\\.net\/\\w+",
-            'download_button"|"Download file"',
-            'File not found!|Файл не найден',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_wikiupload_dot_com_links", false))
-        {
-            addFileHost(
-            "wikiupload.com",
-            "wikiupload\\.com\/\\w+",
-            'download-button">',
-            'Sorry, File not found|theme-container">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_hostuje_dot_net_links", false))
-        {
-            addFileHost(
-            "hostuje.net",
-            "hostuje\\.net\/file\\.php\\?id=\\w+",
-            'file.php">|Pobierz Plik',
-            'Podany plik zosta. skasowany z powodu naruszania praw autorskich...|Podany plik nie zosta. odnaleziony...',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_4fastfile_dot_com_links", false))
-        {
-            addFileHost(
-            "4fastfile.com",
-            "4fastfile\\.com\/abv-fs\/\\d+",
-            'file-download">',
-            'v><div id="block',
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_slingfile_dot_com_links", false))
-        {
-            addFileHost(
-            "slingfile.com",
-            "slingfile\\.com\/(?:dl|file|video)\/\\w+",
-            'fileinfo">',
-            'errorbox">|<a id="ubutton" class="btn-guest',
-            'optional--'
-            );
-        }*/
-
-        if (hostSet("Check_tufiles_dot_ru_links", false))
-        {
-            addFileHost(
-            "tufiles.ru|turbob1t.ru|filesmail.ru|failookmenik.ru|firebit.in|dlbit.net|china-gsm.ru|3aka4aem.ru|turbo-bit.ru|turbosfiles.ru|piratski.ru|mnogofiles.com|links-free.ru",
-            "(?:tufiles|turbob1t|failoobmenik|filesmail|firebit|dlbit|files\\.china\\-gsm|3aka4aem|file\\.piratski|mnogofiles|links-free|turbo-bit|turbosfiles)\\.\\w+\/\\w+",
-            'download-file">',
-            /col-1">\s*<h1>/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_data_dot_hu_links", false))
-        {
-            addFileHost(
-            "data.hu",
-            "data\\.hu\/get\/\\d+\/",
-            'download_box_button',
-            'missing.php',
-            'optional--',
-            true
-            );
-        }
-
-        if (hostSet("Check_filesmelt_dot_com_links", false))
-        {
-            addFileHost(
-            "filesmelt.com",
-            "filesmelt\\.com\/dl\/\\w+",
-            'ready">',
-            'Sorry, but your',
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_packupload_dot_com_links", false))
-        {
-            addFileHost(
-            "packupload.com",
-            "(?:\\w{2}\\.)?packupload\\.com\/\\w+",
-            'buttonDelay"',
-            'bold; color: #ff0000',
-            'optional--'
-            );
-        }*/
-
-        if (hostSet("Check_files_dot_indowebster_dot_com_links", false))
-        {
-            addFileHost(
-            "indowebster.com",
-            "files\\.indowebster\\.com\/download\/\\w+\/",
-            'premiumBtn"',
-            'errorMessage"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_superload_dot_cz_links", false))
-        {
-            addFileHost(
-            "superload.cz",
-            "superload\\.cz\/dl\/\\w+",
-            'icon-download">',
-            'soubor nebyl nalezen',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_easybytez_dot_com_links", false))
-        {
-            addFileHost(
-            "easybytez.com",
-            "easybytez\\.com\/\\w+",
-            'name=\"method_free|>This server is in maintenance mode',
-            '/stop_error.gif|>Download not available',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filestore_dot_com_dot_ua_links", false))
-        {
-            addFileHost(
-            "filestore.com",
-            "filestore\\.com\\.ua\/\\?d=\\w+",
-            'tdrow1>',
-            'class=warn',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_netkups_dot_com_links", false))
-        {
-            addFileHost(
-            "netkups.com",
-            "netkups\\.com\/\\?d=\\w+",
-            '<form method="post"',
-            '<div align="center">|>File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_extmatrix_dot_com_links", false))
-        {
-            addFileHost(
-            "extmatrix.com",
-            "extmatrix\\.com\/files\/\\w+",
-            'div class="success"',
-            'div class="error"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sendfiles_dot_nl_links", false))
-        {
-            addFileHost(
-            "sendfiles.nl",
-            "sendfiles\\.nl\/download.aspx\\?ID=\\w+",
-            'content_lnkDownload',
-            'error.aspx?',
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_sockshare_dot_com_links", false))
-        {
-            addFileHost(
-            "sockshare.com",
-            "sockshare\\.com\/file\/\\w+",
-            'choose_speed">',
-            '>Welcome to Sockshare|>This file has been removed',
-            'optional--'
-            );
-        }*/
-
-        if (hostSet("Check_yourfilestore_dot_com_links", false))
-        {
-            addFileHost(
-            "yourfilestore.com",
-            "yourfilestore\\.com\/download\/\\d+\/",
-            'download_data">',
-            'may have been deleted|<h1>Sorry!</h1>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_nekaka_dot_com_links", false))
-        {
-            addFileHost(
-            "nekaka.com",
-            "nekaka\\.com\/d\/[\\w-]+",
-            '<b>Please Wait <span id="waittime">',
-            /invalid file link|<p>\s*File has been blocked|>File does not exist</,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filebig_dot_net_links", false))
-        {
-            addFileHost(
-            "filebig.net",
-            "filebig\\.net\/files\/\\w+",
-            'downloadFile">',
-            '<p>File not found</p>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filefront_dot_com_links", false))
-        {
-            addFileHost(
-            "filefront.com|gamefront.com",
-            "(?:files\\.|\\w+\\.|)(?:file|game)front\\.com\/\\w+",
-            'downloadLink">|class="downloadNow"|<strong>Download',
-            /File not found, you|(?:File|Page) Not Found/,
-            'unavailable at the moment'
-            );
-        }
-
-        if (hostSet("Check_free_dash_uploading_dot_com_links", false))
-        {
-            addFileHost(
-            "free-uploading.com",
-            "free\\-uploading\\.com\/\\w+",
-            'op" value="download',
-            'class="err">|width:500px;text-align:left;">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filesin_dot_com_links", false))
-        {
-            addFileHost(
-            "filesin.com",
-            "filesin\\.com\/\\w+",
-            'download_area">',
-            'error_note">',
-            'optional--',
-            true
-            );
-        }
-
-        if (hostSet("Check_nowdownload_dot_eu_links", false))
-        {
-            addFileHost(
-            "nowdownload.eu|nowdownload.ch|nowdownload.co",
-            "nowdownload\\.(?:eu|ch|co)\/dl\/\\w+",
-            'alert-success"',
-            'This file does not exist!',
-            'The file is being transfered'
-            );
-        }
-
-        if (hostSet("Check_axifile_dot_com_links", false))
-        {
-            addFileHost(
-            "axfile.com",
-            "axifile\\.com(?:\/\w(2))?\/\\??\\w+",
-            'Dbutton_big"',
-            'download-error.php',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_asfile_dot_com_links", false))
-        {
-            addFileHost(
-            "asfile.com",
-            "asfile\\.com\/file\/\\w+",
-            'link_line">',
-            /Page not found|(?:deleted|is not exist|gelöscht)<\/strong>/,
-            'optional--'
-            );
-        }
-
-        //do not use checkfiles.html bulk check, not working properly for all links
-        if (hostSet("Check_hulkshare_dot_com_links", false))
-        {
-            addFileHost(
-            "hulkshare.com|hu.lk",
-            "(?:hulkshare\\.com|hu\\.lk)\/\\w+",
-            'download.sam.png|bigDownloadBtn basicDownload|halfTop">',
-            'File does not exist|fingerprint protected copyright|disabled for public access|File no longer available!|This is a private file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_movshare_dot_net_links", false))
-        {
-            addFileHost(
-            "movshare.net",
-            "movshare\\.net\/\\w+",
-            'videoPlayer"',
-            'no longer exists',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_mafiastorage_dot_com_links", false))
-        {
-            addFileHost(
-            "mafiastorage.com",
-            "mafiastorage\\.com\/\\w+",
-            'op" value="download',
-            'class="err">|style="width:500px;text-align:left;"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploadspace_dot_pl_links", false))
-        {
-            addFileHost(
-            "uploadspace.pl",
-            "uploadspace\.pl\/plik\\w+",
-            /Downloading .+? \|/,
-            'Downloading a file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploadingit_dot_com_links", false))
-        {
-            addFileHost(
-            "uploadingit.com",
-            "uploadingit\\.com\/(?:file|d)\/\\w+",
-            'downloadTitle">',
-            'deleteContent">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_stiahni_dot_si_links", false))
-        {
-            addFileHost(
-            "stiahni.si",
-            "stiahni\\.si\/(?:download\\.php\\?id=|file\/)\\w+",
-            'button-download-symbol">|#downloadModal" onclick="download();">',
-            'exclamation.png|The file not found">|file you are trying to download has been deleted',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_rghost_dot_net_links", false))
-        {
-            addFileHost(
-            "rghost.net|rghost.ru",
-            "rghost\.(?:net|ru)\/(?:|private\/)\\d+",
-            'download_link|btn large download"',
-            'file is restricted|File is deleted|503 Service Unavailable',
-            'File was deleted'
-            );
-        }
-
-        if (hostSet("Check_xdisk_dot_cz_links", false))
-        {
-            addFileHost(
-            "xdisk.cz",
-            "xdisk\\.cz\/(?:..\/)?download\\.php\\?id=\\w+",
-            /">Staženo:\\s*<\/span>/,
-            'Soubor, který hledáte nenalezen',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_videozer_dot_com_links", false))
-        {
-            addFileHost(
-            "videozer.com",
-            "videozer\\.com\/video\/\\w+",
-            'video_player"',
-            'error_404"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_divxden_dot_com_links", false))
-        {
-            addFileHost(
-            "divxden.com|vidbux.com",
-            "(?:divxden|vidbux)\.com\/\\w+",
-            'Continue to Video"',
-            'No such file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_daten_dash_hoster_dot_de_links", false))
-        {
-            addFileHost(
-            "daten-hoster.de|filehosting.org|filehosting.at",
-            "(?:daten-hoster\\.de|filehosting\\.(?:org|at))\/file\/\\w+",
-            '<table class="table table-bordered',
-            '<div class="alert alert-error',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_fileflyer_dot_com_links", false))
-        {
-            addFileHost(
-            "fileflyer.com",
-            "fileflyer\.com\/view\/\\w+",
-            '<a id="ItemsList_noLockButton|server loads in your area',
-            '<span class="removedlink">|class="lockedbtn">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filestore_dot_to_links", false))
-        {
-            addFileHost(
-            "filestore.to",
-            "filestore\.to\/\\?d=\\w+",
-            '"downloading"',
-            'Datei wurde nicht gefunden',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_easy_dash_share_dot_com_links", false))
-        {
-            addFileHost(
-            "crocko.com|easy-share.com",
-            "(?:w\\d*\.|)(?:crocko|easy-share)\\.com\/\\w+",
-            'fz24">Download|td class="first">',
-            'msg-err"|the page you\'re looking for|1>400 Bad Request<|No files in this folder|search_result">|<span class="status">Searching for file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_burnupload_dot_com_links", false))
-        {
-            addFileHost(
-            "burnupload.com|ihiphop.com",
-            "burnupload\\.(?:com\/\\?d=|ihiphop\\.com\/download\\.php\\?id=)\\w+",
-            'File size:',
-            'file is not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_yunfile_dot_com_links", false))
-        {
-            addFileHost(
-            "yunfile.com|filemarkets.com|yfdisk.com",
-            "(?:\\w+\\.)?(?:yunfile|filemarkets|yfdisk)\\.com\/f(?:ile|s)\/\\w+",
-            /<h2 class="title">.+?&nbsp;(?:<a><\/a>)?&nbsp;.+?<\/h2>/,
-            /<h2 class="title">.+?&nbsp;&nbsp;<\/h2>|Been deleted|> Access denied/,
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_firedrive_dot_com_links", false))
-        {
-            addFileHost(
-            "firedrive.com|putlocker.com",
-            "(?:putlocker|firedrive)\\.com\/file\/\\w+",
-            '<button id="prepare_continue_btn|<div class="jp-playlist|trans=\'dl',
-            /<div class="sad_face_image"><\/div>\s*This file might have been moved, replaced or deleted|<div class="private_file_image/,
-            /<div class="sad_face_image"><\/div>\s*This file is temporarily unavailable due to maintenance/
-            );
-        }*/
-
-        if (hostSet("Check_nitroflare_dot_com_links", false))
-        {
-            addFileHost(
-            "nitroflare.com",
-            "nitroflare\\.com\/view\/\\w+",
-            '<button id="slow-download',
-            'This file has been removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_cloudzilla_dot_to_links", false))
-        {
-            addFileHost(
-            "cloudzilla.to",
-            "cloudzilla\\.to\/share\/file\/\\w+",
-            '<div class="btn1" id="free_download',
-            '<div id="download_err_div',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_luckyshare_dot_net_links", false))
-        {
-            addFileHost(
-            "luckyshare.net",
-            "luckyshare\\.net\/(?:uploaded\/file\/id\/)?\\d+",
-            '<div id="dl-high-first"',
-            />[Nn]o such file/,
-            'optional--',
-            true);
-        }
-
-        if (hostSet("Check_uploadhero_dot_com_links", false))
-        {
-            addFileHost(
-            "uploadhero.com|uploadhero.co",
-            "uploadhero\\.com?\/dl\/\\w+",
-            'content-dl">',
-            'men_file_lost.jpg"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_load_dot_to_links", false))
-        {
-            addFileHost(
-            "load.to",
-            '(?:www\\.|\/)load\\.to\/(?:|\\?d\\=)\\w+',
-            '"download_table_left">Size|<input class="input-button" type="submit" value="Download"',
-            'Can\'t find file',
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_files_dot_to_links", false))
-        {
-            addFileHost(
-            "files.to",
-            "files\.to\/get\/\\d+\/",
-            'You requested the following',
-            'requested file couldn|This download link is invalide.',
-            'optional--'
-            );
-        }*/
-
-        if (hostSet("Check_divshare_dot_com_links", false))
-        {
-            addFileHost(
-            "divshare.com",
-            "divshare\\.com\/download\/",
-            'download_new.png',
-            'have been removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_stahovadlo_dot_cz_links", false))
-        {
-            addFileHost(
-            "stahovadlo.cz",
-            "stahovadlo\\.cz\/soubor\/\\d+\/[\\.\\w]+",
-            'download" type="submit',
-            'Neplatný nebo neúplný odkaz|Soubor již není dostupný',
-            'optional--',
-            true
-            );
-        }
-
-        if (hostSet("Check_euroshare_dot_eu_links", false))
-        {
-            addFileHost(
-            "euroshare.eu|euroshare.pl|euroshare.sk|euroshare.cz|euroshare.hu",
-            "euroshare\\.(?:eu|pl|sk|cz|hu)\/file\/\\d+",
-            'nazev-souboru">',
-            /<div id="obsah">\\s*<h1>/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_datafilehost_dot_com_links", false))
-        {
-            addFileHost(
-            "datafilehost.com",
-            "datafilehost\\.com\/(?:download-\\w+\\.html|d\/\\w+)",
-            'dldtable">',
-            'does not exist.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_files_dot_mail_dot_ru_links", false))
-        {
-            addFileHost(
-            "mail.ru",
-            'files\\.mail\\.ru/(?:\\w*)',
-            'fileList',
-            'errorMessage|error">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_narod_dot_ru_links", false))
-        {
-            addFileHost(
-            "narod.ru|yandex.ru",
-            'narod\\.(?:yandex\\.|)ru\/disk\/',
-            '<a id="b-submit"',
-            '<p class="b-download-virus-note"|headCode">404<',
-            'Внутренняя ошибка сервиса'
-            );
-        }
-
-        if (hostSet("Check_rayfile_dot_com_links", false))
-        {
-            addFileHost(
-            "rayfile.com",
-            "rayfile\\.com\/",
-            'FILEtitleTXT',
-            'blueRow',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filesmonster_dot_com_links", false))
-        {
-            addFileHost(
-            "filesmonster.com",
-            "filesmonster\\.com\/download\\.php\\?id=\\w+",
-            'button_green_body"',
-            'error">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sendspace_dot_com_links", false))
-        {
-            addFileHost(
-            "sendspace.com",
-            'sendspace\\.com\/file\/\\w+',
-            'file_description',
-            'msg error"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sendspace_dot_pl_links", false))
-        {
-            addFileHost(
-            "sendspace.pl",
-            'sendspace\\.pl\/file\/\\w+',
-            'download_file"',
-            'Podany plik nie',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_gigasize_dot_com_links", false))
-        {
-            addFileHost(
-            "gigasize.com",
-            'gigasize\\.com\/get(?:\\.php(?:\/[\\d-]+|\\?d=\\w+)|\/\\w+)',
-            'fileId"',
-            'error">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_2shared_dot_com_links", false))
-        {
-            addFileHost(
-            "2shared.com",
-            '2shared\\.com\/(?:file|video|document)\/\\w*',
-            'File size',
-            'var msg = \'VGhlIGZpbGUgbGluayB0aGF0IHlvdSByZ',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_gigapeta_dot_com_links", false))
-        {
-            addFileHost(
-            "gigapeta.com",
-            'gigapeta\\.com\/dl\/\\w+',
-            'Download file|Скачать файл| Herunterzuladen|Scarica il file|Cargar el fichero|Charger le fichier|<table id="download">',
-            '404|page_error',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_veehd_dot_com_links", false))
-        {
-            addFileHost(
-            "veehd.com",
-            'veehd\.com\/video\/.*?',
-            'No sound|Download video',
-            'Featured Videos',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_ifolder_dot_ru_links", false))
-        {
-            addFileHost(
-            "ifolder.ru|rusfolder.com|rusfolder.net",
-            '(?:ifolder\.ru|rusfolder\\.(?:com|net))\/\\d+',
-            'file-info',
-            'ui-state-error',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filesend_dot_net_links", false))
-        {
-            addFileHost(
-            "filesend.net",
-            'filesend\.net\/download',
-            'buttdl',
-            'File removed|File not found.',
-            'Error'
-            );
-        }
-
-        if (hostSet("Check_fileswap_dot_com_links", false))
-        {
-            addFileHost(
-            "fileswap.com",
-            'fileswap\\.com\/dl\/\\w+',
-            'dlslowbutton"',
-            '<div class="rounded_block_error',
-            'is temporary unavailable|disponible en estos momentos|vorläufig unerreichbar|Файл временно недоступен'
-            );
-        }
-
-        if (hostSet("Check_solidfiles_dot_com_links", false))
-        {
-            addFileHost(
-            "solidfiles.com",
-            'solidfiles\\.com\/d\/\\w+',
-            '<i class="fa fa-download"></i>',
-            '<title>File not available - Solidfiles</title>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uloz_dot_to_links", false))
-        {
-            addFileHost(
-            "uloz.to|ulozto.cz|bagruj.cz|zachowajto.pl",
-            "(?:uloz|ulozto|bagruj|zachowajto)\\.(to|cz|sk|net|pl)\/\\w",
-            'fileDownload">|fileSize">|passwordProtectedFile">',
-            'grayButton deletedFile">|Stránka nenalezena|upload-button"|jako soukromý.',
-            'frmaskAgeForm-disagree',
-            true
-            );
-        }
-
-        if (hostSet("Check_leteckaposta_dot_cz_links", false))
-        {
-            addFileHost(
-            "leteckaposta.cz|sharegadget.com",
-            "(?:leteckaposta\\.cz|sharegadget\\.com)\/\\d+",
-            '<body onload="">',
-            'neexistuje|not exist',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_zippyshare_dot_com_links", false))
-        {
-            addFileHost(
-            "zippyshare.com",
-            "(?:www\\d+\.|)zippyshare\.com\/(?:v\/\\w+\/file\.html|view\\.jsp\\?)",
-            'download.png|Download Now|dlbutton"',
-            'not exist',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_speedshare_dot_org_links", false))
-        {
-            addFileHost(
-            "speedshare.org",
-            "speedshare\.org\/.+",
-            'id="downloadbtn"',
-            'Error',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_mediafire_dot_com_links", false))
-        {
-            addFileHost(
-            "mediafire.com",
-            "mediafire\\.com\/(?:\\?|download(?:\\.php\\?|\/)|(?:file|view)\/)\\w+",
-            'download_file_title"|<a class="btn alt download|<div class="filepreview|<div class="fileName">|<div class="dl_startlink">',
-            'class="error_msg_title">|>Sign Up! It\'s free|<label for="create-file-name">|<div id="privateTitle">This file is currently set to private.</div>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_ulozisko_dot_sk_links", false))
-        {
-            addFileHost(
-            "ulozisko.sk",
-            "ulozisko\.sk\/",
-            'Detaily',
-            'neexistuje',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_speedfile_dot_cz_links", false))
-        {
-            addFileHost(
-            "speedfile.cz",
-            "speedfile\.cz\/(?:cs\/|en\/|sk\/|)\\d+\/",
-            'Stáhnout|<span>Download',
-            'error|soubor byl odst|This file was deleted',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upnito_dot_sk_links", false))
-        {
-            addFileHost(
-            "upnito.sk",
-            "(?:dl.\\.|)upnito\\.sk\/(download|subor|file)",
-            'download.php',
-            'notfound|upload-suborov.php"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_dataport_dot_cz_links", false))
-        {
-            addFileHost(
-            "dataport.cz",
-            "dataport\.cz\/file\/",
-            'premium_download">',
-            '="error">',
-            'optional--',
-            true
-            );
-        }
-
-        if (hostSet("Check_myupload_dot_dk_links", false))
-        {
-            addFileHost(
-            "myupload.dk",
-            "myupload\\.dk\/showfile\/\\w+",
-            '<td class="downloadTblRight"><a class="downloadLink"',
-            '<div id="flash_upload_progress"|<td class="downloadTblRight">File has been removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filebeam_dot_com_links", false))
-        {
-            addFileHost(
-            "filebeam.com|fbe.am",
-            "(?:filebeam\\.com|fbe\\.am)\/\\w+",
-            '<center>File Download Area</center>',
-            '<center>Error:</center>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upstore_dot_net_links", false))
-        {
-            addFileHost(
-            "upstore.net|upsto.re",
-            "(?:upsto\\.re|upstore.net)\/\\w+",
-            '<ul class="features minus">|Download files from folder',
-            '<span class="error">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_adrive_dot_com_links", false))
-        {
-            addFileHost(
-            "adrive.com",
-            "adrive\\.com\/public\/\\w+",
-            'download should start',
-            'no longer available publicly',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filebulk_dot_com_links", false))
-        {
-            addFileHost(
-            "filebulk.com",
-            "filebulk\\.com\/\\w+",
-            '<span id="countdown_str"',
-            'File Not Available',
-            'You can download files up to 100 Mb only.'
-            );
-        }
-
-        if (hostSet("Check_box_dot_com_links", false))
-        {
-            addFileHost(
-            "box.com|box.net",
-            "https?:\/\/(?:www\\.|)box\\.(?:com|net)\/(?:s|shared|public)\/\\w+",
-            'id=\"download_button',
-            '>Box \| 404|error_message_not_found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_ukfilehost_dot_com_links", false))
-        {
-            addFileHost(
-            "ukfilehost.com",
-            "ukfilehost\\.com\/files\/get\/\\w+",
-            'optional--',
-            'The file you have requested cannot be found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_zalil_dot_ru_links", false))
-        {
-            addFileHost(
-            "zalil.ru",
-            "zalil\\.ru\/\\d+",
-            'optional--',
-            'Файл не найден',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploads_dot_bizhat_dot_com_links", false))
-        {
-            addFileHost(
-            "bizhat.com",
-            "uploads\\.bizhat\\.com\/file\/\\d+",
-            'div id="dl">',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_mega_dash_myfile_dot_com_links", false))
-        {
-            addFileHost(
-            "mega-myfile.com",
-            "mega\\-myfile\\.com\/file\/\\d+\/\\w+",
-            '<b>File name:</b>',
-            'Your requested file is not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_speedy_dash_share_dot_com_links", false))
-        {
-            addFileHost(
-            "speedy-share.com",
-            "speedy\\-share\\.com\/\\w+",
-            'File Download',
-            'No such file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filebox_dot_ro_links", false))
-        {
-            addFileHost(
-            "filebox.ro|fbx.ro",
-            "(?:filebox|fbx)\\.ro\/(?:download\\.php\\?key\\=)?\\w+",
-            'fisierul trebuie sa astepti',
-            'downloadezi a expirat',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_100shared_dot_com_links", false)) //checkfiles.html giving false positives
-        {
-            addFileHost(
-            "100shared.com",
-            "100shared\\.com\/\\w+",
-            '<h2>Download File',
-            'No such file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_mixturecloud_dot_com_links", false))
-        {
-            addFileHost(
-            "mixturecloud.com|mixturefile.com|mixturevideo.com",
-            "mixture(?:cloud|file|video)\\.com\/(?:download\\=|media\/(?:download\/)?)\\w+",
-            /download_(?:free|unlimited)">|btn icon i_cloud_download gray|icon\-white"><\/i> Download/,
-            'File not found|class="err"|msgerr alert alert-error text-center">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_yourupload_dot_com_links", false))
-        {
-            addFileHost(
-            "yourupload.com",
-            "yourupload\\.com\/\\w+",
-            '<label>Download',
-            '404',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_fileneo_dot_com_links", false))
-        {
-            addFileHost(
-            "fileneo.com",
-            "fileneo\\.com\/\\w+",
-            'Download File</h3>',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_file_dash_upload_dot_net_links", false))
-        {
-            addFileHost(
-            "file-upload.net",
-            "(?:en\\.|)file\\-upload\\.net\/download\\-\\d+\/\\w+",
-            'downbutton2.gif',
-            'Datei existiert nicht!|File does not exist!',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_fliiby_dot_com_links", false))
-        {
-            addFileHost(
-            "fliiby.com",
-            "fliiby\\.com\/file\/\\d+\/\\w+",
-            '>Download',
-            '<title>Error 404|<title>Error 403|<title>Error 410',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filesmall_dot_com_links", false))
-        {
-            addFileHost(
-            'filesmall.com',
-            "filesmall\\.com\/\\w+\/download\\.html",
-            'value="Download"',
-            'File Not Found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upload_dot_ee_links", false))
-        {
-            addFileHost(
-            'upload.ee',
-            "upload\\.ee\/files\/\\d+\/\\w+",
-            'id="d_l"',
-            'There is no such file',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_share4web_dot_com_links", false))
-        {
-            addFileHost(
-            'share4web.com',
-            "share4web\\.com\/get\/\\w+",
-            'btn_red">',
-            'Page Not Found|File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_limelinx_dot_com_links", false))
-        {
-            addFileHost(
-            'limelinx.com',
-            "limelinx\\.com\/\\w+",
-            'icon-download-alt',
-            '>Error - File Not Found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_novamov_dot_com_links", false))
-        {
-            addFileHost(
-            'novamov.com',
-            "novamov\\.com\/\\w+",
-            'Download file|>Download this video<',
-            'File not found|The video file was removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_skydrive_dot_live_dot_com_links", false))
-        {
-            addFileHost(
-            'live.com|sdrv.ms',
-            "(?:skydrive\\.live\\.com|sdrv\\.ms)\/\\w+",
-            'Download file',
-            'no longer available</h1>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_yourfiles_dot_to_links", false))
-        {
-            addFileHost(
-            'yourfiles.to',
-            "yourfiles\\.to\/\\?d=\\w+",
-            'Download-Link: </strong>',
-            'Die angefragte Datei wurde nicht gefunden',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filedropper_dot_com_links", false))
-        {
-            addFileHost(
-            'filedropper.com|filesavr.com',
-            "(?:filedropper|filesavr)\\.com\/\\w+",
-            'download"',
-            'steps.png',
-            'optional--',
-            true);
-        }
-
-        if (hostSet("Check_filehost_dot_ro_links", false))
-        {
-            addFileHost(
-            'filehost.ro',
-            "filehost\\.ro\/\\d+",
-            'Apasati aici pentru a porni download-ul"',
-            'Acest fisier nu exista in baza de date',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_mijnbestand_dot_nl_links", false))
-        {
-            addFileHost(
-            'mijnbestand.nl',
-            "mijnbestand\\.nl\/Bestand\\-\\w+",
-            'downloadfrm"',
-            'stappen">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_ultrashare_dot_net_links", false))
-        {
-            addFileHost(
-            'ultrashare.net',
-            "ultrashare\\.net\/hosting\/fl\/\\w+",
-            'downloadbutton">',
-            'error">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_dosya_dot_tc_links", false))
-        {
-            addFileHost(
-            'dosya.tc',
-            "dosya\\.tc\/server\\d*\/\\w+",
-            'id="dl"',
-            'Dosya bulunamad',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_exfile_dot_ru_links", false))
-        {
-            addFileHost(
-            'exfile.ru',
-            "exfile\\.ru\/\\d+",
-            'id="link"><a href="/download/',
-            'class="align_left"><p class="red"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_fileshare_dot_ro_links", false))
-        {
-            addFileHost(
-            'fileshare.ro',
-            "fileshare\\.ro\/\\w+",
-            'DOWNLOAD NOW',
-            'Acest fisier nu exista.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_fshare_dot_vn_links", false))
-        {
-            addFileHost(
-            'fshare.vn',
-            "fshare\\.vn\/file\/\\w+",
-            'optional--',
-            'Liên kết bạn chọn không tồn tại trên hệ thống Fshare',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_wikifortio_dot_com_links", false))
-        {
-            addFileHost(
-            'wikifortio.com',
-            "wikifortio\\.com\/\\w+",
-            'screenbutton">',
-            "not found on node|doesn't exist or has expired and is no longer available",
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_wyslijto_dot_pl_links", false))
-        {
-            addFileHost(
-            'wyslijto.pl',
-            "wyslijto\\.pl\/(?:files\/download|plik)\/\\w+",
-            'optional--',
-            /zosta. usuni.ty/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_kiwi6_dot_com_links", false))
-        {
-            addFileHost(
-            'kiwi6.com',
-            "kiwi6\\.com\/file\/\\w+",
-            'download-link"',
-            'Upload not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_localhostr_dot_com_links", false))
-        {
-            addFileHost(
-            'localhostr.com|lh.rs|hostr.co',
-            "(?:localhostr\\.com\/file|lh\\.rs|hostr\\.co\/download)\/\\w+",
-            'download-button',
-            'fourohfour">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_remixshare_dot_com_links", false))
-        {
-            addFileHost(
-            'remixshare.com',
-            "remixshare\\.com\/(?:dl|download)\/\\w+",
-            'linkContainerDiv"',
-            'Sorry, die Datei konnte nicht gefunden werden.|Die angeforderte Datei steht nicht mehr zur Verfügung.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_hidemyass_dot_com_links", false))
-        {
-            addFileHost(
-            'hidemyass.com',
-            "hidemyass\\.com\/files\/\\w+",
-            'dlbutton"',
-            'genericerrorbox">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_tinyupload_dot_com_links", false))
-        {
-            addFileHost(
-            'tinyupload.com',
-            "s\\d+\\.tinyupload\\.com\/(?:index\\.php)?\\?file_id=\\d+",
-            'Download file</h3>',
-            'File was deleted from server.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_gigabase_dot_com_links", false))
-        {
-            addFileHost(
-            'gigabase.com',
-            "gigabase\\.com\/getfile\/\\w+",
-            '/img/but_dnld_regular.jpg|gigaBtn std">',
-            /<div class="all" id="Page404"|(?:File|Page) Not Found/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_trainbit_dot_com_links", false))
-        {
-            addFileHost(
-            'trainbit.com',
-            "trainbit\\.com\/files\/\\w+",
-            'download"',
-            'file not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_videobam_dot_com_links", false))
-        {
-            addFileHost(
-            'videobam.com',
-            "videobam\\.com\/\\w+",
-            'wrap-video"',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_hyperfileshare_dot_com_links", false))
-        {
-            addFileHost(
-            'hyperfileshare.com',
-            "hyperfileshare\\.com\/d\/\\w+",
-            '/img/download_btm_site.gif',
-            'Download URL is incorrect or your file has already been deleted!',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploads_dot_ws_links", false))
-        {
-            addFileHost(
-            'uploads.ws|upl.me',
-            "(?:uploads\\.ws|upl\\.me)\/\\w+",
-            'downloadFile"',
-            'download does not exist or has been removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_keep2share_dot_cc_links", false))
-        {
-            addFileHost(
-            'keep2share.cc|keep2share.com|k2s.cc|keep2s.cc',
-            "(?:(?:keep2share|k2s|keep2s)\\.cc|keep2share\\.com)\/file\/\\w+",
-            'low-speed.png"',
-            'deleted</h5>|<label for="download_links',
-            'optional--',
-            true);
-        }
-
-        if (hostSet("Check_cloud_dash_up_dot_be_links", false))
-        {
-            addFileHost(
-            'cloud-up.be',
-            "(?:download\\.)?cloud\\-up\\.be\/download\\.php\\?file=\\w+",
-            'download file',
-            'This file does not exist!',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploadc_dot_com_links", false)) //Do not use bulkcheck, false reports
-        {
-            addFileHost(
-            'uploadc.com|zalaa.com',
-            "(?:uploadc|zalaa)\\.com\/\\w+",
-            'Slow access"',
-            'File Not Found|file has been removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_fastupload_dot_ro_links", false))
-        {
-            addFileHost(
-            'fastupload.ro|rol.ro',
-            "fastupload\\.(?:rol\\.)?ro\/\\w+",
-            'isAliveRegex',
-            'Fişierele nu mai sunt active!',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_howfile_dot_com_links", false))
-        {
-            addFileHost(
-            'howfile.com',
-            "howfile\\.com\/file\/\\w+",
-            'btn1"',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_free_dot_fr_links", false))
-        {
-            addFileHost(
-            'free.fr',
-            "dl\\.free\\.fr\/(?:getfile\\.pl\\?file=\/?|)\\w+",
-            'Valider et t&eacute;l&eacute;charger le fichier',
-            'Fichier inexistant',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_file4go_dot_com_links", false))
-        {
-            addFileHost(
-            'file4go.com',
-            "file4go\\.com\/d\/\\w+",
-            'gerarlinkdownload"',
-            'REMOVIDO POR <b>DMCA|FILE REMOVED DMCA<|>FILE4GO 404 ARQUIVO',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_hostinoo_dot_com_links", false)) //checkfiles.html not working
-        {
-            addFileHost(
-            'hostinoo.com',
-            "hostinoo\\.com\/\\w+",
-            'btn_download',
-            'File Not Found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sendfile_dot_su_links", false))
-        {
-            addFileHost(
-            'sendfile.su',
-            "sendfile\\.su\/\\w+",
-            'download_click"',
-            'Файл не найден',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_usaupload_dot_net_links", false))
-        {
-            addFileHost(
-            'usaupload.net',
-            "usaupload\\.net\/d\/\\w+",
-            'Download">',
-            'is not available',
-            'In this moment you can`t download this file, please try again in few minutes, we working on this server, SORRY!'
-            );
-        }
-
-        if (hostSet("Check_anonfiles_dot_com_links", false))
-        {
-            addFileHost(
-            'anonfiles.com',
-            "anonfiles\\.com\/file\/\\w+",
-            'download_button"',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_divxstage_dot_eu_links", false))
-        {
-            addFileHost(
-            'divxstage.eu|divxstage.net',
-            "divxstage\\.(?:eu|net)\/video\/\\w+",
-            '>Download the video<',
-            '>This file no longer exists on our servers.<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_herosh_dot_com_links", false))
-        {
-            addFileHost(
-            'herosh.com',
-            "herosh\\.com\/download\/\\d+\/\\w+",
-            'green">Download',
-            'file not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_minus_dot_com_links", false))
-        {
-            addFileHost(
-            'min.us|minus.com',
-            "(?:min\\.us|minus.com)\/\\w+",
-            'btn-action btn-download no-counter',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_m5zn_dot_com_links", false))
-        {
-            addFileHost(
-            'm5zn.com',
-            "m5zn\\.com\/d\/\\?\\d+",
-            'free_account">',
-            'عذرا انتهت صلاحية الملف المطلوب ولايمكنك تحميله حاليا',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_girlshare_dot_ro_links", false))
-        {
-            addFileHost(
-            'girlshare.ro',
-            "girlshare\\.ro\/\\w+",
-            'download-button.gif',
-            'Acest fisier nu exista.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_bin_dot_ge_links", false))
-        {
-            addFileHost(
-            'bin.ge',
-            "bin\\.ge\/dl\/\\w+",
-            'captchacode">',
-            'No file found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_nowvideo_dot_eu_links", false))
-        {
-            addFileHost(
-            'nowvideo.eu|nowvideo.sx',
-            "nowvideo\\.(?:sx|eu)\/video\/\\w+",
-            '>Download this video!<',
-            '>This file no longer exists on our servers',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_shareplace_dot_com_links", false))
-        {
-            addFileHost(
-            'shareplace.com',
-            "shareplace\\.com\/(?:index1\\.php\\?a=|\\?)",
-            'wait">',
-            'Your requested file is not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_terafiles_dot_net_links", false))
-        {
-            addFileHost(
-            'terafiles.net',
-            "terafiles\\.net\/v\\-\\d+",
-            'download file',
-            'Le fichier que vous souhaitez télécharger n\'est plus disponible sur nos serveurs.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploadmb_dot_com_links", false))
-        {
-            addFileHost(
-            'uploadmb.com',
-            "uploadmb\\.com\/dw\\.php\\?id=\\w+",
-            'wait">',
-            'The file you are requesting to download is not available',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upload_dash_il_dot_com_links", false))
-        {
-            addFileHost(
-            'upload-il.com|upload-il.net|uploadilcloud.com|filez.bz|przeslij.net|pir.co.il|directil.com',
-            "(?:upload\\-il\\.(?:com|net)|uploadilcloud\\.com|filez\\.bz|przeslij\\.net|pir\\.co\\.il|directil\\.com)\/(?:en|he|ar|ru|view|)\/?\\w+",
-            'captchaUl">',
-            /\\\u05E9\\u05D2\\\u05D9\\\u05D0\\\u05D4: \\\u05E7\\\u05D5\\\u05D1\\\u05E5 \\\u05D0\\\u05D5 \\\u05D3\\\u05E3 \\\u05DC\\\u05D0 \\\u05E0\\\u05DE\\\u05E6\\\u05D0|Your requested file is not found./,
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_bayfiles_dot_net_links", false))
-        {
-            addFileHost(
-            'bayfiles.net',
-            "bayfiles\\.net\/file\/\\w+\/\\w+",
-            'download-header">',
-            'class="not-found">',
-            'optional--'
-            );
-        }*/
-
-        if (hostSet("Check_bitupload_dot_com_links", false))
-        {
-            addFileHost(
-            'bitupload.com',
-            "bitupload\\.com\/\\w+",
-            'limited">',
-            'two-col">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_ravishare_dot_com_links", false))
-        {
-            addFileHost(
-            'ravishare.com',
-            "ravishare\\.com\/\\w+",
-            'Free Download">',
-            '>File Not Found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_promptfile_dot_com_links", false))
-        {
-            addFileHost(
-            'promptfile.com',
-            "promptfile\\.com\/l\/[a-zA-Z0-9-]",
-            /<button type="submit" class="gray_btn">Continue to File<\/button>|<a href=".+" class="green_btn download_btn">Download File<\/a>/,
-            /\s+<div id="not_found_msg"/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filebar_dot_kz_links", false))
-        {
-            addFileHost(
-            'filebar.kz',
-            "filebar\\.kz\/files\/\\d+",
-            'I don\'t think this is a filehost tbh but meh...',
-            'Ошибка 404. Страница не найдена!',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_yourfilelink_dot_com_links", false))
-        {
-            addFileHost(
-            'yourfilelink.com',
-            "yourfilelink\\.com\/get\\.php\\?fid=\\d+",
-            'optional--',
-            'File not found.</div>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_1file_dot_cc_links", false))
-        {
-            addFileHost(
-            '1f.cc|1file.cc',
-            "1f(?:ile)?\\.cc\/\\w+",
-            'download-btn">',
-            '>File Not Found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_qshare_dot_com_links", false))
-        {
-            addFileHost(
-            'quickshare.com|qshare.com',
-            "(?:quickshare|qshare)\\.com\/get\/\\d+",
-            '>Free<',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filewist_dot_com_links", false))
-        {
-            addFileHost(
-            'filewist.com',
-            "filewist\\.com\/\\w+",
-            'link btn-free"',
-            '>File not found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_airupload_dot_com_links", false))
-        {
-            addFileHost(
-            'airupload.com',
-            "airupload\\.com\/file\/i\/\\w+",
-            'download" value="Slow download',
-            '<span class="glyph attention"></span>File was removed',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_dropbox_dot_com_links", false)) //shared links
-        {
-            addFileHost(
-            'dropbox.com',
-            "dropbox\\.com\/sh?\/\\w+",
-            'default_content_download_button" class="freshbutton-blue">',
-            '>Nothing Here<|>Error (404)<|>Restricted Content|>Access to this link has been disabled.|The file you\'re looking for has been moved or deleted.',
-            />Error \(509\)</
-            );
-        }
-
-        if (hostSet("Check_wikisend_dot_com_links", false))
-        {
-            addFileHost(
-            'wikisend.com',
-            "wikisend\\.com\/download\/\\d+",
-            'button_download.gif" alt="Download file',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_webfilehost_dot_com_links", false))
-        {
-            addFileHost(
-            'webfilehost.com',
-            "webfilehost\\.com\/\\?mode=viewupload&id=\\d+",
-            'linkDownload">',
-            'File not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_wrzuc_dot_to_links", false))
-        {
-            addFileHost(
-            'wrzuc.to',
-            "wrzuc.to\/\\w+",
-            'Download file">',
-            'został usunięty przez użytkownika.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_myuplbox_dot_com_links", false))
-        {
-            addFileHost(
-            'myuplbox.com',
-            "myuplbox\\.com\/file\/download\/\\d+",
-            'dwl_button corner-all">Click',
-            'deleted_file">File Not Found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filesflash_dot_com_links", false))
-        {
-            addFileHost(
-            'filesflash.com|filesflash.net',
-            "filesflash\\.(?:com|net)\/\\w+",
-            'freedownload.php">',
-            />That file (?:was deleted|is not available)/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_demo_dot_ovh_dot_eu_links", false))
-        {
-            addFileHost(
-            'ovh.eu',
-            "demo\\.ovh\\.eu\/(?:en|de)\/\\w+",
-            'download.gif"',
-            'p_point">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_dwn_dot_so_links", false))
-        {
-            addFileHost(
-            'dwn.so|dwnshare.pl',
-            "(?:dwn\\.so|dwnshare.pl)\/show\\-file\/\\w+",
-            '$(\'.link_download\').click(function()',
-            '<div id="main_container',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sharephile_dot_com_links", false))
-        {
-            addFileHost(
-            'sharephile.com',
-            "sharephile\\.com\/\\w+",
-            '<h1 class="download-file">',
-            />\\\u0424\\\u0430\\\u0439\\\u043B \\\u043D\\\u0435 \\\u043D\\\u0430\\\u0439\\\u0434\\\u0435\\\u043D./,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_maherfile_dot_com_links", false))
-        {
-            addFileHost(
-            'maherfire.com',
-            "maherfire\\.com\/\\?d=\\w+",
-            '<input type="button" onclick="startDownload();"',
-            '>Your requested file is not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_droidbin_dot_com_links", false))
-        {
-            addFileHost(
-            'droidbin.com|apkhosting.com',
-            "(?:droidbin\\.com|apkhosting.com)\/\\w+",
-            'optional--',
-            '>That\'s a 404<|<li>File has been removed by the site administrator.</li>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_d_dash_h_dot_st_links", false))
-        {
-            addFileHost(
-            'd-h.st',
-            "d\\-h\\.st\/\\w+",
-            '>File Information<\/h2>',
-            '>File Not Found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filefactory_dot_com_links", false) && !genset("Filefactory_API_Check", false))
-        {
-            addFileHost(
-            'filefactory.com',
-            "filefactory\\.com\/file\/\\w+",
-            /<div id="download-(?:free|premium)|<form action="\/error\.php\?code=257"/,
-            /(?:<h2>(?:File Removed|Invalid Download Link|File Unavailable|Server Failed|Datei entfernt|Ung.ltiger Download-Link))|>Account suspended/,
-            /<h2>Premium Account Required|<form action="\/error\.php\?code=253/
-            );
-        }
-
-        if (hostSet("Check_jumbofiles_dot_com_links", false))
-        {
-            addFileHost(
-            'jumbofiles.com',
-            "jumbofiles\\.com\/\\w+",
-            '<h3>Download File',
-            />File\n*\s*Not Found/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_cloudstor_dot_es_links", false))
-        {
-            addFileHost(
-            'cloudstor.es',
-            "cloudstor\\.es\/f\/\\w+",
-            '<div id="btn_download"',
-            '>File not found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_moevideo_dot_net_links", false))
-        {
-            addFileHost(
-            'moevideo.net',
-            "moevideo\\.net\/video\/\\d+\\.\\w+",
-            />Download\s*video</,
-            '>Video not found<',
-            'optional--'
-            );
-        }
-
-        /*if (hostSet("Check_dizzcloud_dot_com_links", false))
-        {
-            addFileHost(
-            'dizzcloud.com',
-            "dizzcloud\\.com\/(?:file|dl)?\/?\\w+",
-            /<div\s+id="download-counter">/,
-            '<div class="font-404-1">',
-            '>File is temporary unavailable<'
-            );
-        }*/
-
-        if (hostSet("Check_shared_dot_com_links", false))
-        {
-            addFileHost(
-            'shared.com',
-            "shared\\.com\/\\w+",
-            /<div class="attachment\-icon">\n\s*<a href="https?:\/\/(?:dl|\d+\.ss)\.shared\.com\/\w+/,
-            'optional--',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filetrip_dot_net_links", false))
-        {
-            addFileHost(
-            'filetrip.net',
-            "filetrip\\.net\/dl\\?\\w+",
-            '<input type="submit" name="download" value="Download"|<i>Your download will be ready in a second...</i>',
-            '>Sorry, the file you requested does not exist.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_filepi_dot_com_links", false))
-        {
-            addFileHost(
-            'filepi.com',
-            "filepi\\.com\/\\w+",
-            '<button class="submit" id="button_start"',
-            '<div id="big_title">File not found or deleted :(',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_2downloadz_dot_com_links", false))
-        {
-            addFileHost(
-            '2downloadz.com',
-            "2downloadz\\.com\/\\w+",
-            '<div title="Slow Download"',
-            '>File not found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_qfpost_dot_com_links", false))
-        {
-            addFileHost(
-            'qfpost.com',
-            "qfpost\\.com\/file\/d\\?g=\\w+",
-            '<input src="/i/download2.png"',
-            '>File not found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_superupload_dot_com_links", false))
-        {
-            addFileHost(
-            'superupload.com',
-            "superupload\\.com\/(?:\\?|files\/)\\w+",
-            '<span id="regularspeed" class="speedt">',
-            '>DUNNO<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_tropicshare_dot_com_links", false))
-        {
-            addFileHost(
-            'tropicshare.com',
-            "tropicshare\\.com\/files\/\\d+",
-            '"free-download">FREE<br/>',
-            '>FNF<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_mystore_dot_to_links", false))
-        {
-            addFileHost(
-            'mystore.to',
-            "mystore\\.to\/dl\/\\w+",
-            /<button wert="\w+">Download File</,
-            '>file not found<', //?
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_putcker_dot_com_links", false))
-        {
-            addFileHost(
-            'putcker.com',
-            "putcker\\.com\/.+",
-            '<div class="downloadfree">',
-            'div_file"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_turtleshare_dot_com_links", false))
-        {
-            addFileHost(
-            'turtleshare.com',
-            "turtleshare\\.com\/download\/\\w+",
-            /<div style=".+" id="download_link">Preparing Download/,
-            'We do not know this file.',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_flashx_dot_tv_links", false))
-        {
-            addFileHost(
-            'flashx.tv',
-            "flashx\\.tv\/video\/\\w+",
-            /<iframe width="\d+" height="\d+" src="http:\/\/play\.flashx\.tv\/player\/embed\.php/,
-            '>File not found<', //?
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_nosupload_dot_com_links", false))
-        {
-            addFileHost(
-            "nosupload.com",
-            "nosupload\\.com\/(?:\\?d=)?\\w+",
-            'op" value="download',
-            />(?:File Not Found|The file was removed by administrator)</,
-            'optional--',
-            true
-            );
-        }
-
-        if (hostSet("Check_fileim_dot_com_links", false))
-        {
-            addFileHost(
-            'fileim.com',
-            "fileim\\.com\/file\/\\w+",
-            '<a id="freedown"',
-            '>Not Found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_socifiles_dot_com_links", false))
-        {
-            addFileHost(
-            'socifiles.com',
-            "socifiles\\.com\/d\/\\w+",
-            '<h1 class="file-link"',
-            'something something darkside', //?
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_file4u_dot_pl_links", false))
-        {
-            addFileHost(
-            'file4u.pl',
-            'file4u\\.pl\/download\/\\d+',
-            />Zwyk.y U.ytkownik<\/button>/,
-            />\s*Plik kt.ry pr.bujesz pobra./,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_kie_dot_nu_links", false))
-        {
-            addFileHost(
-            'kie.nu',
-            'kie\\.nu\/\\w+',
-            '<input type="submit" value="download" id="submit-dl" />',
-            '404 NOT FOUND',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_file-space_dot_org_links", false))
-        {
-            addFileHost(
-            'file-space.org',
-            'file\\-space\\.org\/files\/get\/[a-z0-9-]+',
-            '<a href="#" onclick="javascript:gotofree();"',
-            'nothingyet',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sendfile_dot_pl_links", false))
-        {
-            addFileHost(
-            'sendfile.pl',
-            'sendfile\\.pl\/\\d+',
-            '<font color="#0000FF"><b><u>Pobierz</u>',
-            '<div class="error">Plik nie istnieje!</div>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_uploadizer_dot_net_links", false))
-        {
-            addFileHost(
-            'uploadizer.net',
-            'uploadizer\\.net\/\\?d=\\d+',
-            '<input type="button" onclick="startDownload();"',
-            '<div class="error">Your requested file is not found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_twojepliki_dot_eu_links", false))
-        {
-            addFileHost(
-            'twojepliki.eu',
-            'twojepliki\\.eu\/\\w+',
-            '<td><a class="free-btn-4 free-btn" href="/download/free',
-            '<h1>File not found. Probably it was deleted.</h1>|<div class="code-404" style="display:none;">404</div>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_video_dot_tt_links", false))
-        {
-            addFileHost(
-            'video.tt',
-            'video\\.tt\/video\/\\w+',
-            '<div class="video_player" id="videoPlayer">',
-            '<font size="5">This video is no longer available</font>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_hightail_dot_com_links", false))
-        {
-            addFileHost(
-            'hightail.com|yousendit.com',
-            '(?:hightail|yousendit)\\.com\/download\/\\w+',
-            '<a id="saveToDesktop" class="btn-save hightailWhite"',
-            'deadregex',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upgolden_dot_com_links", false))
-        {
-            addFileHost(
-            'upgolden.com|shallfile.com',
-            '(?:upgolden\\.com|shallfile\\.com)\/download\\.php\\?file=\\d{3}',
-            '<input type="submit" value="Continue as a Guest"',
-            '>File not found<', //?
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_poslisoubor_dot_cz_links", false))
-        {
-            addFileHost(
-            'poslisoubor.cz',
-            'poslisoubor\\.cz\/stahni\/\\w+',
-            '<i>kliknutím na název souburu začne stahování</i>',
-            />\s*Zadaná zásilka již na/,
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_edisk_dot_cz_links", false))
-        {
-            addFileHost(
-            'edisk.cz|edisk.sk|edisk.eu',
-            '(?:(?:muj|data)\\d*\\.|)edisk\\.(?:cz|sk|eu)\/(?:|(?:cz|sk|en|pl))',
-            '<a class="newdlbutton',
-            '<h3>This file does not exist',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_creafile_dot_com_links", false))
-        {
-            addFileHost(
-            'creafile.com',
-            'creafile\\.com\/download\/\\w+',
-            '>>ToBeAdded--',
-            '>File not found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_seacloud_dot_cc_links", false))
-        {
-            addFileHost(
-            'seacloud.cc',
-            'seacloud\\.cc\/d\/\\w+\/files\/\\?p=.+',
-            '<a href="/repo/',
-            '>>ToBeAdded--',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_dropjiffy_dot_com_links", false))
-        {
-            addFileHost(
-            'dropjiffy.com',
-            'dropjiffy\\.com\/f\/\\w+',
-            '>Start Download</a>',
-            '<div class="expiredtext">',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_gulfup_dot_com_links", false))
-        {
-            addFileHost(
-            'gulfup.com',
-            'gulfup\\.com\/\\?\\w+',
-            '<img src="http://www.gulfup.com/styles/gulfup2/images/download.gif"',
-            '<title>Sorry We Can\'t Find The File  !!</title>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_quickshare_dot_cz_links", false))
-        {
-            addFileHost(
-            'quickshare.cz',
-            'quickshare\\.cz\/stahnout-soubor\/\\d+',
-            ':void(0)" onclick="stahnoutSoubor()">',
-            '<small>error 404</small>|<h1>Chyba! Vámi zadaný soubor neexistuje.</h1>',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_sharerepo_dot_com_links", false))
-        {
-            addFileHost(
-            'sharerepo.com',
-            'sharerepo\\.com\/(?:f\/)?\\w+',
-            /<a class="btn" href="\/f\/download\/\w+">Download<\/a>/,
-            '>File Not Found<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_purevid_dot_com_links", false))
-        {
-            addFileHost(
-            'purevid.com',
-            'purevid\\.com\/v\/\\w+',
-            '--ToBeAdded!',
-            'Sorry, this video has been deleted',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_tempfiles_dot_net_links", false))
-        {
-            addFileHost(
-            'tempfiles.net',
-            'tempfiles\\.net\/download\/\\d+',
-            '>>ToBeAdded',
-            '>File not found!<',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_thaicyberupload_dot_com_links", false))
-        {
-            addFileHost(
-            'thaicyberupload.com',
-            'thaicyberupload\\.com\/get\/\\w+',
-            '>>TOBEADDED!',
-            '<form method="post" enctype="multipart/form-data" id="frmupload"',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_linkz_dot_ge_links", false))
-        {
-            addFileHost(
-            'linkz.ge',
-            'linkz\\.ge\/file\/\\d+',
-            '>>ToBeAdded',
-            'No file found',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_nosvideo_dot_com_links", false))
-        {
-            addFileHost(
-            'nosvideo.com',
-            'nosvideo\\.com\/\\?v=\\w+',
-            'name="method_free"|id="btn_download"|value="Free Download"',
-            />(?:File not found|We're sorry, the file you are looking for could not be found.|The file was removed by administrator|Datei nicht gefunden|No such file|The file you are trying to download is no longer available)\s*<|<div id="div_file" class="upload_block">/i,
-            '>This server is in maintenance mode|<img src="/images/under.gif"'
-            );
-        }
-
-        if (hostSet("Check_sdilej_dot_cz_links", false))
-        {
-            addFileHost(
-            'sdilej.cz',
-            'sdilej\\.cz\/\\w+',
-            '>Stáhnout FREE</a>',
-            '>>ToBeAdded!',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upf_dot_co_dot_il_links", false))
-        {
-            addFileHost(
-            'upf.co.il',
-            'upf\\.co\\.il\/file\/\\d+\\.html',
-            '<div id="abc">',
-            '>>ToBeAdded',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_upload2box_dot_com_links", false))
-        {
-            addFileHost(
-            'upload2box.com',
-            'upload2box\\.com\/files\/\\w+',
-            '<input type="button" value="Free Download" id="dlbutton"',
-            '>>ToBeAdded',
-            'optional--'
-            );
-        }
-
-        if (hostSet("Check_safelinking_dot_net_links", false))
+		//INNER_LINK (Hotfile.com/links/)
+		processRedirectorLinkEx: function(link, redirectorId) {
+			link.className = 'container_link';
+
+			GM_xmlhttpRequest({
+				method: 'GET',
+				url: link.href,
+				headers: {
+					'User-agent': rUA(),
+					'Accept': 'text/xml',
+					'Referer': ""
+				},
+				onload: function(result) {
+					link.href = result.responseText.match(hostsCheck[redirectorId].innerLinkRegex)[1];
+
+					hostsCheck[redirectorId].cProcessed++;
+
+					if (hostsCheck[redirectorId].cProcessed >= hostsCheck[redirectorId].cTotal)
+					checkLinks('container_link');
+				}
+			});
+		}
+	}
+
+	foundMirrors.RH = uniqArray(foundMirrors.RH);
+	redirLength = foundMirrors.RH.length;
+	if (redirLength > 0) {
+		//process redirector links
+		var hostID, links, y;
+		for(var redirIdx = 0; redirIdx < redirLength; redirIdx++)
 		{
-			addFileHost(
-			'safelinking.net',
-			"safelinking\\.net\/p\/\\w{10}",
-			'color:green;"',
-			'color:red;"|<p>This link does not exist.',
-			'optional--',
-			true);
+			hostID = foundMirrors.RH[redirIdx];
+			links = uniqArray(hostsCheck[hostID].links)
+			hostsCheck[hostID].cTotal = links.length;
+
+			cLinksTotal += links.length;
+			y = links.length;
+
+			while(y--) {
+				switch(hostsCheck[hostID].type) {
+					case redirectorTypes.HTTP_302:       redirFunctions.processRedirectorLink(links[y], hostID); break;
+					case redirectorTypes.INNER_LINK:        redirFunctions.processRedirectorLinkEx(links[y], hostID); break;
+					default:
+				}
+			}
+
+			hostsCheck[hostID].links = [];
+		}
+	}
+	foundMirrors.RH = [];
+	//
+	//HANDLING REDIRECTORS END
+	//
+
+	//STANDARD LINKCHECKING START
+	foundMirrors.WC = uniqArray(foundMirrors.WC);
+	var WCLength = foundMirrors.WC.length;
+	if (WCLength > 0) {
+		var hostID, links, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop, y;
+		while(WCLength--) {
+			hostID = foundMirrors.WC[WCLength];
+			links = uniqArray(hostsCheck[hostID].links);
+
+			if (filterId == null)
+			{
+				cLinksTotal += links.length;
+			}
+
+			isAliveRegex = hostsCheck[hostID].liveRegex;
+			isDeadRegex = hostsCheck[hostID].deadRegex;
+			isUnavaRegex = hostsCheck[hostID].unavaRegex;
+			tryLoop = hostsCheck[hostID].tryLoop;
+
+			y = links.length;
+
+			while (y--)
+			{
+				geturl(links[y], isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop);
+			}
+			hostsCheck[hostID].links = [];
+		}
+	}
+	foundMirrors.WC = [];
+	//STANDARD LINKCHECKING END
+
+	//OBSOLETE FILE HOSTS PROCESSING START
+	foundMirrors.OH = uniqArray(foundMirrors.OH);
+	var OHLength = foundMirrors.OH.length;
+	if (OHLength > 0) {
+		var hostID, links, y;
+		while(OHLength--) {
+			hostID = foundMirrors.OH[OHLength];
+			links = uniqArray(hostsCheck[hostID].links);
+
+			if (filterId == null)
+			{
+				cLinksTotal += links.length;
+			}
+
+			y = links.length;
+
+			while (y--)
+			{
+				$(links[y]).attr('warlc_error', 'Cause de l\'erreur: <b>Obsolete filehosting.</b>');
+				displayTheCheckedLink(links[y], "obsolete_link");
+			}
+			hostsCheck[hostID].links = [];
+		}
+	}
+	foundMirrors.OH = [];
+	//OBSOLETE FILE HOSTS PROCESSING END
+
+	//DIRECT LINKCHECKING START
+	foundMirrors.HC = uniqArray(foundMirrors.HC);
+	var HCLength = foundMirrors.HC.length;
+	if (HCLength > 0) {
+		var hostID, links, isAliveRegex, isDeadRegex, y;
+		while(HCLength--) {
+			hostID = foundMirrors.HC[HCLength];
+			links = uniqArray(hostsCheck[hostID].links);
+
+			if (filterId == null)
+			{
+				cLinksTotal += links.length;
+			}
+
+			isAliveRegex = hostsCheck[hostID].liveRegex;
+			isDeadRegex = hostsCheck[hostID].deadRegex;
+
+			y = links.length;
+
+			while (y--)
+			{
+				geturlHeader(links[y], isAliveRegex, isDeadRegex);
+			}
+			hostsCheck[hostID].links = [];
+		}
+	}
+	foundMirrors.HC = [];
+	//DIRECT LINKCHECKING END
+
+	//Bulkcheck hosts controller
+	foundMirrors.BC = uniqArray(foundMirrors.BC);
+	var BCLength = foundMirrors.BC.length;
+	if (BCLength > 0) {
+		var hostID, links, y, corrLink, m, n;
+		while(BCLength--) {
+			hostID = foundMirrors.BC[BCLength];
+			links = uniqArray(hostsCheck[hostID].links);
+			if (filterId == null)
+			{
+				cLinksTotal += links.length;
+			}
+
+			//Replace anchors by href's, and processes link corrections
+			y = links.length;
+			while(y--) {
+				corrLink = links[y].href;
+				if (hostsCheck[hostID].corrMatch && hostsCheck[hostID].corrMatch.test(corrLink)) corrLink = corrLink.match(hostsCheck[hostID].corrMatch)[1]; //link match corrections
+				if (hostsCheck[hostID].corrReplWhat && hostsCheck[hostID].corrReplWith) corrLink = corrLink.replace(hostsCheck[hostID].corrReplWhat, hostsCheck[hostID].corrReplWith); //link replace corrections
+				links[y] = corrLink;
+			}
+
+			//Filter out dupe links
+			links = uniqArray(links);
+
+			m = links.length;
+			n = hostsCheck[hostID].blockSize;
+			if (m > n) {
+				//insert block separators (RAND_STRING) into the array
+				for(var i = n; i < (Math.floor(m/n)+1)*n; i += n + 1)
+				{
+					links.splice(i, 0, RAND_STRING);
+				}
+			}
+
+			var sep = hostsCheck[hostID].splitSeparator;
+
+			hostsCheck[hostID].func.call({     links:            links.join(sep).replace(new RegExp(sep.replace(/\\/g, "\\") + RAND_STRING + sep.replace(/\\/g, "\\"), "g"), RAND_STRING).replace(new RegExp(RAND_STRING + "$"), "").split(RAND_STRING),
+			apiUrl:         hostsCheck[hostID].apiUrl,
+			postData:         hostsCheck[hostID].postData,
+			resLinkRegex:    hostsCheck[hostID].resLinkRegex,
+			resLiveRegex:    hostsCheck[hostID].resLiveRegex,
+			resDeadRegex:    hostsCheck[hostID].resDeadRegex,
+			resUnavaRegex:     hostsCheck[hostID].resUnavaRegex,
+			separator:         sep
+		});
+
+		hostsCheck[hostID].links.length = 0;
+	}
+}
+foundMirrors.BC = [];
+
+//Processes link
+//
+// [string]        link            link URL
+// [string]     isAliveRegex    alive link regex
+// [string]     isDeadRegex        dead link regex
+// [string]     isUnavaRegex    unavailable link regex
+// [boolean]    tryLoop            repeats request until succeeded
+function geturl(link, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop)
+{
+	//host exceptions
+	if ((link.href.contains("yourfilelink.com/")) && (!link.href.contains("&dv=1"))) link.href += "&dv=1"; //to bypass yourfilelink wait times
+	link.href = link.href.replace("shareplace.com/?", "shareplace.com/index1.php?a="); //to bypass shareplace iframe on shareplace.com/?{id} links
+	link.href = link.href.replace('ultramegabit.com', 'uploadto.us'); //to bypass ultramegabit ssl certificates warnings
+
+	GM_xmlhttpRequest(
+		{
+			method: 'GET',
+			url: link.href,
+			headers: {
+				'User-agent': rUA(),
+				'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+				'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
+				'Referer': ""
+			},
+			onload: function (result)
+			{
+				var res = result.responseText;
+
+				//console.log(res);
+
+				if (res.contains(isAliveRegex))
+				{
+					displayTheCheckedLink(link, 'alive_link');
+					return;
+				}
+
+				if (res.contains(isDeadRegex))
+				{
+					displayTheCheckedLink(link, 'adead_link');
+					return;
+				}
+
+				if (res.contains(isUnavaRegex))
+				{
+					displayTheCheckedLink(link, 'unava_link');
+					return;
+				}
+
+				var resStatus = result.status;
+
+				if (resStatus == 404)
+				{
+					displayTheCheckedLink(link, 'adead_link');
+					return;
+				}
+
+				if (resStatus == 500 || resStatus == 503 || resStatus == 403 || res.contains('>Too Many Requests')) //not found/available/temp. unava/too many requests: solely for k2s.cc
+				{
+					if (tryLoop)
+					{
+						//wait 1-5 seconds and repeat the request
+						setTimeout(function(){geturl(link, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop)}, 1000 + (Math.random() * 4000));
+					}
+					else
+					{
+						displayTheCheckedLink(link, 'unava_link');
+					}
+
+					return;
+				}
+
+				displayTheCheckedLink(link, 'unknown_link');
+				res = "";
+			},
+			onerror: function ()
+			{
+				displayTheCheckedLink(link, 'unknown_link');
+			}
+		});
+	}
+
+	function geturlHeader(link, isAliveRegex, isDeadRegex)
+	{
+		if (link.href.contains("disk.karelia.pro/") && !link.href.contains(/karelia\.pro\/fast\/\w+\/.+?/)) {
+			geturl(link, 'diskFile\"', '<div id="center">\n+<\/div>', 'optional--', false);
+			return;
 		}
 
-        if (hostSet("Check_fileboom_dot_me_links", false)) {
-            addFileHost(
-            'fileboom.me|fboom.me',
-            'f(?:ile)?boom\\.me\/file\/[a-zA-Z0-9]{13}',
-            '<a id="download-free" href="#"|>Premium download</button>', //last part is for premium users only
-            '<title>File not found or deleted',
-            'optional--');
-        }
+		if (link.href.contains("demo.ovh.") && link.href.contains("/download/")) {
+			specificOvhCheck(link);
+			return;
+		}
 
-        if (hostSet("Check_filesupload_dot_org_links", false))
-        {
-            addFileHost(
-            'filesupload.org',
-            'filesupload\\.org\/\\w+',
-            '<a href="/download-or-watch/',
-            '<title>File not found',
-            'optional--');
-        }
+		GM_xmlhttpRequest(
+			{
+				method: 'HEAD',
+				url: link.href,
+				headers: {
+					'User-agent': rUA(),
+					'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+					'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
+					'Referer': ""
+				},
+				onload: function (result)
+				{
+					var resStatus = result.status;
+					var resHeaders = "";
 
-        if (hostSet("Check_uplooad_dot_net_links", false)) //has API but doesn't work properly
-        {
-            addFileHost(
-            'uplooad.net',
-            'uplooad\\.net\/file\/[A-Z0-9]{8}\/#!.+',
-            '<i class="fa fa-download fa-lg">',
-            '<div class="alert alert-danger"><strong>Error ! </strong>This file has been deleted',
-            'optional--');
-        }
+					if (resStatus == 403 || resStatus == 404 || resStatus == 500) //not found/available
+					{
+						displayTheCheckedLink(link, 'adead_link');
+						return;
+					}
 
-        if (hostSet("Check_openload_dot_io_links", false)) //has API but doesn't work properly
-        {
-            addFileHost(
-            'openload.io',
-            'openload\\.io\/f\/[a-zA-Z0-9-_]+',
-            '<button id="btnDl" class="btn btn-primary btn-bootstrap">Download</button>|<strong>FREE DOWNLOAD</strong>',
-            '<title>File not found ;(',
-            'optional--');
-        }
+					if (resStatus == 509) //public traffic exhausted
+					{
+						displayTheCheckedLink(link, 'unava_link');
+						return;
+					}
 
-        if (hostSet("Check_4upld_dot_com_files", false))
-        {
-            addFileHost(
-            '4upld.com',
-            '4upld\\.com\/[a-zA-Z0-9]+',
-            '<div class="download-timer" style="display:none;">',
-            '<li>File not found|<li>File has been removed due to copyright issues',
-            'optional--');
-        }
+					resHeaders = result.responseHeaders;
+					//console.log(resHeaders);
 
-        if (hostSet("Check_ninjashare_dot_pl_links", false))
-        {
-            addFileHost(
-            'ninjashare.pl',
-            'ninjashare\\.pl\/f\/\\w+',
-            '<input type="submit" class="button" value="Download"',
-            '<div class="main">\nFile does not exists',
-            'optional--');
-        }
-    }
+					if (resHeaders.contains(isDeadRegex) && !link.href.contains('archive.org/'))
+					{
+						displayTheCheckedLink(link, 'adead_link');
+						return;
+					} else if (link.href.contains('archive.org/') && resHeaders.contains(isDeadRegex)) {
+						specArchCheck(link);
+						return;
+					}
 
-    //hosts with direct download, so they must be requested for headers only
-    function initFileHostsHeadersOnly()
-    {
-        var aFHHCOCount = 1;
-        function addFileHostHeadersOnly(hostName, linkRegex, isAliveRegex, isDeadRegex)
-        {
-            hostName = hostName.split("|");
-            var i = hostName.length;
+					if (resHeaders.contains(isAliveRegex))
+					{
+						displayTheCheckedLink(link, 'alive_link');
+						return;
+					}
+
+					if (link.href.contains('rapidgator.net|rg.to')) {
+						geturl(
+							link,
+							/btm" style="height: \d+px;">\s*<p/,
+							'<h3>File not found</h3>|<span>Get the advantages of premium-account',
+							'optional--',
+							true);
+							return;
+						}
+
+						displayTheCheckedLink(link, 'unknown_link');
+					},
+					onerror: function ()
+					{
+						displayTheCheckedLink(link, 'unknown_link');
+					}
+				});
+			}
+
+			function specArchCheck(link) {
+				var alive = /<title>Index of/;
+				var dead = /<h1>Item not available<\/h1>/;
+				var unava = /optional--/;
+				geturl(link, alive, dead, unava);
+			}
+
+			//Specific handler for demo.ovh.com/download/ direct link
+			function specificOvhCheck(link) {
+				GM_xmlhttpRequest(
+					{
+						method: 'HEAD',
+						url: link.href,
+						headers: {
+							'User-agent': rUA(),
+							'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+							'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
+							'Referer': ""
+						},
+						onload: function (result)
+						{
+							var resHeaders = "";
+							resHeaders = result.responseHeaders;
+							if (resHeaders.contains('Content-Type: application/octet-stream'))
+							{
+								displayTheCheckedLink(link, 'alive_link');
+								return;
+							}
+
+							if (resHeaders.contains('Content-Type: text/html'))
+							{
+								var liveRegex = 'download.gif"';
+								var deadRegex = 'p_point">';
+								var unavRegex = 'optional--';
+								geturl(link, liveRegex, deadRegex, unavRegex);
+								return;
+							}
+
+						},
+						onerror: function ()
+						{
+							displayTheCheckedLink(link, 'unava_link');
+						}
+					});
+				}
+
+				//Delinkfifies the <a> element object
+				function delinkifyLink(link)
+				{
+					var spanElm = document.createElement("span");
+					spanElm.className = link.className;
+					spanElm.innerHTML = link.innerHTML;
+
+					if (Display_tooltip_info)
+					{
+						spanElm.href = link.href;
+						$(spanElm).attr('warlc_error', $(link).attr('warlc_error'));
+
+						switch (link.className){
+							case "alive_link": spanElm.addEventListener("mouseover", displayTooltipInfo, false); break
+							case "adead_link": spanElm.addEventListener("mouseover", displayTooltipError, false); break;
+							case "unava_link": //reserved
+							default:
+						}
+					}
+
+					link.parentNode.replaceChild(spanElm, link);
+				}
+
+				//Assigns result status to the <a> element object and calls delinkifying eventually
+				//Possible result states: adead_link, alive_link, unava_link
+				function displayTheCheckedLink(link, resultStatus)
+				{
+					//console.log(link);
+					link.className = resultStatus;
+					var hostname = gimmeHostName2(link.href);
+					link.href = ANONYMIZE_SERVICE + link.href;
+
+					if (Display_tooltip_info)
+					{
+						switch (resultStatus){
+							case "alive_link": link.addEventListener("mouseover", displayTooltipInfo, false); break;
+							case "adead_link": link.addEventListener("mouseover", displayTooltipError, false); break;
+							case "obsolete_link": link.addEventListener("mouseover", displayTooltipError, false); break;
+							case "unava_link": //reserved
+							default:
+						}
+					}
+
+					if (doNotLinkify)
+					{
+						delinkifyLink(link);
+					}
+
+					cLinksProcessed++;
+
+					if (resultStatus == "alive_link")
+					{
+						cLinksAlive++;
+						updateHosts('live', hostname);
+						return;
+					}
+
+					if (resultStatus == "adead_link")
+					{
+						cLinksDead++;
+						updateHosts('dead', hostname);
+						return;
+					}
+
+					if (resultStatus == "obsolete_link")
+					{
+						cLinksDead++;
+						updateHosts('dead', hostname);
+						return;
+					}
+
+					if (resultStatus == "unava_link")
+					{
+						updateHosts('unava', hostname);
+						cLinksUnava++;
+					}
+
+					if (resultStatus == "unknown_link")
+					{
+						updateHosts('unknown', hostname);
+						cLinksUnknown++;
+					}
+				}
+
+				function DisplayTheCheckedLinks(links, resultStatus, tooltipInfo)
+				{
+					//(a[href*=link_1], a[href*=link_2], ..., a[href*=link_n])
+					var $links = $('a[href*="' + links.join('"], a[href*="') + '"]');
+
+					if (Do_not_linkify_DL_links)
+					{    //TODO into separate jQuery function
+						$links.replaceWith(function(){
+							return '<span href="' + this.href + '">' + $(this).text() + '</span>';
+						});
+
+						$links = $('span[href*="' + links.join('"], span[href*="') + '"]');
+					}
+					$links.removeClass().addClass(resultStatus);
+					if (tooltipInfo && resultStatus == 'unknown_link' && Display_tooltip_info) {
+						$links.mouseover(displayTooltipError);
+						$links.attr('warlc_error', 'Cause de l\'erreur: <b>' + tooltipInfo + '</b>');
+					}
+					var hostname = gimmeHostName2($links[0].href);
+					$links.each(function() {
+						if (!this.href.contains('mega.co.nz')) this.href = ANONYMIZE_SERVICE + $(this).attr("href");
+					});
+
+					switch(resultStatus)
+					{
+						case "alive_link":        cLinksAlive += $links.length;
+						if (Display_tooltip_info) $links.mouseover(displayTooltipInfo);
+						updateHosts('live', hostname);
+						break;
+						case "adead_link":         cLinksDead += $links.length;
+						if (Display_tooltip_info) $links.mouseover(displayTooltipError);
+						updateHosts('dead', hostname);
+						break;
+						case "obsolete_link":    cLinksDead += $links.length;
+						if (Display_tooltip_info) $links.mouseover(displayTooltipError);
+						updateHosts('dead', hostname);
+						break;
+						case "unava_link":         cLinksUnava += $links.length;
+						updateHosts('unava', hostname);
+						break;
+						case "unknown_link":    cLinksUnknown += $links.length;
+						updateHosts('unknown', hostname);
+						break;
+						default:
+					}
+
+					cLinksProcessed += $links.length;
+				}
+
+				function initRedirectors()
+				{
+					var aRCount = 1;
+					function addRedirector(hostName, linkRegex, redirType, innerLinkRegex)
+					{
+						hostName = hostName.split("|");
+						var i = hostName.length;
+
+						var hostID = "RH" + aRCount;
+
+						while(i--) {
+							var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
+							if (!hostsIDs[filehost]) {
+								hostsIDs[filehost] = [];
+							}
+							hostsIDs[filehost].push({
+								hostID: hostID,
+								linkRegex: linkRegex,
+							});
+						}
+						var RHObj = {
+							cProcessed: 0,
+							cTotal: 0,
+							type: redirType,
+							innerLinkRegex: innerLinkRegex,
+							links: []
+						}
+
+						hostsCheck[hostID] = RHObj;
+						aRCount++;
+					}
+
+					if (hostSet("Check_safelinking_dot_net_links", false))
+					{
+						addRedirector(
+							'safelinking.net',
+							'safelinking\\.net\/d\/\\w{10}',
+							redirectorTypes.HTTP_302,
+							null);
+						}
+
+					}
+
+					function initBulkHosts()
+					{
+						var aHCount = 1;
+						function addHost(hostName, linkRegex, blockSize, corrMatch, corrReplWhat, corrReplWith, splitSeparator,
+							apiUrl, postData, resLinkRegex, resLiveRegex, resDeadRegex, resUnavaRegex, func)
+							{
+								hostName = hostName.split("|");
+								var i = hostName.length;
+
+								var hostID = "BC" + aHCount;
+
+								while(i--) {
+									var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
+									if (!hostsIDs[filehost]) {
+										hostsIDs[filehost] = [];
+									}
+									hostsIDs[filehost].push({
+										hostID: hostID,
+										linkRegex: linkRegex,
+									});
+								}
+
+								var BCObj = {
+									blockSize: 50,
+									corrMatch: corrMatch,
+									corrReplWhat: corrReplWhat,
+									corrReplWith: corrReplWith,
+									splitSeparator: '\r\n',
+									apiUrl: apiUrl,
+									postData: postData,
+									resLinkRegex: resLinkRegex,
+									resLiveRegex: resLiveRegex,
+									resDeadRegex: resDeadRegex,
+									resUnavaRegex: resUnavaRegex,
+									func: genBulkCheck,
+									links: []
+								}
+
+								if (blockSize != null) {
+									BCObj.blockSize = blockSize;
+								}
+								if (splitSeparator != null) {
+									BCObj.splitSeparator = splitSeparator;
+								}
+								if (func != null) {
+									BCObj.func = func;
+								}
+
+								hostsCheck[hostID] = BCObj;
+								aHCount++;
+
+							}
+
+							var genType1 = [    {    host: "rodfile.com",             apiurl: "default"                                       },
+							{    host: "failai.lt",               apiurl: "default"                                       },
+							{    host: "rarefile.net",            apiurl: "default"                                       },
+							{    host: "uploadic.com",            apiurl: "default"                                       },
+							{    host: "filesabc.com",            apiurl: "http://filesabc.com/checkfiles.html"           },
+							{    host: "sharebeast.com",          apiurl: "default"                                       },
+							{    host: "uploadbaz.com",           apiurl: "default"                                       },
+							{    host: "180upload.com",           apiurl: "http://180upload.com/checkfiles.html"          },
+							{    host: "180upload.nl",            apiurl: "http://180upload.com/checkfiles.html"          },
+							{    host: "exfilehost.com",          apiurl: "http://exfilehost.com/checkfiles.html"         },
+							{    host: "asixfiles.com",           apiurl: "default"                                       },
+							{    host: "zomgupload.com",          apiurl: "default"                                       },
+							{    host: "filemaze.ws",             apiurl: "default"                                       },
+							{    host: "upafile.com",             apiurl: "http://upafile.com/checkfiles.html"            },
+							{    host: "novafile.com",            apiurl: "http://novafile.com/checkfiles.html"           },
+							{    host: "longfiles.com",           apiurl: "http://longfiles.com/checkfiles.html"          },
+							{    host: "youwatch.org",            apiurl: "http://youwatch.org/checkfiles.html"           },
+							{    host: "fileband.com",            apiurl: "http://fileband.com/checkfiles.html"           },
+							{    host: "speedvid.tv",             apiurl: "http://speedvid.tv/checkfiles.html"            },
+							{    host: "freestorage.ro",          apiurl: "http://freestorage.ro/checkfiles.html"         },
+							{    host: "imzupload.com",           apiurl: "default"                                       },
+							{    host: "allmyvideos.net",         apiurl: "http://allmyvideos.net/checkfiles.html"        },
+							{    host: "movdivx.com",             apiurl: "default"                                       },
+							{    host: "gorillavid.in",           apiurl: "http://gorillavid.in/checkfiles.html"          },
+							{    host: "vidto.me",                apiurl: "http://vidto.me/checkfiles.html"               },
+							{    host: "filesline.com",           apiurl: "default"                                       },
+							{    host: "upitus.net",              apiurl: "default"                                       },
+							{    host: "fastflv.com",             apiurl: "default"                                       },
+							{    host: "vidhog.com",              apiurl: "http://www.vidhog.com/checkfiles.html"         },
+							{    host: "file4safe.com",           apiurl: "http://www.file4safe.com/?op=checkfiles"       },
+							{    host: "uplds.com",               apiurl: "http://uplds.com/checkfiles.html"              },
+							{    host: "roshare.info",            apiurl: "http://roshare.info/?op=checkfiles"            },
+							{    host: "netkozmos.com",           apiurl: "http://www.netkozmos.com/checkfiles.html"      },
+							{    host: "loadpot.net",             apiurl: "http://www.loadpot.net/checkfiles.html"        },
+							{    host: "vodlocker.com",           apiurl: "http://vodlocker.com/checkfiles.html"          },
+							{    host: "vidx.to",                 apiurl: "http://vidx.to/?op=checkfiles"                 },
+							{    host: "foxishare.com",           apiurl: "http://foxishare.com/checkfiles.html"          },
+							{    host: "uploadzeal.com",          apiurl: "http://www.uploadzeal.com/checkfiles.html"     },
+							{    host: "played.to",               apiurl: "http://played.to/?op=checkfiles"               },
+							{    host: "streamin.to",             apiurl: "http://streamin.to/checkfiles.html"            },
+							{    host: "vidspot.net",             apiurl: "http://vidspot.net/?op=checkfiles"             },
+							{    host: "bestreams.net",           apiurl: "http://bestreams.net/?op=checkfiles"           },
+							{    host: "treesfile.com",           apiurl: "http://treesfile.com/checkfiles.html"          },
+							{    host: "treefiles.com",           apiurl: "http://treesfile.com/checkfiles.html"          }, //same host as treesfile.com
+							{    host: "treefile.org",            apiurl: "http://treesfile.com/checkfiles.html"          }, //same host as treesfile.com
+							{    host: "filejoker.net",           apiurl: "https://filejoker.net/checkfiles.html"         },
+							{    host: 'exashare.com',            apiurl: 'http://www.exashare.com/checkfiles.html'       }
+						];
 
 
-            var hostID = "HC" + aFHHCOCount;
+						var genType2 = [    {    host: "sanshare.com",            apiurl: "http://sanshare.com/?op=checkfiles"            },
+						{    host: "mightyupload.com",        apiurl: "http://mightyupload.com/?op=checkfiles"        },
+						{    host: "megafiles.se",            apiurl: "http://megafiles.se/?op=checkfiles"            },
+						{    host: "isavelink.com",           apiurl: "http://isavelink.com/?op=checkfiles"           },
+						{    host: "4savefile.com",           apiurl: "http://4savefile.com/?op=checkfiles"           },
+						{    host: "daj.to",                  apiurl: "http://daj.to/?op=checkfiles"                  },
+						{    host: "upfile.biz",              apiurl: "http://upfile.biz/?op=checkfiles"              },
+						{    host: "cepzo.com",               apiurl: "http://cepzo.com/?op=checkfiles"               },
+						{    host: "uploadjet.net",           apiurl: "http://uploadjet.net/?op=checkfiles"           },
+						{    host: "vidup.me",                apiurl: "http://vidup.me/?op=checkfiles"                },
+						{    host: "verzend.be",              apiurl: "http://verzend.be/?op=checkfiles"              },
+						{    host: "arabloads.com",           apiurl: "http://www.arabloads.net/?op=checkfiles"       },
+						{    host: "arabloads.net",           apiurl: "http://www.arabloads.net/?op=checkfiles"       },
+						{    host: "amonshare.com",           apiurl: "http://amonshare.com/?op=checkfiles"           },
+						{    host: "filewe.com",              apiurl: "http://nornar.com/?op=checkfiles"              },
+						{    host: "nornar.com",              apiurl: "http://nornar.com/?op=checkfiles"              }, //same host as filewe.com
+						{    host: "medoupload.com",          apiurl: "http://medoupload.com/?op=checkfiles"          },
+						{    host: "filefolks.com",           apiurl: "http://www.filefolks.com/?op=checkfiles"       },
+						{    host: "file-speed.com",          apiurl: "http://file-speed.com/?op=checkfiles"          },
+						{    host: "1st-files.com",           apiurl: "http://www.1st-files.com/?op=checkfiles"       },
+						{    host: "katzfiles.com",           apiurl: "http://katzfiles.com/?op=checkfiles"           },
+						{    host: "secureupload.eu",         apiurl: "http://www.secureupload.eu/checklinks.html"    },
+						{    host: "cometfiles.com",          apiurl: "http://www.cometfiles.com/checkfiles.html"     },
+						{    host: "rockdizfile.com",         apiurl: "http://rockdizfile.com/?op=checkfiles"         },
+						{    host: "clicktoview.org",         apiurl: "http://clicktoview.org/?op=checkfiles"         },
+						{    host: "sinhro.net",              apiurl: "http://sinhro.net/checkfiles.html"             },
+						{    host: "ortofiles.com",           apiurl: "http://www.ortofiles.com/?op=checkfiles"       },
+						{    host: "blitzfiles.com",          apiurl: "http://blitzfiles.com/?op=checkfiles"          },
+						{    host: "hulkload.com",            apiurl: "http://www.hulkload.com/?op=checkfiles"        },
+						{    host: "sharingmaster.com",       apiurl: "http://sharingmaster.com/?op=checkfiles"       },
+						{    host: "expressleech.com",        apiurl: "http://expressleech.com/?op=checkfiles"        },
+						{    host: "upshared.com",            apiurl: "http://upshared.com/?op=checkfiles"            },
+						{    host: "exclusivefaile.com",      apiurl: "http://exclusiveloader.com/?op=checkfiles"     },
+						{    host: "exclusiveloader.com",     apiurl: "http://exclusiveloader.com/?op=checkfiles"     }, //same host as exclusivefaile.com
+						{    host: "basicupload.com",         apiurl: "http://www.basicupload.com/?op=checkfiles"     },
+						{    host: "rapidfileshare.net",      apiurl: "http://www.rapidfileshare.net/?op=checkfiles"  },
+						{    host: "project-free-upload.com", apiurl: "http://project-free-upload.com/?op=checkfiles" },
+						{    host: "vidbull.com",             apiurl: "http://vidbull.com/checkfiles.html"            },
+						{    host: "sendmyway.com",           apiurl: "http://www.sendmyway.com/?op=checkfiles"       },
+						{    host: "creafile.net",            apiurl: "http://creafile.net/?op=checkfiles"            },
+						{    host: "unlimitshare.com",        apiurl: "http://www.unlimitshare.com/?op=checkfiles"    },
+						{    host: "speedshare.eu",           apiurl: "http://speedshare.eu/?op=checkfiles"           },
+						{    host: "uploadboy.com",           apiurl: "http://uploadboy.com/?op=checkfiles"           },
+						{    host: "fiberstorage.net",        apiurl: "http://fiberstorage.net/?op=checkfiles"        },
+						{    host: "shareswift.com",          apiurl: "http://shareswift.com/?op=checkfiles"          },
+						{    host: "fujifile.me",             apiurl: "http://www.fujifile.me/?op=checkfiles"         },
+						{    host: "uncapped-downloads.com",  apiurl: "http://uncapped-downloads.com/?op=checkfiles"  },
+						{    host: "pandamemo.com",           apiurl: "http://www.pandamemo.com/checkfiles.html"      },
+						{    host: "spicyfile.com",           apiurl: "http://spicyfile.com/checkfiles.html"          },
+						{    host: "hugefiles.net",           apiurl: "http://www.hugefiles.net/?op=checkfiles"       },
+						{    host: "hyshare.com",             apiurl: "http://hyshare.com/?op=checkfiles"             },
+						{    host: "filesear.com",            apiurl: "http://filesear.com/?op=checkfiles"            },
+						{    host: "megacache.net",           apiurl: "http://megacache.net/?op=checkfiles"           },
+						{    host: "fileparadox.in",          apiurl: "http://rapidsonic.com/?op=checkfiles"          },
+						{    host: "fileparadox.com",         apiurl: "http://rapidsonic.com/?op=checkfiles"          },
+						{    host: "rapidsonic.com",          apiurl: "http://rapidsonic.com/?op=checkfiles"          },
+						{    host: "rapidstation.com",        apiurl: "http://rapidstation.com/?op=checkfiles"        },
+						{    host: "potload.com",             apiurl: "http://potload.com/?op=checkfiles"             },
+						{    host: "sube.me",                 apiurl: "http://sube.me/?op=checkfiles"                 },
+						{    host: "akafile.com",             apiurl: "http://akafile.com/?op=checkfiles"             },
+						{    host: "files2upload.net",        apiurl: "http://files2upload.net/?op=checkfiles"        },
+						{    host: "backin.net",              apiurl: "http://backin.net/?op=checkfiles"              },
+						{    host: "uploadscenter.com",       apiurl: "http://www.uploadscenter.com/?op=checkfiles"   },
+						{    host: "guizmodl.net",            apiurl: "http://www.guizmodl.net/?op=checkfiles"        },
+						{    host: "gigfiles.net",            apiurl: "http://gigfiles.net/?op=checkfiles"            },
+						{    host: "upload-novalayer.com",    apiurl: "http://upload-novalayer.com/?op=checkfiles"    },
+						{    host: "todayfile.com",           apiurl: "http://todayfile.com/?op=checkfiles"           },
+						{    host: "sfshare.se",              apiurl: "http://sfshare.se/?op=checkfiles"              },
+						{    host: "divxpress.com",           apiurl: "http://divxpress.com/?op=checkfiles"           },
+						{    host: "upgiga.com",              apiurl: "http://www.upgiga.com/?op=checkfiles"          },
+						{    host: "koofile.com",             apiurl: "http://koofile.com/op/checkfiles"              },
+						{    host: "earnupload.eu",           apiurl: "http://earnupload.eu/?op=checkfiles"           },
+						{    host: "kingfiles.net",           apiurl: "http://www.kingfiles.net/?op=checkfiles"       },
+						{    host: "shareblue.eu",            apiurl: "http://shareblue.eu/?op=checkfiles"            },
+						{    host: "grifthost.com",           apiurl: "http://grifthost.com/?op=checkfiles"           },
+						{    host: "limevideo.net",           apiurl: "http://limevideo.net/?op=checkfiles"           },
+						{    host: "lunaticfiles.com",        apiurl: "http://lunaticfiles.com/?op=checkfiles"        },
+						{    host: "vozupload.com",           apiurl: "http://vozupload.com/?op=checkfiles"           },
+						{    host: "kingsupload.com",         apiurl: "http://kingsupload.com/?op=checkfiles"         },
+						{    host: "vidplay.net",             apiurl: "http://vidplay.net/?op=checkfiles"             },
+						{    host: "mydisc.net",              apiurl: "http://mydisc.net/checkfiles.html"             },
+						{    host: "med1fire.com",            apiurl: "http://med1fire.com/?op=checkfiles"            },
+						{    host: "stahuj.to",               apiurl: "http://stahuj.to/?op=checkfiles"               },
+						{    host: "hexupload.com",           apiurl: "http://hexupload.com/?op=checkfiles"           },
+						{    host: "salefiles.com",           apiurl: "http://salefiles.com/?op=checkfiles"           },
+						{    host: "anafile.com",             apiurl: "http://www.anafile.com/?op=checkfiles"         },
+						{    host: "bonanzashare.com",        apiurl: "http://bonanzashare.com/?op=checkfiles"        },
+						{    host: "imgjungle.com",           apiurl: "http://imgjungle.com/?op=checkfiles"           },
+						{    host: "unlimitzone.com",         apiurl: "http://unlimitzone.com/?op=checkfiles"         },
+						{    host: "rosharing.com",           apiurl: "http://rosharing.com/?op=checkfiles"           },
+						{    host: "storagely.com",           apiurl: "http://storagely.com/?op=checkfiles"           },
+						{    host: "wipfiles.net",            apiurl: "http://wipfiles.net/?op=checkfiles"            },
+						{    host: "filemoney.com",           apiurl: "http://filemoney.com/?op=checkfiles"           },
+						{    host: "filehoot.com",            apiurl: "http://filehoot.com/?op=checkfiles"            },
+						{    host: "mxua.com",                apiurl: "http://www.mxua.com/?op=checkfiles"            },
+						{    host: "cloudyvideos.com",        apiurl: "http://cloudyvideos.com/?op=checkfiles"        },
+						{    host: "idup.in",                 apiurl: "http://idup.in/?op=checkfiles"                 },
+						{    host: "filedais.com",            apiurl: "http://www.filedais.com/?op=checkfiles"        },
+						{    host: "fileforever.net",         apiurl: "http://fileforever.net/?op=checkfiles"         },
+						{    host: "rioupload.com",           apiurl: "http://rioupload.com/?op=checkfiles"           },
+						{    host: "medofire.co",             apiurl: "http://medofire.co/?op=checkfiles"             },
+						{    host: "vshare.eu",               apiurl: "http://vshare.eu/?op=checkfiles"               },
+						{    host: "hellupload.com",          apiurl: "http://www.hellupload.com/checkfiles.html"     },
+						{    host: "hostingbulk.com",         apiurl: "http://hostingbulk.com/?op=checkfiles"         },
+						{    host: "movreel.com",             apiurl: "http://movreel.com/?op=checkfiles"             },
+						{    host: "thefile.me",              apiurl: "http://thefile.me/?op=checkfiles"              },
+						{    host: "spaceforfiles.com",       apiurl: "http://www.filespace.com/?op=checkfiles"       },
+						{    host: "filespace.com",           apiurl: "http://www.filespace.com/?op=checkfiles"       }, //same host as spaceforfiles
+						{    host: "city-upload.com",         apiurl: "http://city-upload.com/?op=checkfiles"         },
+						{    host: "uploadrocket.net",        apiurl: "http://uploadrocket.net/?op=checkfiles"        },
+						{    host: "bluehaste.com",           apiurl: "http://bluehaste.com/?op=checkfiles"           },
+						{    host: "up09.com",                apiurl: "http://file.up09.com/?op=checkfiles"           },
+						{    host: "4downfiles.com",          apiurl: "http://4downfiles.net/?op=checkfiles"          },
+						{    host: "4downfiles.net",          apiurl: "http://4downfiles.net/?op=checkfiles"          },
+						{    host: "filemup.com",             apiurl: "http://www.filemup.com/?op=checkfiles"         },
+						{    host: "lomafile.com",            apiurl: "http://lomafile.com/?op=checkfiles"            },
+						{    host: "tuxfile.com",             apiurl: "http://tuxfile.com/?op=checkfiles"             },
+						{    host: "filecloud.cc",            apiurl: "http://filecloud.cc/?op=checkfiles"            },
+						{    host: "streamratio.com",         apiurl: "http://www.streamratio.com/?op=checkfiles"     },
+						{    host: "flexydrive.com",          apiurl: "http://flexydrive.com/?op=checkfiles"          },
+						{    host: "usersfiles.com",          apiurl: "http://usersfiles.com/?op=checkfiles"          },
+						{    host: "radicalshare.com",        apiurl: "http://radicalshare.com/checkfiles.html"       },
+						{    host: "sharemods.com",           apiurl: "http://sharemods.com/?op=checkfiles"           },
+						{    host: "worldbytez.com",          apiurl: "http://worldbytez.com/?op=checkfiles"          },
+						{    host: "vipshare.me",             apiurl: "http://vipshare.me/?op=checkfiles"             },
+						{    host: "loudupload.com",          apiurl: "http://loudupload.net/?op=checkfiles"          },
+						{    host: "loudupload.net",          apiurl: "http://loudupload.net/?op=checkfiles"          },
+						{    host: "uploadkadeh.ir",          apiurl: "http://uploadkadeh.ir/?op=checkfiles"          },
+						{    host: "joinfile.com",            apiurl: "http://joinfile.com/?op=checkfiles"            },
+						{    host: "fastupload.org",          apiurl: "http://fastupload.org/?op=checkfiles"          },
+						{    host: "clicknupload.com",        apiurl: "http://clicknupload.com/?op=checkfiles"        },
+						{    host: "mediafree.co",            apiurl: "http://mediafree.co/?op=checkfiles"            },
+						{    host: "linestorage.com",         apiurl: "http://linestorage.com/?op=checkfiles"         },
+						{    host: "filemac.com",             apiurl: "http://www.filemac.com/?op=checkfiles"         },
+						{    host: "filekom.com",             apiurl: "http://www.filemac.com/?op=checkfiles"         }, //same host as filemac
+						{    host: "gboxes.com",              apiurl: "http://www.gboxes.com/?op=checkfiles"          },
+						{    host: "dropvideos.net",          apiurl: "http://dropvideos.net/?op=checkfiles"          },
+						{    host: "filedust.net",            apiurl: "http://filedust.net/?op=checkfiles"            },
+						{    host: "brothershare.com",        apiurl: "http://brothershare.com/?op=checkfiles"        },
+						{    host: "voowl.com",               apiurl: "http://voowl.com/?op=checkfiles"               },
+						{    host: "fileinz.com",             apiurl: "http://voowl.com/?op=checkfiles"               },
+						{    host: "xfileload.com",           apiurl: "http://xfileload.com/?op=checkfiles"           },
+						{    host: "files2share.ch",          apiurl: "http://files2share.ch/?op=checkfiles"          },
+						{    host: "chayfile.com",            apiurl: "http://www.chayfile.com/checkfiles"            },
+						{    host: "roottail.com",            apiurl: "http://roottail.com/?op=checkfiles"            },
+						{    host: "seenupload.com",          apiurl: "http://seenupload.com/?op=checkfiles"          },
+						{    host: "filetut.com",             apiurl: "http://filetut.com/?op=checkfiles"             },
+						{    host: "24uploading.com",         apiurl: "http://24uploading.com/?op=checkfiles"         },
+						{    host: "dogefile.com",            apiurl: "http://dogefile.com/?op=checkfiles"            },
+						{    host: "ipithos.to",              apiurl: "http://www.ipithos.to/?op=checkfiles"          },
+						{    host: "iranupload.com",          apiurl: "http://iranupload.com/?op=checkfiles"          },
+						{    host: "megadrive.tv",            apiurl: "http://megadrive.tv/?op=checkfiles"            },
+						{    host: "mrfile.me",               apiurl: "http://mrfile.me/?op=checkfiles"               },
+						{    host: "tikfile.com",             apiurl: "http://tikfile.com/?op=checkfiles"             },
+						{    host: "uplod.ir",                apiurl: "http://uplod.ir/?op=checkfiles"                },
+						{    host: "2drive.net",              apiurl: "https://2drive.net/?op=checkfiles"             },
+						{	 host: "userscloud.com",          apiurl: "http://userscloud.com/?op=checkfiles"          },
+						{    host: "ozofiles.com",            apiurl: "http://ozofiles.com/?op=checkfiles"			  },
+						{    host: "up4.im",                  apiurl: "http://up4.im/?op=checkfiles"      	          },
+						{    host: "indishare.com",           apiurl: "http://www.indishare.com/?op=checkfiles"       },
+						{    host: "fileown.com",             apiurl: "http://fileown.com/?op=checkfiles"             },
+						{    host: 'bdupload.net',            apiurl: 'http://bdupload.net/?op=checkfiles'            },
+						{    host: 'faststore.org',           apiurl: 'http://faststore.org/?op=checkfiles'           },
+						{    host: 'geupload.com',            apiurl: 'http://geupload.com/?op=checkfiles'            },
+						{    host: 'lenfile.com',             apiurl: 'http://geupload.com/?op=checkfiles'            },
+						{    host: 'up07.net',                apiurl: 'http://up07.net/?op=checkfiles'                },
+						{    host: 'themediastorage.com',     apiurl: 'http://www.themediastorage.com/?op=checkfiles' },
+						{    host: 'rockfile.eu',             apiurl: 'http://rockfile.eu/checklinks'                 },
+						{    host: 'bankupload.com',          apiurl: 'http://bankupload.com/?op=checkfiles'          },
+						{    host: 'jumbofile.net',           apiurl: 'http://jumbofile.net/?op=checkfiles'           },
+						{    host: 'rziz.net',                apiurl: 'http://www.rziz.net/?op=checkfiles'            },
+						{    host: 'filerock.net',            apiurl: 'http://filerock.net/?op=checkfiles'            },
+						{    host: 'zorofiles.com',           apiurl: 'http://zorofiles.com/?op=checkfiles'           }
+					];
 
-            while(i--) {
-                var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
+					//xfilesharing 1.0
+					function addGenericType1()
+					{
+						var i = genType1.length;
 
-                if (!hostsIDs[filehost]) {
-                    hostsIDs[filehost] = [];
-                }
-                hostsIDs[filehost].push({
-                    hostID: hostID,
-                    linkRegex: linkRegex,
-                });
-            }
+						while(i--)
+						{
+							var host = genType1[i].host;
+							var apiUrl = genType1[i].apiurl;
 
-            var HCObj = {
-                liveRegex: isAliveRegex,
-                deadRegex: isDeadRegex,
-                links: []
-            }
+							if (apiUrl == "default") apiUrl = "http://www." + host + "/checkfiles.html";
 
-            hostsCheck[hostID] = HCObj;
-            aFHHCOCount++;
+							if (hostSet("Check_" + host.replace(/\./g, "_dot_").replace(/-/g, "_dash_") + "_links", false))
+							{
+								var regexSafe = host.replace(/\./g, "\\.").replace(/-/g, "\\-");
 
-        }
+								addHost(
+									host, //hostname
+									regexSafe + "\/\\w+", //linkregex
+									null, //blocksize
+									new RegExp("(https?:\/\/(?:|www\\.)" + regexSafe + "\/\\w+)",""), //corrmatch
+									null, //corrreplwhat
+									null, //corrreplwith
+									null, //separator
+									apiUrl, //api url
+									"op=checkfiles&process=Check+URLs&list=", //postdata
+									new RegExp("(" + regexSafe + "\/\\w+)",""), //linkregex
+									new RegExp("<font color='green'>https?:\/\/(?:|www\.)" + regexSafe + "\/\\w+","g"), //liveregex
+									new RegExp("<font color='red'>https?:\/\/(?:|www\.)" + regexSafe + "\/\\w+","g"), //deadregex
+									new RegExp("<font color='orange'>https?:\/\/(?:|www\.)" + regexSafe + "\/\\w+","g"), //unavaregex
+									null //function delegate
+								)
+							}
+						}
+					}
 
-        if (hostSet("Check_uloziste_dot_com_links", false))
-        {
-            addFileHostHeadersOnly(
-            'uloziste.com',
-            "(?:|files\\.)uloziste\\.com\/\\w+\/\\w+",
-            'Connection: Keep-Alive',
-            'Content-Length: 3857'
-            )
-        }
+					//xfilesharing 2.0
+					function addGenericType2()
+					{
+						var i = genType2.length;
 
-        if (hostSet("Check_filemonster_dot_net_links", false))
-        {
-            addFileHostHeadersOnly(
-            'folemonster.net',
-            "filemonster\\.net\/(?:..\/|)file\/\\w+",
-            'filename="',
-            'Content-Type: text/html'
-            )
-        }
+						while(i--)
+						{
+							var host = genType2[i].host;
+							var apiUrl = genType2[i].apiurl;
 
-        if (hostSet("Check_uploadbin_dot_net_links", false))
-        {
-            addFileHostHeadersOnly(
-            'uploadbin.net',
-            "uploadbin\\.net\/\\w+\/\\w+",
-            'filename=',
-            'Connection: close'
-            )
-        }
+							if (hostSet("Check_" + host.replace(/\./g, "_dot_").replace(/-/g, "_dash_") + "_links", false))
+							{
+								var regexSafe = host.replace(/\./g, "\\.").replace(/-/g, "\\-");
 
-        if (hostSet("Check_videozer_dot_com_links", false))
-        {
-            addFileHostHeadersOnly(
-            'videozer.com',
-            "videozer\\.com\/embed\/\\w+",
-            "Connection: keep-alive|Content-Type: application/x-shockwave-flash",
-            "optional--"
-            )
-        }
+								addHost(
+									host, //hostname
+									"https?:\/\/(?:www\\.|file\\.)?" + regexSafe + "\/\\w+", //linkregex
+									null, //blocksize
+									new RegExp("(https?:\/\/(?:|www\\.)" + regexSafe + "\/\\w+)",""), //corrmatch
+									null, //corrreplwhat
+									null, //corrreplwith
+									null, //separator
+									apiUrl, //api url
+									"op=checkfiles&process=Check+URLs&list=", //postdata
+									new RegExp("(" + regexSafe + "\/\\w+)",""), //linkregex
+									new RegExp(regexSafe + "\/\\w+.*?\\s*<\/td>\\s*<td style=\\s*\"color:(?:green|#00f100);","g"), //liveregex
+									new RegExp(regexSafe + "\/\\w+.*?\\s*<\/td>\\s*<td style=\\s*\"color:(?:red|#f10000);","g"), //deadregex
+									new RegExp(regexSafe + "\/\\w+.*?\\s*<\/td>\\s*<td style=\\s*\"color:orange;","g"), //unavaregex
+									null //function delegate
+								)
+							}
+						}
+					}
 
-        if (hostSet("Check_karelia_dot_pro_links", false))
-        {
-            addFileHostHeadersOnly(
-            'karelia.pro',
-            "(?:disk|fast)\\.karelia\\.pro\/\\w+",
-            "Content-Disposition: attachment; filename=",
-            "Content-Type: text/html"
-            )
-        }
+					// TEMPLATE
+					// if (hostSet("Check__dot_com_links", false))
+					// {
+						// addHost(
+							// "", //hostname
+							// "", //linkregex
+							// null, //blocksize
+							// null, //corrmatch
+							// null, //corrreplwhat
+							// null, //corrreplwith
+							// null, //separator
+							// "", //api url
+							// "", //postdata
+							// /()/, //linkregex
+							// //liveregex
+							// //deadregex
+							// //unavaregex
+							// null //function delegate
+							// )
+							// }
 
-        if (hostSet("Check_dropbox_dot_com_links", false))
-        {
-            addFileHostHeadersOnly(
-            'dropbox.com|dropboxusercontent.com',
-            "dl\\.dropbox(?:usercontent)?\\.com\/u\/\\d+\/.+?",
-            /x-dropbox-request-id: \w+/,
-            "optional--"
-            )
-        }
 
-        if (hostSet("Check_demo_dot_ovh_dot_eu_links", false))
-        {
-            addFileHostHeadersOnly(
-            'ovh.eu',
-            "demo\\.ovh\\.eu\/download\/\\w+",
-            "optional--",
-            "optional--"
-            )
-        }
+							addGenericType1();
+							addGenericType2();
 
-        if (hostSet("Check_archive_dot_org_links", false))
-        {
-            addFileHostHeadersOnly(
-            'archive.org',
-            "\\w+\\.us\\.archive\\.org\/.+",
-            /Content-Length: \d{6,}/,
-            'Content-Type: text/html'
-            );
-        }
+							if (hostSet("Check_myvdrive_dot_com_links", false))
+							{
+								addHost(
+									"myvdrive.com|fileserving.com", //hostname
+									"(?:fileserving|myvdrive)\\.com\/files\/[\\w-]+", //linkregex
+									null, //blocksize
+									null, //corrmatch
+									null, //corrreplwhat
+									null, //corrreplwith
+									null, //separator
+									"http://www.myvdrive.com/Public/linkchecker", //api url
+									"links=", //postdata
+									/(?:fileserving|myvdrive)\.com\/(files\/[\w-]+)/, //linkregex
+									/icon_file_check_valid"><\/span>\s*http:\/\/(?:www\.)?(?:fileserving|myvdrive)\.com\/files\/[\w-]+/g, //liveregex
+									/icon_file_check_(?:removed|notvalid)"><\/span>\s*http:\/\/(?:www\.)?(?:fileserving|myvdrive)\.com\/files\/[\w-]+/g, //deadregex
+									null, //unavaregex
+									null //function delegate
+								)
+							}
 
-        if (hostSet("Check_rapidgator_dot_net_links", false) && !chromeBrowser)
-        {
-            addFileHostHeadersOnly(
-            'rapidgator.net|rg.to',
-            "(?:rapidgator\\.net|rg.to)\/file\/\\w+",
-            'download_url=http%3A%2F%2Frapidgator.net%2Ffile%2F',
-            'fnf=deleted;'
-            );
-        }
-    }
+							if (hostSet("Check_filepost_dot_com_links", false))
+							{
+								addHost(
+									"filepost.com|fp.io", //hostname
+									"(?:filepost\\.com\/files|fp\\.io)\/\\w+", //linkregex
+									null, //blocksize
+									null, //corrmatch
+									null, //corrreplwhat
+									null, //corrreplwith
+									"\n", //separator
+									'http://filepost.com/files/checker/?JsHttpRequest=0-xml',
+									'urls=',
+									/\\\/files\\\/(\w+)/,
+									/>http:\\\/\\\/filepost\.com\\\/files\\\/\w+(?:[^>]+>){5}(?:\\n|\\t)+<span class=\\"v\\"/g,
+									/>http:\\\/\\\/filepost\.com\\\/files\\\/\w+(?:[^>]+>){5}(?:\\n|\\t)+<span class=\\"x\\"/g,
+									null,
+									null //function delegate
+								)
+							}
+
+							/*if (hostSet("Check_edisk_dot_cz_links", false))
+							{
+							addHost(
+							"edisk.cz|edisk.sk|edisk.eu", //hostname
+							"(?:(?:muj|data)\\d*\\.|)edisk\\.(?:cz|sk|eu)\/(?:|(?:cz|sk|en|pl)\/)", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							/edisk\.\w{2}\/(?:|\w{2}\/)stahni/, //corrreplwhat
+							'edisk.cz/stahni', //corrreplwith
+							null, //separator
+							'http://www.edisk.cz/zkontrolovat-odkazy',
+							'submitBtn=Zkontrolovat&checkFiles=',
+							/((?:download|stahn(?:i|out-soubor))\/\d+)/,
+							/"ano"\/>\s*<\/td>\s*<td>\s*http:\/\/.+/g,
+							/"ne"\/>\s*<\/td>\s*<td>\s*http:\/\/.+/g,
+							null,
+							null //function delegate
+						)
+					}*/
+
+					if (hostSet("Check_bezvadata_dot_cz_links", false))
+					{
+						addHost(
+							"bezvadata.cz", //hostname
+							"(?:beta\\.|)bezvadata\.cz\/stahnout\/\\d+\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://bezvadata.cz/nastroje/kontrola-odkazu?do=kontrolaOdkazuForm-submit',
+							'zkontrolovat=Zkontrolovat&odkazy=',
+							/(bezvadata\.cz\/stahnout\/\d+)/,
+							/bezvadata\.cz\/stahnout\/.+?<\/td>\s*<td style="background-color: #d9ffb2/g,
+							/bezvadata\.cz\/stahnout\/.+?<\/td>\s*<td style="background-color: #ffb2b2/g,
+							null,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_depositfiles_dot_com_links", false))
+					{
+						addHost(
+							"depositfiles.com|dfiles.eu|dfiles.ru|depositfiles.org|depositfiles.lt", //hostname
+							"(?:depositfiles\\.(?:com|lt|org)|dfiles\\.(?:eu|ru))\/(?:en\/|ru\/|de\/|es\/|pt\/|)files\/\\w+", //linkregex
+							100000, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							depositfilesBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_videobb_dot_com_links", false))
+					{
+						addHost(
+							"videobb.com", //hostname
+							"videobb\\.com\/(?:video\/|watch_video\\.php\\?v=)\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://www.videobb.com/link_checker.php',
+							'links=',
+							/(videobb\.com\/(?:watch_video\.php\?v?=|video\/)\w+)/,
+							/<td>http:\/\/(?:www\.|)videobb.com\/(?:watch_video\.php\?v?=|video\/)\w+<\/td>\s+<td>.+?<\/td>\s+<td>\d+:\d+<\/td>\s+<td>Available/g,
+							/<td>http:\/\/(?:www\.|)videobb.com\/(?:watch_video\.php\?v?=|video\/)\w+<\/td>\s+<td>(?:|.+?)<\/td>\s+<td>N\/A<\/td>\s+<td>Not Available/g,
+							null,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_queenshare_dot_com_links", false))
+					{
+						addHost(
+							"queenshare.com|10upload.com", //hostname
+							"(?:queenshare|10upload)\\.com\/\\w+", //linkregex
+							null, //blocksize
+							/(http:\/\/(?:www\.|)(?:queenshare|10upload)\.com\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://www.queenshare.com/?op=checkfiles', //api url
+							'op=checkfiles&process=Check+URLs&list=', //postdata
+							/((?:queenshare|10upload)\.com\/\w+)/, //linkregex
+							/(?:queenshare|10upload)\.com\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
+							/(?:queenshare|10upload)\.com\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
+							/(?:queenshare|10upload)\.com\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_filerio_dot_com_links", false))
+					{
+						addHost(
+							"filekeen.com|filerio.in|filerio.com", //hostname
+							"file(?:keen|rio)\\.(?:com|in)\/\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							"\n", //separator
+							'http://filerio.in/checkfiles.html',
+							'op=checkfiles&process=Check+URLs&list=',
+							/(file(?:keen|rio)\.(?:com|in)\/\w+)/,
+							/green'>http:\/\/(?:www\.|)file(?:keen|rio)\.(?:com|in)\/\w+/g,
+							/red'>http:\/\/(?:www\.|)file(?:keen|rio)\.(?:com|in)\/\w+/g,
+							/orange'>http:\/\/(?:www\.|)file(?:keen|rio)\.(?:com|in)\/\w+/g,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_share_dash_online_dot_biz_links", false))
+					{
+						addHost(
+							"share-online.biz|egoshare.com", //hostname
+							"(?:share-online\\.biz|egoshare\\.com)\/(?:dl\/|download\\.php\\?id=|\\?d=)\\w+", //linkregex
+							100, //blocksize
+							/http:\/\/(?:www\.|)(?:share-online\.biz|egoshare\.com)\/(?:d(?:l\/|ownload\.php\?id=)|\?d=)(?:\d{1}\/|)(\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							"\n", //separator
+							'http://api.share-online.biz/linkcheck.php',
+							'links=',
+							/(\w+);(?:OK|NOTFOUND|DELETED)/,
+							/(\w+);OK/g,
+							/(\w+);(?:DELETED|NOTFOUND)/g,
+							null,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_netload_dot_in_links", false))
+					{
+						addHost(
+							"netload.in", //hostname
+							"netload\\.in\/datei\\w{10}", //linkregex
+							100, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							"\n", //separator
+							"http://api.netload.in/index.php?id=2", //api url
+							"send=Absenden&links=", //postdata
+							/(\w+);/, //linkregex
+							/\w{10,};.+?;.+?;online/g, //liveregex
+							/\w{10,};.+?;.+?;offline/g, //deadregex
+							null, //unavaregex
+							netloadBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_filefactory_dot_com_links", false) && genset("Filefactory_API_Check", false))
+					{
+						addHost(
+							"filefactory.com", //hostname
+							"filefactory\\.com\/+file\/[a-z0-9]", //linkregex
+							100, //blocksize
+							null, //corrmatch
+							/(?:www\.|)filefactory\.com\/+file/, //corrreplwhat
+							'www.filefactory.com/file', //corrreplwith
+							"\n", //separator
+							"http://www.filefactory.com/account/tools/link-checker.php", //api url
+							"Submit=Check+Links&links=", //postdata
+							/filefactory\.com\/(file\/\w+)/, //linkregex
+							/<i class="icon-ok.+\n.+\n.+http:\/\/(?:www\.)?filefactory\.com\/file\/\w+/g, //liveregex
+							/<i class="icon-remove.+\n.+\n.+http:\/\/(?:www\.)?filefactory\.com\/file\/\w+/g, //deadregex
+							/<i class="icon-wrench.+\n.+\n.+http:\/\/(?:www\.)?filefactory\.com\/file\/\w+/g, //unavaregex
+							null //function delegate
+						);
+					}
+
+					if (hostSet("Check_videopremium_dot_net_links", false))
+					{
+						addHost(
+							"videopremium.net|videopremium.tv|videopremium.me", //hostname
+							"videopremium\\.(?:net|tv|me)\/\\w+", //linkregex
+							null, //blocksize
+							/(http:\/\/(?:www\.|)videopremium\.(?:net|tv|me)\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://videopremium.me/?op=checkfiles',
+							'op=checkfiles&process=Check+URLs&list=',
+							/(videopremium\.(?:net|tv|me)\/\w+)/,
+							/videopremium\.(?:net|tv|me)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
+							/videopremium\.(?:net|tv|me)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
+							/videopremium\.(?:net|tv|me)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
+							null //function delegate
+
+						)
+					}
+
+					if (hostSet("Check_eyesfiles_dot_com_links", false))
+					{
+						addHost(
+							"eyesfiles.com|eyesfile.net|eyesfile.com|eyesfile.co|eyesfile.org|eyesfile.ca", //hostname
+							"(?:eyesfile\\.(?:ca|org|net|com?)|eyesfiles\\.com)\/\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://www.eyesfile.ca/checkfiles.html',
+							'op=checkfiles&process=Check+URLs&list=',
+							/(eyesfiles?\.(?:com?|net|org|ca)\/\w+)/,
+							/green'>http:\/\/(?:www\.|)eyesfiles?\.(?:com?|net|org|ca)\/\w+/g,
+							/red'>http:\/\/(?:www\.|)eyesfiles?\.(?:com?|net|org|ca)\/\w+/g,
+							/orange'>http:\/\/(?:www\.|)eyesfiles?\.(?:com?|net|org|ca)\/\w+/g,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_uploading_dot_com_links", false))
+					{
+						addHost(
+							"uploading.com",
+							"http:\/\/(?:www\\.|)uploading\\.com\/(?:files\/)?\\w+",
+							500, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							"http://uploading.com/filechecker?ajax",
+							"urls=",
+							/uploading\.com\\\/(\w+)/,
+							/ok\\">\\n\\t\\t<span class=\\"num\\">\d+<\\\/span>\\n\\t\\t<i><\\\/i>\\n\\t\\t<div>\\n\\t\\t\\t<a href=\\"http:\\\/\\\/(?:www\.|)uploading\.com\\\/\w+/g,
+							/failed\\">\\n\\t\\t<span class=\\"num\\">\d+<\\\/span>\\n\\t\\t<i><\\\/i>\\n\\t\\t<div>\\n\\t\\t\\t<a href=\\"http:\\\/\\\/(?:www\.|)uploading\.com\\\/\w+/g,
+							null,
+							uploadingBulkCheck
+						)
+					}
+
+					if (hostSet("Check_megashares_dot_com_links", false))
+					{
+						addHost(
+							"megashares.com",
+							"(?:d01\.)?megashares\.com\/(?:dl\/|(?:index\\.php)?\\?d01=)\\w+",
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							"http://d01.megashares.com/checkit.php",
+							"submit_links=Check+Links&check_links=",
+							/megashares\.com\/(?:dl\/|(?:index\.php)?\?d01=)(\w+)/,
+							/megashares\.com\/(?:dl\/|(?:index\.php)?\?d01=)\w+.*?\s*-\s*ok/g,
+							/megashares\.com\/(?:dl\/|(?:index\.php)?\?d01=)\w+.*?\s*-\s*invalid/g,
+							null,
+							null
+						)
+					}
+
+					if (hostSet("Check_mega_dot_co_dot_nz_links", false))
+					{
+						addHost(
+							"mega.co.nz",
+							"mega\\.co\\.nz\/#F?!\\w+",
+							100000, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							megaBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_4upfiles_dot_com_links", false))
+					{
+						addHost(
+							"4up.me|4up.im|4upfiles.com",
+							"(?:4upfiles\\.com|4up\\.(?:me|im))\/\\w+",
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							"http://4upfiles.com/?op=checkfiles", //api url
+							"op=checkfiles&process=Check+URLs&list=", //postdata
+							/(4up(?:files)?\.(?:com|me|im)\/\w+)/, //linkregex
+							/4up(?:files)?\.(?:com|me|im)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
+							/4up(?:files)?\.(?:com|me|im)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
+							/4up(?:files)?\.(?:com|me|im)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_uploaded_dot_to_links", false))
+					{
+						addHost(
+							"uploaded.to|uploaded.net|ul.to",
+							'(?:uploaded\\.(?:to|net)|ul\\.to)\/(?:files?\/|\\?(?:lang=\\w{2}&)?id=|folder\/)?(?!img\/|coupon\/)\\w{8}',
+							1000,
+							/(?:uploaded|ul)\.(?:to|net)\/(?:files?|\?(?:lang=\w{2}&)?id=|f\/|folder)?\/*(?!img\/|coupon\/)(\w{8})/,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							uploadedBulkCheck
+						)
+					}
+
+					if (hostSet("Check_junocloud_dot_me_links", false))
+					{
+						addHost(
+							"junocloud.me",
+							"junocloud\\.me\/\\w+",
+							null,
+							null,
+							null,
+							null,
+							null,
+							"http://junocloud.me/checkfiles.html",
+							"op=checkfiles&process=Check+URLs&list=",
+							/(junocloud\.me\/\w+)/,
+							/junocloud\.me\/\w+.*?<span style="color: green;/g,
+							/junocloud\.me\/\w+.*?<span style="color: red;/g,
+							/junocloud\.me\/\w+.*?<span style="color: orange;/g,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_flashdrive_dot_it_links", false))
+					{
+						addHost(
+							"flashdrive.it|flashdrive.uk.com",
+							"flashdrive\\.(?:it|uk\\.com)\/\\w+",
+							null,
+							null,
+							null,
+							null,
+							null,
+							"http://flashdrive.uk.com/?op=checkfiles",
+							"op=checkfiles&process=Check+URLs&list=",
+							/(flashdrive\.(?:it|uk\.com)\/\w+)/,
+							/flashdrive\.(?:it|uk\.com)\/\w+.*?<\/td><td style="color:green;">/g,
+							/flashdrive\.(?:it|uk\.com)\/\w+.*?<\/td><td style="color:red;">/g,
+							/flashdrive\.(?:it|uk\.com)\/\w+.*?<\/td><td style="color:orange;">/g,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_datei_dot_to_links", false))
+					{
+						addHost(
+							"datei.to",
+							"datei\\.to\/(?:datei\/|files\/|1,|\\?)\\w+",
+							100000,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							null,
+							dateiToBulk
+						)
+					}
+
+					if (hostSet("Check_medafire_dot_net_links", false))
+					{
+						addHost(
+							"medafire.net",
+							"medafire\\.net\/(?:up\/)?\\w+",
+							null,
+							null,
+							null,
+							null,
+							null,
+							"http://medafire.net/?op=checkfiles",
+							"op=checkfiles&process=Check+URLs&list=",
+							/(medafire\.net\/(?:up\/)?\w+)/,
+							/medafire\.net\/(?:up\/)?\w+.*?<\/td><td style="color:green;">/g,
+							/medafire\.net\/(?:up\/)?\w+.*?<\/td><td style="color:red;">/g,
+							/medafire\.net\/(?:up\/)?\w+.*?<\/td><td style="color:orange;">/g,
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_datafile_dot_com_links", false))
+					{
+						addHost(
+							"datafile.com", //hostname
+							"datafile\\.com\/d\/\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://www.datafile.com/linkchecker.html', //api url
+							'btn=&links=', //postdata
+							/(datafile.com\/d\/\w+)/, //linkregex
+							/datafile.com\/d\/\w+.*?<\/td>[\s\n]+.+[\s\n]*?<td class="aligncenter" title="Status">[\s\n]*Ok/g, //liveregex
+							/datafile.com\/d\/\w+.*?<\/td>[\s\n]+.+[\s\n]*?<td class="aligncenter" title="Status">[\s\n]*Not found/g, //deadregex
+							null, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_depfile_dot_com_links", false))
+					{
+						addHost(
+							"depfile.com", //hostname
+							"depfile\\.com\/(?:downloads\/i\/\\d+\/f\/|\\w+)", //linkregex
+							22, //blocksize //unsure if right number
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'https://depfile.com/checkfiles', //api url
+							'send=Check&files=', //postdata
+							/(depfile\.com\/(?:downloads\/i\/\d+|\w+))/, //linkregex
+							/depfile\.com\/(?:downloads\/i\/\d+|\w+)[^<]*?<\/td><td><span class='active/g, //liveregex
+							/depfile\.com\/(?:downloads\/i\/\d+|\w+)[^<]*?<\/td><td><span class='(?:notfound|badurl)/g, //deadregex
+							null, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_terafile_dot_co_links", false))
+					{
+						addHost(
+							"terafile.co|lumfile.com|lumfile.eu|lumfile.se", //hostname
+							"(?:terafile\\.co|lumfile\\.(?:com|eu|se))\/\\w+", //linkregex
+							null, //blocksize
+							/(http:\/\/(?:www\.|)(?:lumfile\.(?:com|eu|se)|terafile\.co)\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://www.terafile.co/?op=checkfiles',
+							'op=checkfiles&process=Check+URLs&list=',
+							/((?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+)/,
+							/(?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+.*?<\/td>\s*<td style="color:green;">/g, //liveregex
+							/(?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+.*?<\/td>\s*<td style="color:red;">/g, //deadregex
+							/(?:terafile\.co|lumfile\.(?:se|eu|com))\/\w+.*?<\/td>\s*<td style="color:orange;">/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_filedwon_dot_com_links", false))
+					{
+						addHost(
+							"filedwon.com|filedwon.net|filedwon.info", //hostname
+							"filedwon\\.(?:com|net|info)\/\\w+", //linkregex
+							null, //blocksize
+							/(http:\/\/(?:www\.|)filedwon\.(?:com|net|info)\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://filedwon.info/?op=checkfiles',
+							'op=checkfiles&process=Check+URLs&list=',
+							/(filedwon\.(?:com|net|info)\/\w+)/,
+							/filedwon\.(?:com|net|info)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
+							/filedwon\.(?:com|net|info)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
+							/filedwon\.(?:com|net|info)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_ge_dot_tt_links", false))
+					{
+						addHost(
+							"ge.tt", //hostname
+							"ge\\.tt\/(?:api\/1\/files\/)?\\w+", //linkregex
+							1000000, //blocksize
+							/ge\.tt\/(?:api\/1\/files\/)?(\w+.*)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'https://open.ge.tt/1/files/', //api url
+							null, //postdata
+							null, //linkregex
+							null, //liveregex
+							null, //deadregex
+							null, //unavaregex
+							gettBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_filesbomb_dot_com_links", false))
+					{
+						addHost(
+							"filesbomb.com|filesbomb.biz|filesbomb.in", //hostname
+							"filesbomb\\.(?:com|biz|in)\/\\w+", //linkregex
+							null, //blocksize
+							/(http:\/\/(?:www\.|)filesbomb\.(?:com|biz|in)\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://filesbomb.in/?op=checkfiles',
+							'op=checkfiles&process=Check+URLs&list=',
+							/(filesbomb\.(?:com|biz|in)\/\w+)/,
+							/filesbomb\.(?:com|biz|in)\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
+							/filesbomb\.(?:com|biz|in)\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
+							/filesbomb\.(?:com|biz|in)\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_restfile_dot_ca_links", false))
+					{
+						addHost(
+							"restfile.ca|restfile.com|restfile.cc|restfile.org|restfile.net|restfile.co|restfile.bz|restfile.ws|restfiles.com|restfiles.net|restfilee.com", //hostname
+							"(?:restfile\\.(?:com|cc|org|net|ws|co|bz|ca)|restfile(?:s|e)\\.(?:com|net))\/\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							"http://www.restfilee.com/?op=checkfiles", //api url
+							"op=checkfiles&process=Check+URLs&list=", //postdata
+							/(restfile(?:e|s)?\.\w{2,3}\/\w+)/, //linkregex
+							/green'>http:\/\/(?:|www\.)restfile(?:e|s)?\.\w{2,3}\/\w+/g, //liveregex
+							/red'>http:\/\/(?:|www\.)restfile(?:e|s)?\.\w{2,3}\/\w+/g, //deadregex
+							/orange'>http:\/\/(?:|www\.)restfile(?:e|s)?\.\w{2,3}\/\w+/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_filepup_dot_net_links", false))
+					{
+						addHost(
+							"filepup.net", //hostname
+							"filepup\\.net\/(?:files|get)\/\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							/\/get\/(\w+)\/.+/, //corrreplwhat
+							"/files/$1.html", //corrreplwith
+							null, //separator
+							'http://www.filepup.net/link_checker.php', //api url
+							'task=doCheck&submit=Check+Links&urls=', //postdata
+							/filepup\.net\/files(\/\w+)/, //linkregex
+							/green">http:\/\/(?:www\.)?filepup\.net\/files\/\w+/g, //liveregex
+							/red">http:\/\/(?:www\.)?filepup\.net\/files\/\w+/g, //deadregex
+							/orange">http:\/\/(?:www\.)?filepup\.net\/files\/\w+/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_media1fire_dot_com_links", false))
+					{
+						addHost(
+							"media1fire.com", //hostname
+							"up\\.media1fire\\.com\/\\w+", //linkregex
+							null, //blocksize
+							/(http:\/\/up\.media1fire\.com\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							"http://up.media1fire.com/?op=checkfiles", //api url
+							"op=checkfiles&process=Check+URLs&list=", //postdata
+							/(up\.media1fire\.com\/\w+)/, //linkregex
+							/up\.media1fire\.com\/\w+.*?<\/td>\s*<td style=\"color:green;\">/g, //liveregex
+							/up\.media1fire\.com\/\w+.*?<\/td>\s*<td style=\"color:red;\">/g, //deadregex
+							/up\.media1fire\.com\/\w+.*?<\/td>\s*<td style=\"color:orange;\">/g, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_ezfile_dot_ch_links", false))
+					{
+						addHost(
+							"ezfile.ch|filecloud.io", //hostname
+							"(?:ezfile\\.ch|filecloud\\.io)\/\\w{6,10}", //linkregex
+							100000000, //blocksize
+							/(?:ezfile\.ch|filecloud\.io)\/(\w{6,10})/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							null, //api url
+							null, //postdata
+							null, //linkregex
+							null, //liveregex
+							null, //deadregex
+							null, //unavaregex
+							ezfileBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_maskfile_dot_com_links", false))
+					{
+						addHost(
+							"maskfile.com", //hostname
+							"[mM]ask[Ff]ile\\.com\/\\w+", //linkregex
+							null, //blocksize
+							/(https?:\/\/(?:www\.)?maskfile\.com\/\w+)/i, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'https://www.maskfile.com/?op=checkfiles', //api url
+							'op=checkfiles&process=Check+URLs&list=', //postdata
+							/maskfile\.com\/(\w+)/i, //linkregex
+							/maskfile\.com\/\w+.*?<\/td>\s*<td style="color:green;">/gi, //liveregex
+							/maskfile\.com\/\w+.*?<\/td>\s*<td style="color:red;">/gi, //deadregex
+							/maskfile\.com\/\w+.*?<\/td>\s*<td style="color:orange;">/gi, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_anysend_dot_com_links", false))
+					{
+						addHost(
+							"anysend.com", //hostname
+							"anysend\\.com\/\\w{32}", //linkregex
+							100000, //blocksize
+							/anysend\.com\/(\w{32})/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							null, //api url
+							null, //postdata
+							null, //linkregex
+							null, //liveregex
+							null, //deadregex
+							null, //unavaregex
+							anysendBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_webshare_dot_cz_links", false))
+					{
+						addHost(
+							"webshare.cz", //hostname
+							"webshare\\.cz\/(?:(?:#/)?file/\\w+|\\w+-.*)", //linkregex
+							100000, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							null, //api url
+							null, //postdata
+							null, //linkregex
+							null, //liveregex
+							null, //deadregex
+							null, //unavaregex
+							webshareBulkCheck //function delegate
+						)
+					}
+
+					if (hostSet("Check_uploadable_dot_ch_links", false))
+					{
+						addHost(
+							"uploadable.ch", //hostname
+							"uploadable\\.ch\/file\/\\w+", //linkregex
+							null, //blocksize
+							null, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							'http://www.uploadable.ch/check.php', //api url
+							'urls=', //postdata
+							/(uploadable\.ch\/file\/\w+)/, //linkregex
+							/<div class="col1"><a href="">http:\/\/(?:www\.)?uploadable\.ch\/file\/\w+.*<\/a><\/div>\s+<div class="col2">.+<\/div>\s+<div class="col3">.+<\/div>\s+<div class="col4"><span class="[\w\s]+">&nbsp;<\/span>\s+<span class="left">Available<\/span>/g, //liveregex
+							/<div class="col1"><a href="">http:\/\/(?:www\.)?uploadable\.ch\/file\/\w+.*<\/a><\/div>\s+<div class="col2">.+<\/div>\s+<div class="col3">.+<\/div>\s+<div class="col4"><span class="[\w\s]+">&nbsp;<\/span>\s+<span class="left">Not Available<\/span>/g, //deadregex
+							null, //unavaregex
+							null //function delegate
+						)
+					}
+
+					if (hostSet("Check_prefiles_dot_com_links", false))
+					{
+						addHost(
+							"prefiles.com", //hostname
+							"prefiles\\.com\/\\w+", //linkregex
+							null, //blocksize
+							/(https?:\/\/(?:www\.)?prefiles\.com\/\w+)/, //corrmatch
+							null, //corrreplwhat
+							null, //corrreplwith
+							null, //separator
+							"http://prefiles.com/checker", //api url
+							"op=checkfiles&list=", //postdata
+							/(prefiles\.com\/\w+)/, //linkregex
+							/prefiles\.com\/\w+.*<\/div>\s*<div class="copy" style="color:#6ab621;">/g, //liveregex
+							/prefiles\.com\/\w+.*<\/div>\s*<div class="copy" style="color:#f10000;">/g, //deadregex
+							null, //unavaregex
+							null //function delegate
+						)
+					}
+
+					/*if (hostSet("Check_rapidu_dot_net_links", false))
+					{
+					addHost(
+					"rapidu.net", //hostname
+					"rapidu\\.net\/\\d+", //linkregex
+					1000000, //blocksize
+					/rapidu\.net\/(\d+)/, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					"http://rapidu.net/api/getFileDetails/", //api url
+					"id=", //postdata
+					null, //linkregex
+					null, //liveregex
+					null, //deadregex
+					null, //unavaregex
+					rapiduBulkCheck //function delegate
+				)
+			}*/
+
+			if (hostSet("Check_uplea_dot_com_links", false))
+			{
+				addHost(
+					"uplea.com", //hostname
+					"uplea\\.com\/dl\/\\w+", //linkregex
+					1000000, //blocksize
+					/(https?:\/\/(?:www\.)?uplea\.com\/dl\/\w+)/, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					"http://api.uplea.com/api/check-my-links", //api url
+					null, //postdata
+					null, //linkregex
+					null, //liveregex
+					null, //deadregex
+					null, //unavaregex
+					upleaBC //function delegate
+				)
+			}
+
+			if (hostSet("Check_oboom_dot_com_links", false))
+			{
+				addHost(
+					"oboom.com", //hostname
+					"oboom\\.com\/#?\\w{8}", //linkregex
+					null, //blocksize
+					/oboom\.com\/#?(\w{8})/, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					null, //api url
+					null, //postdata
+					null, //linkregex
+					null, //liveregex
+					null, //deadregex
+					null, //unavaregex
+					oboomBulk //function delegate
+				)
+			}
+
+			if (hostSet("Check_updown_dot_bz_links", false))
+			{
+				addHost(
+					"updown.bz", //hostname
+					"updown\\.bz\/\\w{10}", //linkregex
+					null, //blocksize
+					/\.bz\/(\w{10})/, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					null, //api url
+					null, //postdata
+					null, //linkregex
+					null, //liveregex
+					null, //deadregex
+					null, //unavaregex
+					updownBulkCheck //function delegate
+				)
+			}
+
+			if (hostSet("Check_1fichier_dot_com_links", false))
+			{
+				addHost(
+					"1fichier.com", //hostname
+					"(?:\\w+\\.)?1fichier\\.com(?:\/\\?\\w+)?", //linkregex
+					100, //blocksize
+					/(https?:\/\/(?:\w+\.)?1fichier\.com(?:\/\?\w{5,})?)/, //corrmatch
+					/https?:\/\/(?:www\.)?1fichier\.com\/\?(\w{5,})/, //corrreplwhat
+					'https://$1.1fichier.com', //corrreplwith
+					null, //separator
+					'https://1fichier.com/check_links.pl', //api url
+					'links[]=', //postdata
+					/https?:\/\/(\w+)\.1fichier.com;/, //linkregex
+					/https?:\/\/\w+\.1fichier.com.*;.+;\d+/g, //liveregex
+					/https?:\/\/\w+\.1fichier.com.*;;;NOT FOUND/g, //deadregex
+					/https?:\/\/\w+\.1fichier.com.*;;;PRIVATE/g, //unavaregex
+					OnefichierCheck //function delegate
+				);
+			}
+
+			if (hostSet("Check_inclouddrive_dot_com_links", false))
+			{
+				addHost(
+					"inclouddrive.com", //hostname
+					"inclouddrive\\.com\/(?:file|#\/file_download)\/[a-zA-Z0-9_-]+", //linkregex
+					100000000, //blocksize
+					null, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					null, //api url
+					null, //postdata
+					null, //linkregex
+					null, //liveregex
+					null, //deadregex
+					null, //unavaregex
+					inclouddriveCheck //function delegate
+				);
+			}
+
+			if (hostSet("Check_loadster_dot_sx_links", false))
+			{
+				addHost(
+					"loadster.sx", //hostname
+					"loadster\\.sx\/file\/\\w+", //linkregex
+					null, //blocksize
+					null, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					"http://loadster.sx/linkchecker", //api url
+					"checklinks=Check+links&links=", //postdata
+					/(loadster\.sx\/file\/\w+)/, //linkregex
+					/<i class="icon-check"><\/i><a target="blank" href="https?:\/\/(?:www\.)loadster\.sx\/file\/\w+\n*">/g, //liveregex
+					/<i class="icon-cancel"><\/i>https?:\/\/(?:www\.)?loadster\.sx\/file\/\w+<\/p>/g, //deadregex
+					null, //unavaregex
+					null //function delegate
+				);
+			}
+
+			if (hostSet("Check_rapidturk_dot_com_links", false))
+			{
+				addHost(
+					"rapidturk.com",
+					"rapidturk\\.com\/download\/\\d{10}\\.php",
+					null,
+					null,
+					null,
+					null,
+					null,
+					'http://www.rapidturk.com/tools/link-checker',
+					'task=doCheck&submit=Check+Links&urls=',
+					/(rapidturk.com\/download\/\d{10}\.php)/,
+					/>http:\/\/www.rapidturk.com\/download\/\d{10}\.php<\/a> - <font color="green">/g,
+					/>http:\/\/www.rapidturk.com\/download\/\d{10}\.php<\/a> - <font color="red">/g, //assumption
+					/>http:\/\/www.rapidturk.com\/download\/\d{10}\.php<\/a> - <font color="orange">/g, //assumption
+					null
+				);
+			}
+			/***********
+			CUSTOM_ADD
+			***********/
+			if (hostSet("Check_turbobit_dot_net_links", false)) {
+				addHost(
+					"turbobit.pl|turbobit.net",
+					"turbobit\\.net\/\\w+",
+					null, //blocksize
+					null, //corrmatch
+					null, //corrreplwhat
+					null, //corrreplwith
+					null, //separator
+					null,
+					null,
+					null,
+					null,
+					null,
+					null,
+					turbobitBulkCheck //function delegate
+				)
+			}
+
+			function genBulkCheck()
+			{
+				var blockIdx = this.links.length;
+
+				while (blockIdx--)
+				{
+					postRequest(this.apiUrl, this.postData, this.links[blockIdx],
+						this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.resUnavaRegex, this.separator);
+
+					}
+
+					function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex, sep)
+					{
+						GM_xmlhttpRequest(
+							{
+								method: 'POST',
+								url: api,
+								headers: {
+									'User-agent': rUA(),
+									'Content-type': 'application/x-www-form-urlencoded',
+									'Referer': api,
+									'X-Requested-With': 'XMLHttpRequest'
+								},
+								data: postData + encodeURIComponent(links),
+								onload: function (result)
+								{
+									var res = result.responseText;
+
+									//console.log(res);
+
+									if ((res.contains(">DDoS protection by CloudFlare") && res.contains(">Checking your browser before accessing<")) || res.contains('<iframe src="/_Incapsula_Resource?') || res.contains('>Please complete the security check')) {
+										DisplayTheCheckedLinks(links.split(sep), 'unknown_link', 'Captcha required to check links');
+										sendMessage('Some links require you to fill out a captcha! Please open them manually.')
+									}
+
+									var i;
+
+									var livelinks = res.match(liveRegex);
+									var deadlinks = res.match(deadRegex);
+
+									//console.log(livelinks);
+									//console.log(deadlinks);
+
+									if (livelinks != null)
+									{
+										i = livelinks.length - 1;
+										do
+										{
+											livelinks[i] = livelinks[i].match(linkRegex)[1];
+										}
+										while (i--);
+										DisplayTheCheckedLinks(livelinks, 'alive_link');
+									}
+
+									if (deadlinks != null)
+									{
+										i = deadlinks.length - 1;
+										do
+										{
+											deadlinks[i] = deadlinks[i].match(linkRegex)[1];
+										}
+										while (i--);
+										DisplayTheCheckedLinks(deadlinks, 'adead_link');
+									}
+
+									if (unavaRegex != null)
+									{
+										var unavalinks = res.match(unavaRegex)
+										if (unavalinks)
+										{
+											i = unavalinks.length - 1;
+											do
+											{
+												unavalinks[i] = unavalinks[i].match(linkRegex)[1];
+											}
+											while (i--);
+											DisplayTheCheckedLinks(unavalinks, 'unava_link');
+										}
+									}
+								},
+								onerror: function (e) {
+									var linkArr = links.split(sep);
+									DisplayTheCheckedLinks(linkArr, "unknown_link");
+								}
+							});
+
+						}
+					}
+
+					//specialized bulkchecking handlers follow
+					function OnefichierCheck() {
+						var blockIdx = this.links.length;
+
+						while (blockIdx--)
+						{
+							postRequest(this.apiUrl, this.postData, this.links[blockIdx].split(this.separator).join('&links[]='),
+							this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.resUnavaRegex, '&links[]=');
+
+						}
+
+						function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex, sep)
+						{
+							GM_xmlhttpRequest(
+								{
+									method: 'POST',
+									url: api,
+									headers: {
+										'User-agent': rUA(),
+										'Content-type': 'application/x-www-form-urlencoded',
+										'Referer': api,
+										'X-Requested-With': 'XMLHttpRequest'
+									},
+									data: postData + encodeURIComponent(links).replace(/%26links%5B%5D%3D/g, '&links[]='), //replace for 1Fichier (Doesn't recognize different request parameters)
+									onload: function (result)
+									{
+										var res = result.responseText;
+
+										//console.log(res);
+
+										var i;
+
+										var livelinks = res.match(liveRegex);
+										var deadlinks = res.match(deadRegex);
+
+										//console.log(livelinks);
+										//console.log(deadlinks);
+
+										if (livelinks != null)
+										{
+											i = livelinks.length - 1;
+											do
+											{
+												livelinks[i] = livelinks[i].match(linkRegex)[1];
+											}
+											while (i--);
+											DisplayTheCheckedLinks(livelinks, 'alive_link');
+										}
+
+										if (deadlinks != null)
+										{
+											i = deadlinks.length - 1;
+											do
+											{
+												deadlinks[i] = deadlinks[i].match(linkRegex)[1];
+											}
+											while (i--);
+											DisplayTheCheckedLinks(deadlinks, 'adead_link');
+										}
+
+										if (unavaRegex != null)
+										{
+											var unavalinks = res.match(unavaRegex)
+											if (unavalinks)
+											{
+												i = unavalinks.length - 1;
+												do
+												{
+													unavalinks[i] = unavalinks[i].match(linkRegex)[1];
+												}
+												while (i--);
+												DisplayTheCheckedLinks(unavalinks, 'unava_link');
+											}
+										}
+
+										var unknownlinks = res.match(/https?:\/\/\w+\.1fichier.com.*;;;BAD LINK/g);
+										if (unknownlinks) {
+											i = unknownlinks.length - 1;
+											do
+											{
+												unknownlinks[i] = unknownlinks[i].match(linkRegex)[1];
+											}
+											while (i--);
+											DisplayTheCheckedLinks(unknownlinks, 'unknown_link');
+										}
+									},
+									onerror: function (e) {
+										var linkArr = links.split(sep);
+										DisplayTheCheckedLinks(linkArr, "unknown_link");
+									}
+								});
+
+							}
+						}
+
+						function inclouddriveCheck() {
+							var links = this.links[0].split('\r\n');
+							var x = links.length;
+							var link;
+							while (x--) {
+								checkLink(links[x]);
+							}
+
+							function checkLink(link) {
+								GM_xmlhttpRequest({
+									method: 'GET',
+									url: link.replace('/file/', '/index.php/file_download/').replace('/#/', '/index.php/'),
+									headers: {
+										'X-Requested-With': 'XMLHttpRequest'
+									},
+									onload: function (result) {
+										var res = result.responseText;
+										if (res.contains('<p style="font-size:17px;">The requested file isn\'t anymore!</p>')) {
+											DisplayTheCheckedLinks([link], 'adead_link');
+										} else if (res.contains('<button style="border:none;" id="download_from_link"')) {
+											DisplayTheCheckedLinks([link], 'alive_link');
+										} else {
+											DisplayTheCheckedLinks([link], 'unknown_link');
+										}
+									}
+								});
+							}
+						}
+
+						function updownBulkCheck() {
+							var res = '',
+							a = [],
+							b = [],
+							links = this.links,
+							blockIdx = links.length,
+							obj = new Object;
+							obj.m = 'chkr'
+							obj.a = 'chk',
+							obj.d = new Object();
+
+							while (blockIdx--) {
+								obj.d.id = links[blockIdx].split('\r\n');
+								console.log(obj);
+
+								GM_xmlhttpRequest({
+									method: 'POST',
+									url: 'https://api.updown.bz/',
+									headers: {
+										'Content-type': 'application/json; charset=utf-8',
+										'Referer': 'https://updown.bz/'
+									},
+									data: JSON.stringify(obj),
+									onload: function(result) {
+										var res = JSON.parse(result.responseText);
+										console.log(res)
+										if (res.c === 1) {
+											for (var i = res.d.length - 1; i >= 0; i--) {
+												if (res.d[i].online) {
+													a.push(res.d[i].id);
+												} else if (!res.d[i].online) {
+													b.push(res.d[i].id);
+												}
+											};
+										}
+
+										if (a.length > 0) DisplayTheCheckedLinks(a, 'alive_link');
+										if (b.length > 0) DisplayTheCheckedLinks(b, 'adead_link');
+									}
+
+								});
+							}
+						}
+
+						function oboomBulk() {
+							var a = [], b = [], c = [];
+							var array = this.links;
+
+							GM_xmlhttpRequest({
+								method: 'GET',
+								url: 'https://www.oboom.com/1/guestsession',
+								headers: {
+									'User-agent': rUA(),
+									'Content-type': 'application/x-www-form-urlencoded',
+									'Referer': 'https://www.oboom.com'
+								},
+								onload: function(result) {
+									//console.log(result);
+									var blockIdx = array.length;
+									var token = JSON.parse(result.responseText)[1];
+									while (blockIdx--) {
+										startCheck(array[blockIdx].split('\r\n'), token);
+									}
+								}
+							});
+
+							function startCheck(links, token) {
+								GM_xmlhttpRequest({
+									method: 'POST',
+									url: "https://api.oboom.com/1/info",
+									headers: {
+										'User-agent': rUA(),
+										'Content-type': 'application/x-www-form-urlencoded',
+										'Referer': 'https://www.oboom.com/',
+										'X-Requested-With': 'XMLHttpRequest'
+									},
+									data: "token=" + token + "&items=" + links.join(","),
+									onload: function(result) {
+										var res = JSON.parse(result.responseText)[1];
+										var i = res.length, s;
+
+										while (i--) {
+											s = res[i].state;
+											if (s == 'online') a.push(res[i].id);
+											else if (s == 'blocked' || s == 'abused' || s == 'lost' || s == 'not_found' || s =='expired') b.push(res[i].id);
+											else c.push(res[i].id);
+										}
+
+										if (a.length > 0) DisplayTheCheckedLinks(a, 'alive_link');
+										if (b.length > 0) DisplayTheCheckedLinks(b, 'adead_link');
+										if (c.length > 0) DisplayTheCheckedLinks(c, 'unknown_link');
+									}
+								});
+							}
+						}
+
+						function upleaBC() {
+							var json = {
+								links: this.links[0].split('\r\n')
+							};
+
+							GM_xmlhttpRequest({
+								method: 'POST',
+								url: this.apiUrl,
+								data: 'json=' + JSON.stringify(json),
+								headers: {
+									'User-agent': rUA(),
+									'Content-type': 'application/x-www-form-urlencoded',
+									'Referer': 'http://uplea.com/checker',
+									'X-Requested-With': 'XMLHttpRequest'
+								},
+								onload: function(result) {
+									var res = JSON.parse(result.responseText);
+
+									if (res.error.length > 0) {
+										var mes = 'Error in checking Uplea.com! Error message(s):';
+										$.each(res.error, function(key, val) { mes += '\r\n' + val; });
+										console.warn(mes); return;
+									}
+
+									var deadlinks = [], alivelinks = [], unavalinks = [];
+									$.each(res.result, function(key, val) {
+										if (val.status == 'OK') alivelinks.push(val.link);
+										else if (val.status == 'DELETE') deadlinks.push(val.link);
+										else unknownlinks.push(val.link);
+									});
+
+									if (deadlinks.length > 0) DisplayTheCheckedLinks(deadlinks, 'adead_link');
+									if (alivelinks.length > 0) DisplayTheCheckedLinks(alivelinks, 'alive_link');
+									if (unknownlinks.length > 0) DisplayTheCheckedLinks(unavalinks, 'unknown_link');
+								}
+							});
+						}
+
+						/*function rapiduBulkCheck() {
+							var arr = this.links[0].split('\r\n').join(',');
+							GM_xmlhttpRequest({
+							method: 'POST',
+							url: this.apiUrl,
+							data: this.postData + arr,
+							headers: {
+							'User-agent': rUA(),
+							'Content-type': 'application/x-www-form-urlencoded',
+							'Referer': 'http://rapidu.net',
+							'X-Requested-With': 'XMLHttpRequest'
+						},
+						onload: function(result) {
+						var res = JSON.parse(result.responseText);
+						var deadlinks = [], alivelinks = [];
+						$.each(res, function(key, value) {
+						if (value.fileStatus && value.fileStatus == 1) {
+						alivelinks.push(value.fileId);
+					} else if (value.fileStatus && value.fileStatus == 0) {
+					deadlinks.push(value.fileId);
+				}
+			});
+
+			if (deadlinks.length > 0) DisplayTheCheckedLinks(deadlinks, 'adead_link');
+			if (alivelinks.length > 0) DisplayTheCheckedLinks(alivelinks, 'alive_link');
+		}
+	});
+}*/
+
+function webshareBulkCheck()
+{
+	var arr = this.links[0].split('\r\n');
+	var i = arr.length;
+
+	while(i--)
+	{
+		postRequest(arr[i]);
+	}
+
+	function postRequest(wsLink) {
+		var id = wsLink.match(/webshare\.cz\/(?:(?:#\/)?file\/)?(\w+)/)[1];
+
+		GM_xmlhttpRequest({
+			method: 'POST',
+			url: "http://webshare.cz/api/file_info/",
+			headers: {
+				'User-agent': rUA(),
+				'Content-type': 'application/x-www-form-urlencoded',
+				'Referer': "",
+			},
+			data: "wst=&ident=" + id,
+			onload: function (result) {
+				var res = result.responseText;
+
+				if (res.contains(/<name>.+?<\/name>/))
+				{
+					DisplayTheCheckedLinks([id], 'alive_link');
+				}
+				else
+				{
+					DisplayTheCheckedLinks([id], 'adead_link');
+				}
+			}
+		});
+	}
 }
 
-update.init();
+function anysendBulkCheck() {
+	var arr = this.links[0].split('\r\n');
+	var blockIdx = arr.length;
+	while (blockIdx--) {
+		check(arr[blockIdx]);
+	}
+
+	function check(id) {
+		GM_xmlhttpRequest({
+			url: 'http://im.anysend.com/check_file.php?key=' + id,
+			method: 'GET',
+			onload: function(result) {
+				var res = result.responseText;
+				if (res.contains(/"[0-9\.]+"/)) {
+					DisplayTheCheckedLinks([id], 'alive_link');
+				} else if (res.contains('<a href="/download.php" class="btn btn-large btn-success"')) { //request has redirected to homepage => link dead
+					DisplayTheCheckedLinks([id], 'adead_link');
+				} else {
+					DisplayTheCheckedLinks([id], 'unknown_link');
+				}
+
+			}
+		});
+	}
+}
+
+function ezfileBulkCheck() {
+	var arr = this.links[0].split(this.separator);
+	var blockIdx = arr.length;
+	while (blockIdx--) {
+		check(arr[blockIdx]);
+	}
+
+	function check(ukey) {
+		GM_xmlhttpRequest({
+			method: 'GET', //api seems to only work with GET
+			url: 'https://ezfile.ch/?m=api&a=exists&fkey=' + encodeURIComponent(ukey),
+			headers: {
+				'User-agent': rUA(),
+				'Content-type': 'application/x-www-form-urlencoded',
+				'Referer': 'http://ezfile.ch',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			onload: function(result) {
+				var res = JSON.parse(result.responseText);
+
+				if (res.status == 'ok' && res.exists) {
+					DisplayTheCheckedLinks([ukey], 'alive_link');
+				} else if (res.status == 'ok' && !res.exists) {
+					DisplayTheCheckedLinks([ukey], 'adead_link');
+				} else DisplayTheCheckedLinks([ukey], 'unknown_link');
+			},
+			onerror: function() {
+				DisplayTheCheckedLinks([ukey], 'unknown_link');
+			}
+		});
+	}
+}
+
+function gettBulkCheck() {
+	var arr = this.links[0].split("\r\n");
+	var i = arr.length;
+	var params, sharename, fileid;
+	while (i--) {
+		params = arr[i].match(/(\w+)(?:\/v\/(\d+))?/);
+		sharename = params[1], fileid = params[2] ? params[2] : 0;
+		GM_xmlhttpRequest({
+			method:"GET",
+			url: this.apiUrl + sharename + "/" + fileid,
+			headers: {
+				'User-agent': rUA(),
+				'Content-type': 'application/x-www-form-urlencoded',
+				'Referer': this.apiUrl,
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			onload: function(result) {
+				var res = JSON.parse(result.responseText);
+				if (res.readystate == "uploaded") {
+					DisplayTheCheckedLinks([res.sharename], 'alive_link');
+				} else if (res.readystate == "removed") {
+					DisplayTheCheckedLinks([res.sharename], 'adead_link');
+				} else {
+					DisplayTheCheckedLinks([res.sharename], 'unknown_link');
+				}
+			}
+		});
+	}
+}
+
+function uploadingBulkCheck()
+{
+	var blockIdx = this.links.length;
+
+	while (blockIdx--)
+	{
+		postRequest(this.apiUrl, this.postData, this.links[blockIdx],
+			this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.resUnavaRegex);
+
+		}
+
+		function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex)
+		{
+			GM_xmlhttpRequest(
+				{
+					method: 'POST',
+					url: api,
+					headers: {
+						'User-agent': rUA(),
+						'Content-type': 'application/x-www-form-urlencoded',
+						'Referer': api,
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					data: postData + encodeURIComponent(links),
+					onload: function (result)
+					{
+						var res = result.responseText;
+
+						var i;
+
+						var livelinks = res.match(liveRegex);
+						var deadlinks = res.match(deadRegex);
+						var allLinks = links.split("\r\n");
+						for(i=0;i<allLinks.length;i++) {
+							allLinks[i] = allLinks[i].match(/uploading\.com\/(?:files\/|\w+\/\?get=)?(\w+)/)[1];
+						}
+
+						if (livelinks != null)
+						{
+							i = livelinks.length - 1;
+							do
+							{
+								livelinks[i] = livelinks[i].match(linkRegex)[1].toLowerCase();
+								livelinks.push(livelinks[i].toUpperCase());
+								allLinks.splice($.inArray(livelinks[i], allLinks), 1);
+							}
+							while (i--);
+							DisplayTheCheckedLinks(livelinks, 'alive_link');
+						}
+
+						if (deadlinks != null)
+						{
+							i = deadlinks.length - 1;
+							do
+							{
+								deadlinks[i] = deadlinks[i].match(linkRegex)[1].toLowerCase();
+								deadlinks.push(deadlinks[i].toUpperCase());
+								allLinks.splice($.inArray(deadlinks[i], allLinks), 1);
+							}
+							while (i--);
+							DisplayTheCheckedLinks(deadlinks, 'adead_link');
+						}
+
+						if (allLinks.length > 0)
+						{
+							i = allLinks.length - 1;
+							do
+							{
+								websiteCheck(allLinks[i]);
+							}
+							while (i--);
+						}
+					}
+				});
+
+			}
+
+			function websiteCheck(link) {
+				var realLink = "http://uploading.com/files/" + link;
+				GM_xmlhttpRequest({
+					method: 'GET',
+					url: realLink,
+					headers: {
+						'User-agent': rUA(),
+						'Content-type': 'application/x-www-form-urlencoded',
+						'Referer': realLink,
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					onload: function (result) {
+						if (result.status == 503) websiteCheck(link);
+						res = result.responseText;
+						if (res.contains('file_error">|error_404">')) {
+							DisplayTheCheckedLinks([link], 'adead_link');
+						}
+						else if (res.contains('free_method">')) {
+							DisplayTheCheckedLinks([link], 'alive_link');
+						}
+					}
+				});
+			}
+		}
+
+		function dateiToBulk()
+		{
+			var arr = this.links[0].split("\r\n");
+			var data = "key=YYMHGBR9SFQA0ZWA&info=STATUS&datei=";
+			var i = arr.length;
+
+			while(i--)
+			{
+				var token = arr[i].match(/\.to\/(?:datei\/|files\/|1,|\?)(\w+)/)[1];
+				postRequest(token);
+			}
+
+			function postRequest(token) {
+				data += token;
+				GM_xmlhttpRequest({
+					method:"POST",
+					url:"http://api.datei.to/",
+					data:data,
+					headers: {
+						'User-agent': rUA(),
+						'Content-type': 'application/x-www-form-urlencoded',
+						'Referer': ""
+					},
+					onload: function(result) {
+						var res = result.responseText;
+						if (res.contains('offline')) {
+							DisplayTheCheckedLinks([token],'adead_link');
+						}
+						else if (res.contains('online')) {
+							DisplayTheCheckedLinks([token], 'alive_link');
+						}
+					}
+				});
+			}
+		}
+
+		function uploadedBulkCheck()
+		{
+			var t = this.links.length;
+			while (t--) {
+				var arr = this.links[t].split("\r\n");
+				var data = "apikey=lhF2IeeprweDfu9ccWlxXVVypA5nA3EL";
+
+				$.each(arr, function (key, value) {
+					data += '&id_' + key + '=' + value;
+				});
+
+				GM_xmlhttpRequest(
+					{
+						method: "POST",
+						url: "https://uploaded.net/api/filemultiple",
+						data: data,
+						headers: {
+							'User-agent': rUA(),
+							'Content-type': 'application/x-www-form-urlencoded',
+							'Referer': ""
+						},
+						onload: function (result)
+						{
+							var res = result.responseText;
+
+							var i;
+
+							var livelinks = res.match(/online,\w+,/g);
+							var deadlinks = res.match(/offline,\w+,/g);
+
+							if (livelinks)
+							{
+								var i = livelinks.length - 1;
+								do
+								{
+									livelinks[i] = livelinks[i].match(/,(\w+),/)[1];
+								}
+								while (i--);
+								DisplayTheCheckedLinks(livelinks, 'alive_link');
+							}
+
+							if (deadlinks)
+							{
+								var i = deadlinks.length - 1;
+								do
+								{
+									deadlinks[i] = deadlinks[i].match(/,(\w+),/)[1];
+								}
+								while (i--);
+								DisplayTheCheckedLinks(deadlinks, 'adead_link');
+							}
+						}
+					});
+				}
+			}
+
+			function megaBulkCheck()
+			{
+				var arr = this.links[0].split("\r\n");
+				var i = arr.length;
+				var seqno = Math.floor(Math.random()*1000000000);
+
+				while(i--)
+				{
+					postRequest(arr[i]);
+				}
+
+				function postRequest(megaLink)
+				{
+					var id = megaLink.match(/mega\.co\.nz\/#F?!(\w+)(?:!\w+)?/)[1];
+
+					GM_xmlhttpRequest(
+						{
+							method: "POST",
+							url: 'https://g.api.mega.co.nz/cs?id=' + seqno++,
+							data: '[{"a":"g","p":"' + id + '","ssl": "1"}]',
+							headers: {
+								'User-agent': rUA(),
+								'Content-Type': 'application/xml',
+								'Referer': "https://mega.co.nz/"
+							},
+							onload: function (result)
+							{
+								var res = $.parseJSON(result.responseText.match(/\[(.+?)\]/)[1]);
+
+								if ((typeof res == "number" && (res == -9 || res == -16 || res == -6)) || res.d) {
+									DisplayTheCheckedLinks([id], 'adead_link');
+								} else if (res.e == "ETEMPUNAVAIL") {
+									DisplayTheCheckedLinks([id], 'unava_link');
+								} else if (res.at) {
+									DisplayTheCheckedLinks([id], 'alive_link');
+								} else {
+									console.warn("Error in checking Mega.co.nz! Please notify devs.\r\nError code: " + result.responseText);
+								}
+							}
+						});
+					}
+				}
+
+				function turbobitBulkCheck() {
+					var arr = this.links[0].split("\r\n");
+					var i = arr.length;
+
+					while (i--) {
+						postRequest(arr[i]);
+					}
+
+					function postRequest(turbobitLink) {
+						GM_xmlhttpRequest({
+							method: "POST",
+							url: 'http://turbobit.net/linkchecker/check',
+							data: 'links_to_check=' + turbobitLink,
+							headers: {
+								'User-agent': 'Mozilla/4.0 (compatible) Greasemonkey',
+								'Content-type': 'application/x-www-form-urlencoded',
+							},
+							onload: function(result) {
+								if(!result.responseText.match(/<img src=".*" title="(\w+)" \/>/)) {
+									DisplayTheCheckedLinks([turbobitLink], 'unava_link');
+								}
+								var res = result.responseText.match(/<img src=".*" title="(\w+)" \/>/)[1];
+								if (res == "Deleted") {
+									DisplayTheCheckedLinks([turbobitLink], 'adead_link');
+								} else if (res == "Existent") {
+									DisplayTheCheckedLinks([turbobitLink], 'alive_link');
+								}
+							}
+						});
+					}
+				}
+
+
+				function netloadBulkCheck()
+				{
+					var blockIdx = this.links.length;
+
+					while (blockIdx--)
+					{
+						postRequest(this.apiUrl, this.postData, this.links[blockIdx],
+							this.resLinkRegex, this.resLiveRegex, this.resDeadRegex, this.unavaRegex);
+
+						}
+
+						function postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex)
+						{
+							GM_xmlhttpRequest(
+								{
+									method: 'POST',
+									url: api,
+									headers: {
+										'User-agent': rUA(),
+										'Content-type': 'application/x-www-form-urlencoded',
+										'Referer': ""
+									},
+									data: postData + encodeURIComponent(links),
+									onload: function (result)
+									{
+										var res = result.responseText;
+
+										//console.log(res);
+
+										if (res.contains('<title>403 - Forbidden</title>')){
+											postRequest(api, postData, links, linkRegex, liveRegex, deadRegex, unavaRegex);
+										}
+
+										var i;
+
+										var livelinks = res.match(liveRegex);
+										var deadlinks = res.match(deadRegex);
+
+										//console.log(livelinks);
+										//console.log(deadlinks);
+
+										if (livelinks != null)
+										{
+											i = livelinks.length - 1;
+											do
+											{
+												recheckLink(livelinks[i].match(linkRegex)[1]);
+												//livelinks[i] = livelinks[i].match(linkRegex)[1];
+											}
+											while(i--);
+											//DisplayTheCheckedLinks(livelinks, "alive_link");
+										}
+
+										if (deadlinks != null)
+										{
+											i = deadlinks.length - 1;
+											do
+											{
+												deadlinks[i] = deadlinks[i].match(linkRegex)[1];
+											}
+											while (i--);
+											DisplayTheCheckedLinks(deadlinks, 'adead_link');
+										}
+									}
+								});
+							}
+
+							function recheckLink(link)
+							{
+								var link = link;
+
+								GM_xmlhttpRequest(
+									{
+										method: 'GET',
+										url: 'http://netload.in/datei' + link + '.htm',
+										headers: {
+											'User-agent': rUA(),
+											'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+											'Accept-Charset': 'windows-1250,utf-8;q=0.7,*;q=0.7',
+											'Referer': ""
+										},
+										onload: function (result)
+										{
+											var res = result.responseText;
+											//console.log(res);
+
+											if (res.contains('dl_first_file_download">|download_limit.gif'))
+											{
+												DisplayTheCheckedLinks([link], 'alive_link');
+												return;
+											}
+
+											if (res.contains('achtung.jpg"'))
+											{
+												DisplayTheCheckedLinks([link], 'adead_link');
+												return;
+											}
+
+											if (res.contains('>403 - Forbidden<')) {
+												recheckLink(link);
+											}
+										},
+										onerror: function ()
+										{
+											displayTheCheckedLink(link, 'unava_link');
+										}
+									});
+								}
+							}
+
+							function depositfilesBulkCheck()
+							{
+								var arr = this.links[0].split("\r\n");
+								var i = arr.length;
+
+								while(i--)
+								{
+									postRequest(arr[i]);
+								}
+
+								function postRequest(dfLink)
+								{
+									var id = dfLink.match(/(?:depositfiles\.(?:com|lt|org)|dfiles\.(?:eu|ru))\/(?:en\/|ru\/|de\/|es\/|pt\/|)files\/(\w+)/)[1];
+
+									GM_xmlhttpRequest(
+										{
+											method: "POST",
+											url: 'http://depositfiles.com/api/get_download_info.php?id=' + id + "&format=json",
+											headers: {
+												'User-agent': rUA(),
+												'Content-Type': 'application/x-www-form-urlencoded',
+												'Referer': ""
+											},
+											onload: function (result)
+											{
+												var res = result.responseText;
+												//console.log(res);
+
+												if (res == "") {
+													postRequest(dfLink);
+												}
+
+												if (res.contains('no_file'))
+												{
+													DisplayTheCheckedLinks(["files/" + id], 'adead_link');
+													return;
+												}
+
+												if (res.contains('file_ban')) {
+													DisplayTheCheckedLinks(["files/" + id], 'unknown_link');
+													return;
+												}
+
+												if (res.contains(/download_li(?:nk|mit)|password_check|file_storage/))
+												{
+													DisplayTheCheckedLinks(["files/" + id], 'alive_link');
+												}
+											}
+										});
+									}
+								}
+							}
+
+							function initFileHosts()
+							{
+								var aOHCount = "1";
+								function addObsoleteHost(hostName, linkRegex)
+								{
+									hostName = hostName.split("|");
+									var i = hostName.length;
+
+									var hostID = "OH" + aOHCount;
+
+									while(i--) {
+										var filehost = gimmeHostName(hostName[i]).replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
+										if (!hostsIDs[filehost]) {
+											hostsIDs[filehost] = [];
+										}
+										hostsIDs[filehost].push({
+											hostID: hostID,
+											linkRegex: linkRegex,
+										});
+									}
+
+									var OHObj = {
+										links: []
+									}
+
+									hostsCheck[hostID] = OHObj;
+									aOHCount++;
+								}
+
+								//obsolete file hosts init start
+								if (hostSet("Obsolete_file_hosts", false))
+								{
+									addObsoleteHost("superfastfile.com", "superfastfile\\.com\/\\w+");
+									addObsoleteHost("uploadlab.com", "files\\.uploadlab\\.com\/\\w+");
+									addObsoleteHost("zupload.com", "z\\d+\\.zupload\\.com\/\\w+");
+									addObsoleteHost("filesdump.com", "(?:s\\d+\\.|)filesdump\\.com\/file\/\\w+");
+									addObsoleteHost("speedie-host.com", "uploads\\.speedie\\-host\\.com\/\\w+");
+									addObsoleteHost("turboupload.com", "(?:d\\.|)turboupload\\.com\/\\w+");
+									addObsoleteHost("share2u.net", "dl\\.share2u\\.net\/\\w+");
+									addObsoleteHost("filestock.net|filestock.ru", "(?:download\\.)?filestock\\.(?:net|ru)\/\\w+");
+									addObsoleteHost("ex.ua", "(?:fs\\d{1,2}\\.)?(?:www\\.|)ex\\.ua\/\\w+");
+									addObsoleteHost("omxira.com", "(?:get\\.|)omxira\\.com\/\\w+");
+									addObsoleteHost("uploadtornado.com", "(?:\\w{2}\\.)uploadtornado\\.com\/\\w+");
+									addObsoleteHost("bgdox.com", "(?:turbo\\.)?bgdox\\.com\/\\w+");
+									addObsoleteHost("fshare.eu", "www\\d?\\.fshare\\.eu\/\\w+");
+									var i = allObsoleteNames.length;
+									while(i--)
+									{
+										addObsoleteHost(
+											allObsoleteNames[i],
+											"https?:\/\/(?:[a-zA-Z0-9-]+\\.)?(?:" + allObsoleteNames[i].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/"
+										);
+									}
+
+									if (PW_MODE) {
+										var x = pwCensoredHosts.length;
+										while (x--) {
+											addObsoleteHost(
+												pwCensoredHosts[x],
+												"https?:\/\/(?:[a-zA-Z0-9-]+\\.)?(?:" + pwCensoredHosts[x].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/"
+											);
+										}
+										addObsoleteHost("hellshare.com|hellshare.sk|hellshare.pl|hellshare.cz|hellshare.hu","(?:|download\\.(?:\\w{2}\\.|)|www\\.)hellshare\\.(?:\\w{2,3})\/[\\w-\\.]+");
+									}
+								}
+								//obsolete file hosts init end
+								var aFHCount = 1;
+								function addFileHost(hostName, linkRegex, isAliveRegex, isDeadRegex, isUnavaRegex, tryLoop)
+								{
+									hostName = hostName.split("|");
+									var i = hostName.length;
+
+									var hostID = "WC" + aFHCount;
+
+									while(i--) {
+										var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
+
+										if (!hostsIDs[filehost]) {
+											hostsIDs[filehost] = [];
+										}
+										hostsIDs[filehost].push({
+											hostID: hostID,
+											linkRegex: linkRegex,
+										});
+									}
+
+									var WCObj = {
+										liveRegex: isAliveRegex,
+										deadRegex: isDeadRegex,
+										unavaRegex: isUnavaRegex,
+										tryLoop: false,
+										links: []
+									}
+
+									if (tryLoop) WCObj.tryLoop = true;
+
+									hostsCheck[hostID] = WCObj;
+									aFHCount++;
+								}
+
+								var genericWC = [   'host4files.com', 'rabidfiles.com', 'free4share.de', 'box4up.com', 'upfile.vn', 'weshare.me',
+								'sv-esload.com', 'up-loading.net', 'yonzy.com', 'jumbofiles.net', 'forlaughs.net', 'warped.co',
+								'iguanashare.com'];
+
+								var XFSPWC =     [     "fileplanet.com.ua|fileplaneta.com", "xvidstage.com", "midupload.com", "ex-load.com", "share.az", "sharesix.com",
+								"interfile.net", "medofire.com", "downloadani.me", "uppit.com|up.ht", "filenuke.com", 'toofile.com',
+								"filecore.co.nz|fcore.eu", "1000shared.com", "tusfiles.net|tusfiles.com", "lafiles.com", "redbunker.net", 'happystreams.net'];
+
+								var genThird =    [    "jumbofiles.org|jumbofilebox.com", "10shared.com", "4bigbox.com", "skyfilebox.com"]
+
+								var gWC = genericWC.length;
+								while(gWC--) {
+									if (hostSet("Check_" + genericWC[gWC].replace(/\./g, "_dot_").replace(/\-/g, "_dash_") + "_links", false))
+									{
+										addFileHost(
+											genericWC[gWC],
+											genericWC[gWC].replace(/\./g, "\\.").replace(/\-/g, "\\-") + "\/\\w+",
+											'$(\'.download-timer\').html("<a class=\'btn btn-|<a class="link btn-free"',
+											/<ul class='pageErrors'><li>(?:Datei wurde entfernt|File has been removed)/,
+											'optional--'
+										);
+									}
+								}
+
+								var xWC = XFSPWC.length;
+								while (xWC--) {
+									if (hostSet("Check_" + XFSPWC[xWC].match(/[\w\.\-]+/)[0].replace(/\./g, "_dot_").replace(/\-/g, "_dash_") + "_links", false))
+									{
+										addFileHost(
+											XFSPWC[xWC],
+											"(?:" + XFSPWC[xWC].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/\\w+",
+											'name="method_free"|id="btn_download"|value="Free Download"',
+											/>(?:File not found|We're sorry, the file you are looking for could not be found.|The file was removed by administrator|Datei nicht gefunden|No such file|The file you are trying to download is no longer available)\s*<|<div id="div_file" class="upload_block">/i,
+											'>This server is in maintenance mode|<img src="/images/under.gif"',
+											true);
+										}
+									}
+
+									var tWC = genThird.length;
+									while (tWC--) {
+										if (hostSet("Check_" + genThird[tWC].match(/[\w\.\-]+/)[0].replace(/\./g, "_dot_").replace(/\-/g, "_dash_") + "_links", false))
+										{
+											addFileHost(
+												genThird[tWC],
+												"(?:" + genThird[tWC].replace(/\./g, "\\.").replace(/\-/g, "\\-") + ")\/newfile\\?n=\\w+",
+												'<div class="downloadfree">',
+												'div_file"',
+												'optional--'
+											);
+										}
+									}
+
+									if (hostSet("Check_megafileupload_dot_com_links", false))
+									{
+										addFileHost(
+											"megafileupload.com",
+											"megafileupload\.com\/..\/file\/",
+											'downloadbtn',
+											'is not found',
+											'optional--');
+										}
+
+										if (hostSet("Check_uploadto_dot_us_links", false))
+										{
+											addFileHost(
+												"uploadto.us|ultramegabit.com",
+												"(?:uploadto\\.us|ultramegabit\\.com)\/file\/details\/[\\w+-]",
+												'>Your download is ready<|>We\'re sorry. This file is temporarily unavailable',
+												'>File has been deleted|<img src="/images/drag_to_upload.png|>File not available',
+												'>This download server is overloaded<',
+												true);
+											}
+
+											if (hostSet("Check_fastshare_dot_cz_links", false))
+											{
+												addFileHost(
+													"fastshare.cz",
+													"fastshare\\.cz\/\\d+\/\\w*",
+													'dwntable">',
+													'nebyla nalezena|nebola nájdená|nie została odnaleziona|color:red;font-weight:bold;border-style:dashed|<b>Requested page not found.',
+													'optional--');
+												}
+
+												if (hostSet("Check_fastshare_dot_org_links", false))
+												{
+													addFileHost(
+														"fastshare.org|FastShare.org",
+														"[fF]ast[sS]hare\\.org\/download",
+														'Download ">',
+														'Diese Datei wurde wegen|wurde kein Dateiname',
+														'optional--');
+													}
+
+													if (hostSet("Check_partage_dash_facile_dot_com_links", false))
+													{
+														addFileHost(
+															"partage-facile.com",
+															"partage-facile\.com\/\\w+",
+															'/dl-view.php"',
+															'Erreur 404|equiv="refresh',
+															'optional--');
+														}
+
+														/*if (hostSet("Check_1fichier_dot_com_links", false))
+														{
+														addFileHost(
+														"1fichier.com|dl4free.com",
+														"\\w+\\.(?:1fichier|dl4free)\\.com\/?",
+														'Download tag"|countdown">|class="form-button"|<input type="submit" value="Download"',
+														'errorDiv"|File not found|Fichier introuvable',
+														'optional--');
+													}*/
+
+													if (hostSet("Check_rapidgator_dot_net_links", false) && chromeBrowser)
+													{
+														addFileHost(
+															"rapidgator.net|rg.to",
+															"(?:rapidgator\\.net|rg.to)\/file\/\\w+",
+															/btm" style="height: \d+px;">\s*<p/,
+															'<h3>File not found</h3>|<span>Get the advantages of premium-account',
+															'optional--',
+															true
+														);
+													}
+
+													if (hostSet("Check_relink_dot_us_links", false))
+													{
+														addFileHost(
+															"relink.us",
+															"relink\\.us\/(?:f\/\\w+|go\\.php\\?id=\\d+|view\\.php\\?id=\\d+)",
+															'online_detail.png" alt="Status',
+															/(?:offline|partially)_detail\.png" alt="Status|File deleted/,
+															'unknown_detail.png" alt="Status'
+														);
+													}
+
+													if (hostSet("Check_flyfiles_dot_net_links", false))
+													{
+														addFileHost(
+															"flyfiles.net",
+															"flyfiles\\.net\/\\w+",
+															'download_button"|"Download file"',
+															'File not found!|Файл не найден',
+															'optional--'
+														);
+													}
+
+													if (hostSet("Check_wikiupload_dot_com_links", false))
+													{
+														addFileHost(
+															"wikiupload.com",
+															"wikiupload\\.com\/\\w+",
+															'download-button">',
+															'Sorry, File not found|theme-container">',
+															'optional--'
+														);
+													}
+
+													if (hostSet("Check_hostuje_dot_net_links", false))
+													{
+														addFileHost(
+															"hostuje.net",
+															"hostuje\\.net\/file\\.php\\?id=\\w+",
+															'file.php">|Pobierz Plik',
+															'Podany plik zosta. skasowany z powodu naruszania praw autorskich...|Podany plik nie zosta. odnaleziony...',
+															'optional--'
+														);
+													}
+
+													if (hostSet("Check_4fastfile_dot_com_links", false))
+													{
+														addFileHost(
+															"4fastfile.com",
+															"4fastfile\\.com\/abv-fs\/\\d+",
+															'file-download">',
+															'v><div id="block',
+															'optional--'
+														);
+													}
+
+													/*if (hostSet("Check_slingfile_dot_com_links", false))
+													{
+													addFileHost(
+													"slingfile.com",
+													"slingfile\\.com\/(?:dl|file|video)\/\\w+",
+													'fileinfo">',
+													'errorbox">|<a id="ubutton" class="btn-guest',
+													'optional--'
+												);
+											}*/
+
+											if (hostSet("Check_tufiles_dot_ru_links", false))
+											{
+												addFileHost(
+													"tufiles.ru|turbob1t.ru|filesmail.ru|failookmenik.ru|firebit.in|dlbit.net|china-gsm.ru|3aka4aem.ru|turbo-bit.ru|turbosfiles.ru|piratski.ru|mnogofiles.com|links-free.ru",
+													"(?:tufiles|turbob1t|failoobmenik|filesmail|firebit|dlbit|files\\.china\\-gsm|3aka4aem|file\\.piratski|mnogofiles|links-free|turbo-bit|turbosfiles)\\.\\w+\/\\w+",
+													'download-file">',
+													/col-1">\s*<h1>/,
+													'optional--'
+												);
+											}
+
+											if (hostSet("Check_data_dot_hu_links", false))
+											{
+												addFileHost(
+													"data.hu",
+													"data\\.hu\/get\/\\d+\/",
+													'download_box_button',
+													'missing.php',
+													'optional--',
+													true
+												);
+											}
+
+											if (hostSet("Check_filesmelt_dot_com_links", false))
+											{
+												addFileHost(
+													"filesmelt.com",
+													"filesmelt\\.com\/dl\/\\w+",
+													'ready">',
+													'Sorry, but your',
+													'optional--'
+												);
+											}
+
+											/*if (hostSet("Check_packupload_dot_com_links", false))
+											{
+											addFileHost(
+											"packupload.com",
+											"(?:\\w{2}\\.)?packupload\\.com\/\\w+",
+											'buttonDelay"',
+											'bold; color: #ff0000',
+											'optional--'
+										);
+									}*/
+
+									if (hostSet("Check_files_dot_indowebster_dot_com_links", false))
+									{
+										addFileHost(
+											"indowebster.com",
+											"files\\.indowebster\\.com\/download\/\\w+\/",
+											'premiumBtn"',
+											'errorMessage"',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_superload_dot_cz_links", false))
+									{
+										addFileHost(
+											"superload.cz",
+											"superload\\.cz\/dl\/\\w+",
+											'icon-download">',
+											'soubor nebyl nalezen',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_easybytez_dot_com_links", false))
+									{
+										addFileHost(
+											"easybytez.com",
+											"easybytez\\.com\/\\w+",
+											'name=\"method_free|>This server is in maintenance mode',
+											'/stop_error.gif|>Download not available',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_filestore_dot_com_dot_ua_links", false))
+									{
+										addFileHost(
+											"filestore.com",
+											"filestore\\.com\\.ua\/\\?d=\\w+",
+											'tdrow1>',
+											'class=warn',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_netkups_dot_com_links", false))
+									{
+										addFileHost(
+											"netkups.com",
+											"netkups\\.com\/\\?d=\\w+",
+											'<form method="post"',
+											'<div align="center">|>File not found',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_extmatrix_dot_com_links", false))
+									{
+										addFileHost(
+											"extmatrix.com",
+											"extmatrix\\.com\/files\/\\w+",
+											'div class="success"',
+											'div class="error"',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_sendfiles_dot_nl_links", false))
+									{
+										addFileHost(
+											"sendfiles.nl",
+											"sendfiles\\.nl\/download.aspx\\?ID=\\w+",
+											'content_lnkDownload',
+											'error.aspx?',
+											'optional--'
+										);
+									}
+
+									/*if (hostSet("Check_sockshare_dot_com_links", false))
+									{
+									addFileHost(
+									"sockshare.com",
+									"sockshare\\.com\/file\/\\w+",
+									'choose_speed">',
+									'>Welcome to Sockshare|>This file has been removed',
+									'optional--'
+								);
+							}*/
+
+							if (hostSet("Check_yourfilestore_dot_com_links", false))
+							{
+								addFileHost(
+									"yourfilestore.com",
+									"yourfilestore\\.com\/download\/\\d+\/",
+									'download_data">',
+									'may have been deleted|<h1>Sorry!</h1>',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_nekaka_dot_com_links", false))
+							{
+								addFileHost(
+									"nekaka.com",
+									"nekaka\\.com\/d\/[\\w-]+",
+									'<b>Please Wait <span id="waittime">',
+									/invalid file link|<p>\s*File has been blocked|>File does not exist</,
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_filebig_dot_net_links", false))
+							{
+								addFileHost(
+									"filebig.net",
+									"filebig\\.net\/files\/\\w+",
+									'downloadFile">',
+									'<p>File not found</p>',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_filefront_dot_com_links", false))
+							{
+								addFileHost(
+									"filefront.com|gamefront.com",
+									"(?:files\\.|\\w+\\.|)(?:file|game)front\\.com\/\\w+",
+									'downloadLink">|class="downloadNow"|<strong>Download',
+									/File not found, you|(?:File|Page) Not Found/,
+									'unavailable at the moment'
+								);
+							}
+
+							if (hostSet("Check_free_dash_uploading_dot_com_links", false))
+							{
+								addFileHost(
+									"free-uploading.com",
+									"free\\-uploading\\.com\/\\w+",
+									'op" value="download',
+									'class="err">|width:500px;text-align:left;">',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_filesin_dot_com_links", false))
+							{
+								addFileHost(
+									"filesin.com",
+									"filesin\\.com\/\\w+",
+									'download_area">',
+									'error_note">',
+									'optional--',
+									true
+								);
+							}
+
+							if (hostSet("Check_nowdownload_dot_eu_links", false))
+							{
+								addFileHost(
+									"nowdownload.eu|nowdownload.ch|nowdownload.co",
+									"nowdownload\\.(?:eu|ch|co)\/dl\/\\w+",
+									'alert-success"',
+									'This file does not exist!',
+									'The file is being transfered'
+								);
+							}
+
+							if (hostSet("Check_axifile_dot_com_links", false))
+							{
+								addFileHost(
+									"axfile.com",
+									"axifile\\.com(?:\/\w(2))?\/\\??\\w+",
+									'Dbutton_big"',
+									'download-error.php',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_asfile_dot_com_links", false))
+							{
+								addFileHost(
+									"asfile.com",
+									"asfile\\.com\/file\/\\w+",
+									'link_line">',
+									/Page not found|(?:deleted|is not exist|gelöscht)<\/strong>/,
+									'optional--'
+								);
+							}
+
+							//do not use checkfiles.html bulk check, not working properly for all links
+							if (hostSet("Check_hulkshare_dot_com_links", false))
+							{
+								addFileHost(
+									"hulkshare.com|hu.lk",
+									"(?:hulkshare\\.com|hu\\.lk)\/\\w+",
+									'download.sam.png|bigDownloadBtn basicDownload|halfTop">',
+									'File does not exist|fingerprint protected copyright|disabled for public access|File no longer available!|This is a private file',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_movshare_dot_net_links", false))
+							{
+								addFileHost(
+									"movshare.net",
+									"movshare\\.net\/\\w+",
+									'videoPlayer"',
+									'no longer exists',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_mafiastorage_dot_com_links", false))
+							{
+								addFileHost(
+									"mafiastorage.com",
+									"mafiastorage\\.com\/\\w+",
+									'op" value="download',
+									'class="err">|style="width:500px;text-align:left;"',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_uploadspace_dot_pl_links", false))
+							{
+								addFileHost(
+									"uploadspace.pl",
+									"uploadspace\.pl\/plik\\w+",
+									/Downloading .+? \|/,
+									'Downloading a file',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_uploadingit_dot_com_links", false))
+							{
+								addFileHost(
+									"uploadingit.com",
+									"uploadingit\\.com\/(?:file|d)\/\\w+",
+									'downloadTitle">',
+									'deleteContent">',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_stiahni_dot_si_links", false))
+							{
+								addFileHost(
+									"stiahni.si",
+									"stiahni\\.si\/(?:download\\.php\\?id=|file\/)\\w+",
+									'button-download-symbol">|#downloadModal" onclick="download();">',
+									'exclamation.png|The file not found">|file you are trying to download has been deleted',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_rghost_dot_net_links", false))
+							{
+								addFileHost(
+									"rghost.net|rghost.ru",
+									"rghost\.(?:net|ru)\/(?:|private\/)\\d+",
+									'download_link|btn large download"',
+									'file is restricted|File is deleted|503 Service Unavailable',
+									'File was deleted'
+								);
+							}
+
+							if (hostSet("Check_xdisk_dot_cz_links", false))
+							{
+								addFileHost(
+									"xdisk.cz",
+									"xdisk\\.cz\/(?:..\/)?download\\.php\\?id=\\w+",
+									/">Staženo:\\s*<\/span>/,
+									'Soubor, který hledáte nenalezen',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_videozer_dot_com_links", false))
+							{
+								addFileHost(
+									"videozer.com",
+									"videozer\\.com\/video\/\\w+",
+									'video_player"',
+									'error_404"',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_divxden_dot_com_links", false))
+							{
+								addFileHost(
+									"divxden.com|vidbux.com",
+									"(?:divxden|vidbux)\.com\/\\w+",
+									'Continue to Video"',
+									'No such file',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_daten_dash_hoster_dot_de_links", false))
+							{
+								addFileHost(
+									"daten-hoster.de|filehosting.org|filehosting.at",
+									"(?:daten-hoster\\.de|filehosting\\.(?:org|at))\/file\/\\w+",
+									'<table class="table table-bordered',
+									'<div class="alert alert-error',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_fileflyer_dot_com_links", false))
+							{
+								addFileHost(
+									"fileflyer.com",
+									"fileflyer\.com\/view\/\\w+",
+									'<a id="ItemsList_noLockButton|server loads in your area',
+									'<span class="removedlink">|class="lockedbtn">',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_filestore_dot_to_links", false))
+							{
+								addFileHost(
+									"filestore.to",
+									"filestore\.to\/\\?d=\\w+",
+									'"downloading"',
+									'Datei wurde nicht gefunden',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_easy_dash_share_dot_com_links", false))
+							{
+								addFileHost(
+									"crocko.com|easy-share.com",
+									"(?:w\\d*\.|)(?:crocko|easy-share)\\.com\/\\w+",
+									'fz24">Download|td class="first">',
+									'msg-err"|the page you\'re looking for|1>400 Bad Request<|No files in this folder|search_result">|<span class="status">Searching for file',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_burnupload_dot_com_links", false))
+							{
+								addFileHost(
+									"burnupload.com|ihiphop.com",
+									"burnupload\\.(?:com\/\\?d=|ihiphop\\.com\/download\\.php\\?id=)\\w+",
+									'File size:',
+									'file is not found',
+									'optional--'
+								);
+							}
+
+							if (hostSet("Check_yunfile_dot_com_links", false))
+							{
+								addFileHost(
+									"yunfile.com|filemarkets.com|yfdisk.com",
+									"(?:\\w+\\.)?(?:yunfile|filemarkets|yfdisk)\\.com\/f(?:ile|s)\/\\w+",
+									/<h2 class="title">.+?&nbsp;(?:<a><\/a>)?&nbsp;.+?<\/h2>/,
+									/<h2 class="title">.+?&nbsp;&nbsp;<\/h2>|Been deleted|> Access denied/,
+									'optional--'
+								);
+							}
+
+							/*if (hostSet("Check_firedrive_dot_com_links", false))
+							{
+							addFileHost(
+							"firedrive.com|putlocker.com",
+							"(?:putlocker|firedrive)\\.com\/file\/\\w+",
+							'<button id="prepare_continue_btn|<div class="jp-playlist|trans=\'dl',
+							/<div class="sad_face_image"><\/div>\s*This file might have been moved, replaced or deleted|<div class="private_file_image/,
+							/<div class="sad_face_image"><\/div>\s*This file is temporarily unavailable due to maintenance/
+						);
+					}*/
+
+					if (hostSet("Check_nitroflare_dot_com_links", false))
+					{
+						addFileHost(
+							"nitroflare.com",
+							"nitroflare\\.com\/view\/\\w+",
+							'<button id="slow-download',
+							'This file has been removed',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_cloudzilla_dot_to_links", false))
+					{
+						addFileHost(
+							"cloudzilla.to",
+							"cloudzilla\\.to\/share\/file\/\\w+",
+							'<div class="btn1" id="free_download',
+							'<div id="download_err_div',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_luckyshare_dot_net_links", false))
+					{
+						addFileHost(
+							"luckyshare.net",
+							"luckyshare\\.net\/(?:uploaded\/file\/id\/)?\\d+",
+							'<div id="dl-high-first"',
+							/>[Nn]o such file/,
+							'optional--',
+							true);
+						}
+
+						if (hostSet("Check_uploadhero_dot_com_links", false))
+						{
+							addFileHost(
+								"uploadhero.com|uploadhero.co",
+								"uploadhero\\.com?\/dl\/\\w+",
+								'content-dl">',
+								'men_file_lost.jpg"',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_load_dot_to_links", false))
+						{
+							addFileHost(
+								"load.to",
+								'(?:www\\.|\/)load\\.to\/(?:|\\?d\\=)\\w+',
+								'"download_table_left">Size|<input class="input-button" type="submit" value="Download"',
+								'Can\'t find file',
+								'optional--'
+							);
+						}
+
+						/*if (hostSet("Check_files_dot_to_links", false))
+						{
+						addFileHost(
+						"files.to",
+						"files\.to\/get\/\\d+\/",
+						'You requested the following',
+						'requested file couldn|This download link is invalide.',
+						'optional--'
+					);
+				}*/
+
+				if (hostSet("Check_divshare_dot_com_links", false))
+				{
+					addFileHost(
+						"divshare.com",
+						"divshare\\.com\/download\/",
+						'download_new.png',
+						'have been removed',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_stahovadlo_dot_cz_links", false))
+				{
+					addFileHost(
+						"stahovadlo.cz",
+						"stahovadlo\\.cz\/soubor\/\\d+\/[\\.\\w]+",
+						'download" type="submit',
+						'Neplatný nebo neúplný odkaz|Soubor již není dostupný',
+						'optional--',
+						true
+					);
+				}
+
+				if (hostSet("Check_euroshare_dot_eu_links", false))
+				{
+					addFileHost(
+						"euroshare.eu|euroshare.pl|euroshare.sk|euroshare.cz|euroshare.hu",
+						"euroshare\\.(?:eu|pl|sk|cz|hu)\/file\/\\d+",
+						'nazev-souboru">',
+						/<div id="obsah">\\s*<h1>/,
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_datafilehost_dot_com_links", false))
+				{
+					addFileHost(
+						"datafilehost.com",
+						"datafilehost\\.com\/(?:download-\\w+\\.html|d\/\\w+)",
+						'dldtable">',
+						'does not exist.',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_files_dot_mail_dot_ru_links", false))
+				{
+					addFileHost(
+						"mail.ru",
+						'files\\.mail\\.ru/(?:\\w*)',
+						'fileList',
+						'errorMessage|error">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_narod_dot_ru_links", false))
+				{
+					addFileHost(
+						"narod.ru|yandex.ru",
+						'narod\\.(?:yandex\\.|)ru\/disk\/',
+						'<a id="b-submit"',
+						'<p class="b-download-virus-note"|headCode">404<',
+						'Внутренняя ошибка сервиса'
+					);
+				}
+
+				if (hostSet("Check_rayfile_dot_com_links", false))
+				{
+					addFileHost(
+						"rayfile.com",
+						"rayfile\\.com\/",
+						'FILEtitleTXT',
+						'blueRow',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filesmonster_dot_com_links", false))
+				{
+					addFileHost(
+						"filesmonster.com",
+						"filesmonster\\.com\/download\\.php\\?id=\\w+",
+						'button_green_body"',
+						'error">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_sendspace_dot_com_links", false))
+				{
+					addFileHost(
+						"sendspace.com",
+						'sendspace\\.com\/file\/\\w+',
+						'file_description',
+						'msg error"',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_sendspace_dot_pl_links", false))
+				{
+					addFileHost(
+						"sendspace.pl",
+						'sendspace\\.pl\/file\/\\w+',
+						'download_file"',
+						'Podany plik nie',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_gigasize_dot_com_links", false))
+				{
+					addFileHost(
+						"gigasize.com",
+						'gigasize\\.com\/get(?:\\.php(?:\/[\\d-]+|\\?d=\\w+)|\/\\w+)',
+						'fileId"',
+						'error">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_2shared_dot_com_links", false))
+				{
+					addFileHost(
+						"2shared.com",
+						'2shared\\.com\/(?:file|video|document)\/\\w*',
+						'File size',
+						'var msg = \'VGhlIGZpbGUgbGluayB0aGF0IHlvdSByZ',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_gigapeta_dot_com_links", false))
+				{
+					addFileHost(
+						"gigapeta.com",
+						'gigapeta\\.com\/dl\/\\w+',
+						'Download file|Скачать файл| Herunterzuladen|Scarica il file|Cargar el fichero|Charger le fichier|<table id="download">',
+						'404|page_error',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_veehd_dot_com_links", false))
+				{
+					addFileHost(
+						"veehd.com",
+						'veehd\.com\/video\/.*?',
+						'No sound|Download video',
+						'Featured Videos',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_ifolder_dot_ru_links", false))
+				{
+					addFileHost(
+						"ifolder.ru|rusfolder.com|rusfolder.net",
+						'(?:ifolder\.ru|rusfolder\\.(?:com|net))\/\\d+',
+						'file-info',
+						'ui-state-error',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filesend_dot_net_links", false))
+				{
+					addFileHost(
+						"filesend.net",
+						'filesend\.net\/download',
+						'buttdl',
+						'File removed|File not found.',
+						'Error'
+					);
+				}
+
+				if (hostSet("Check_fileswap_dot_com_links", false))
+				{
+					addFileHost(
+						"fileswap.com",
+						'fileswap\\.com\/dl\/\\w+',
+						'dlslowbutton"',
+						'<div class="rounded_block_error',
+						'is temporary unavailable|disponible en estos momentos|vorläufig unerreichbar|Файл временно недоступен'
+					);
+				}
+
+				if (hostSet("Check_solidfiles_dot_com_links", false))
+				{
+					addFileHost(
+						"solidfiles.com",
+						'solidfiles\\.com\/d\/\\w+',
+						'<i class="fa fa-download"></i>',
+						'<title>File not available - Solidfiles</title>',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_uloz_dot_to_links", false))
+				{
+					addFileHost(
+						"uloz.to|ulozto.cz|bagruj.cz|zachowajto.pl",
+						"(?:uloz|ulozto|bagruj|zachowajto)\\.(to|cz|sk|net|pl)\/\\w",
+						'fileDownload">|fileSize">|passwordProtectedFile">',
+						'grayButton deletedFile">|Stránka nenalezena|upload-button"|jako soukromý.',
+						'frmaskAgeForm-disagree',
+						true
+					);
+				}
+
+				if (hostSet("Check_leteckaposta_dot_cz_links", false))
+				{
+					addFileHost(
+						"leteckaposta.cz|sharegadget.com",
+						"(?:leteckaposta\\.cz|sharegadget\\.com)\/\\d+",
+						'<body onload="">',
+						'neexistuje|not exist',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_zippyshare_dot_com_links", false))
+				{
+					addFileHost(
+						"zippyshare.com",
+						"(?:www\\d+\.|)zippyshare\.com\/(?:v\/\\w+\/file\.html|view\\.jsp\\?)",
+						'download.png|Download Now|dlbutton"',
+						'not exist',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_speedshare_dot_org_links", false))
+				{
+					addFileHost(
+						"speedshare.org",
+						"speedshare\.org\/.+",
+						'id="downloadbtn"',
+						'Error',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_mediafire_dot_com_links", false))
+				{
+					addFileHost(
+						"mediafire.com",
+						"mediafire\\.com\/(?:\\?|download(?:\\.php\\?|\/)|(?:file|view)\/)\\w+",
+						'download_file_title"|<a class="btn alt download|<div class="filepreview|<div class="fileName">|<div class="dl_startlink">',
+						'class="error_msg_title">|>Sign Up! It\'s free|<label for="create-file-name">|<div id="privateTitle">This file is currently set to private.</div>',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_ulozisko_dot_sk_links", false))
+				{
+					addFileHost(
+						"ulozisko.sk",
+						"ulozisko\.sk\/",
+						'Detaily',
+						'neexistuje',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_speedfile_dot_cz_links", false))
+				{
+					addFileHost(
+						"speedfile.cz",
+						"speedfile\.cz\/(?:cs\/|en\/|sk\/|)\\d+\/",
+						'Stáhnout|<span>Download',
+						'error|soubor byl odst|This file was deleted',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_upnito_dot_sk_links", false))
+				{
+					addFileHost(
+						"upnito.sk",
+						"(?:dl.\\.|)upnito\\.sk\/(download|subor|file)",
+						'download.php',
+						'notfound|upload-suborov.php"',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_dataport_dot_cz_links", false))
+				{
+					addFileHost(
+						"dataport.cz",
+						"dataport\.cz\/file\/",
+						'premium_download">',
+						'="error">',
+						'optional--',
+						true
+					);
+				}
+
+				if (hostSet("Check_myupload_dot_dk_links", false))
+				{
+					addFileHost(
+						"myupload.dk",
+						"myupload\\.dk\/showfile\/\\w+",
+						'<td class="downloadTblRight"><a class="downloadLink"',
+						'<div id="flash_upload_progress"|<td class="downloadTblRight">File has been removed',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filebeam_dot_com_links", false))
+				{
+					addFileHost(
+						"filebeam.com|fbe.am",
+						"(?:filebeam\\.com|fbe\\.am)\/\\w+",
+						'<center>File Download Area</center>',
+						'<center>Error:</center>',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_upstore_dot_net_links", false))
+				{
+					addFileHost(
+						"upstore.net|upsto.re",
+						"(?:upsto\\.re|upstore.net)\/\\w+",
+						'<ul class="features minus">|Download files from folder',
+						'<span class="error">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_adrive_dot_com_links", false))
+				{
+					addFileHost(
+						"adrive.com",
+						"adrive\\.com\/public\/\\w+",
+						'download should start',
+						'no longer available publicly',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filebulk_dot_com_links", false))
+				{
+					addFileHost(
+						"filebulk.com",
+						"filebulk\\.com\/\\w+",
+						'<span id="countdown_str"',
+						'File Not Available',
+						'You can download files up to 100 Mb only.'
+					);
+				}
+
+				if (hostSet("Check_box_dot_com_links", false))
+				{
+					addFileHost(
+						"box.com|box.net",
+						"https?:\/\/(?:www\\.|)box\\.(?:com|net)\/(?:s|shared|public)\/\\w+",
+						'id=\"download_button',
+						'>Box \| 404|error_message_not_found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_ukfilehost_dot_com_links", false))
+				{
+					addFileHost(
+						"ukfilehost.com",
+						"ukfilehost\\.com\/files\/get\/\\w+",
+						'optional--',
+						'The file you have requested cannot be found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_zalil_dot_ru_links", false))
+				{
+					addFileHost(
+						"zalil.ru",
+						"zalil\\.ru\/\\d+",
+						'optional--',
+						'Файл не найден',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_uploads_dot_bizhat_dot_com_links", false))
+				{
+					addFileHost(
+						"bizhat.com",
+						"uploads\\.bizhat\\.com\/file\/\\d+",
+						'div id="dl">',
+						'File not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_mega_dash_myfile_dot_com_links", false))
+				{
+					addFileHost(
+						"mega-myfile.com",
+						"mega\\-myfile\\.com\/file\/\\d+\/\\w+",
+						'<b>File name:</b>',
+						'Your requested file is not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_speedy_dash_share_dot_com_links", false))
+				{
+					addFileHost(
+						"speedy-share.com",
+						"speedy\\-share\\.com\/\\w+",
+						'File Download',
+						'No such file',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filebox_dot_ro_links", false))
+				{
+					addFileHost(
+						"filebox.ro|fbx.ro",
+						"(?:filebox|fbx)\\.ro\/(?:download\\.php\\?key\\=)?\\w+",
+						'fisierul trebuie sa astepti',
+						'downloadezi a expirat',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_100shared_dot_com_links", false)) //checkfiles.html giving false positives
+				{
+					addFileHost(
+						"100shared.com",
+						"100shared\\.com\/\\w+",
+						'<h2>Download File',
+						'No such file',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_mixturecloud_dot_com_links", false))
+				{
+					addFileHost(
+						"mixturecloud.com|mixturefile.com|mixturevideo.com",
+						"mixture(?:cloud|file|video)\\.com\/(?:download\\=|media\/(?:download\/)?)\\w+",
+						/download_(?:free|unlimited)">|btn icon i_cloud_download gray|icon\-white"><\/i> Download/,
+						'File not found|class="err"|msgerr alert alert-error text-center">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_yourupload_dot_com_links", false))
+				{
+					addFileHost(
+						"yourupload.com",
+						"yourupload\\.com\/\\w+",
+						'<label>Download',
+						'404',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_fileneo_dot_com_links", false))
+				{
+					addFileHost(
+						"fileneo.com",
+						"fileneo\\.com\/\\w+",
+						'Download File</h3>',
+						'File not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_file_dash_upload_dot_net_links", false))
+				{
+					addFileHost(
+						"file-upload.net",
+						"(?:en\\.|)file\\-upload\\.net\/download\\-\\d+\/\\w+",
+						'downbutton2.gif',
+						'Datei existiert nicht!|File does not exist!',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_fliiby_dot_com_links", false))
+				{
+					addFileHost(
+						"fliiby.com",
+						"fliiby\\.com\/file\/\\d+\/\\w+",
+						'>Download',
+						'<title>Error 404|<title>Error 403|<title>Error 410',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filesmall_dot_com_links", false))
+				{
+					addFileHost(
+						'filesmall.com',
+						"filesmall\\.com\/\\w+\/download\\.html",
+						'value="Download"',
+						'File Not Found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_upload_dot_ee_links", false))
+				{
+					addFileHost(
+						'upload.ee',
+						"upload\\.ee\/files\/\\d+\/\\w+",
+						'id="d_l"',
+						'There is no such file',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_share4web_dot_com_links", false))
+				{
+					addFileHost(
+						'share4web.com',
+						"share4web\\.com\/get\/\\w+",
+						'btn_red">',
+						'Page Not Found|File not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_limelinx_dot_com_links", false))
+				{
+					addFileHost(
+						'limelinx.com',
+						"limelinx\\.com\/\\w+",
+						'icon-download-alt',
+						'>Error - File Not Found<',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_novamov_dot_com_links", false))
+				{
+					addFileHost(
+						'novamov.com',
+						"novamov\\.com\/\\w+",
+						'Download file|>Download this video<',
+						'File not found|The video file was removed',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_skydrive_dot_live_dot_com_links", false))
+				{
+					addFileHost(
+						'live.com|sdrv.ms',
+						"(?:skydrive\\.live\\.com|sdrv\\.ms)\/\\w+",
+						'Download file',
+						'no longer available</h1>',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_yourfiles_dot_to_links", false))
+				{
+					addFileHost(
+						'yourfiles.to',
+						"yourfiles\\.to\/\\?d=\\w+",
+						'Download-Link: </strong>',
+						'Die angefragte Datei wurde nicht gefunden',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filedropper_dot_com_links", false))
+				{
+					addFileHost(
+						'filedropper.com|filesavr.com',
+						"(?:filedropper|filesavr)\\.com\/\\w+",
+						'download"',
+						'steps.png',
+						'optional--',
+						true);
+					}
+
+					if (hostSet("Check_filehost_dot_ro_links", false))
+					{
+						addFileHost(
+							'filehost.ro',
+							"filehost\\.ro\/\\d+",
+							'Apasati aici pentru a porni download-ul"',
+							'Acest fisier nu exista in baza de date',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_mijnbestand_dot_nl_links", false))
+					{
+						addFileHost(
+							'mijnbestand.nl',
+							"mijnbestand\\.nl\/Bestand\\-\\w+",
+							'downloadfrm"',
+							'stappen">',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_ultrashare_dot_net_links", false))
+					{
+						addFileHost(
+							'ultrashare.net',
+							"ultrashare\\.net\/hosting\/fl\/\\w+",
+							'downloadbutton">',
+							'error">',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_dosya_dot_tc_links", false))
+					{
+						addFileHost(
+							'dosya.tc',
+							"dosya\\.tc\/server\\d*\/\\w+",
+							'id="dl"',
+							'Dosya bulunamad',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_exfile_dot_ru_links", false))
+					{
+						addFileHost(
+							'exfile.ru',
+							"exfile\\.ru\/\\d+",
+							'id="link"><a href="/download/',
+							'class="align_left"><p class="red"',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_fileshare_dot_ro_links", false))
+					{
+						addFileHost(
+							'fileshare.ro',
+							"fileshare\\.ro\/\\w+",
+							'DOWNLOAD NOW',
+							'Acest fisier nu exista.',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_fshare_dot_vn_links", false))
+					{
+						addFileHost(
+							'fshare.vn',
+							"fshare\\.vn\/file\/\\w+",
+							'optional--',
+							'Liên kết bạn chọn không tồn tại trên hệ thống Fshare',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_wikifortio_dot_com_links", false))
+					{
+						addFileHost(
+							'wikifortio.com',
+							"wikifortio\\.com\/\\w+",
+							'screenbutton">',
+							"not found on node|doesn't exist or has expired and is no longer available",
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_wyslijto_dot_pl_links", false))
+					{
+						addFileHost(
+							'wyslijto.pl',
+							"wyslijto\\.pl\/(?:files\/download|plik)\/\\w+",
+							'optional--',
+							/zosta. usuni.ty/,
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_kiwi6_dot_com_links", false))
+					{
+						addFileHost(
+							'kiwi6.com',
+							"kiwi6\\.com\/file\/\\w+",
+							'download-link"',
+							'Upload not found',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_localhostr_dot_com_links", false))
+					{
+						addFileHost(
+							'localhostr.com|lh.rs|hostr.co',
+							"(?:localhostr\\.com\/file|lh\\.rs|hostr\\.co\/download)\/\\w+",
+							'download-button',
+							'fourohfour">',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_remixshare_dot_com_links", false))
+					{
+						addFileHost(
+							'remixshare.com',
+							"remixshare\\.com\/(?:dl|download)\/\\w+",
+							'linkContainerDiv"',
+							'Sorry, die Datei konnte nicht gefunden werden.|Die angeforderte Datei steht nicht mehr zur Verfügung.',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_hidemyass_dot_com_links", false))
+					{
+						addFileHost(
+							'hidemyass.com',
+							"hidemyass\\.com\/files\/\\w+",
+							'dlbutton"',
+							'genericerrorbox">',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_tinyupload_dot_com_links", false))
+					{
+						addFileHost(
+							'tinyupload.com',
+							"s\\d+\\.tinyupload\\.com\/(?:index\\.php)?\\?file_id=\\d+",
+							'Download file</h3>',
+							'File was deleted from server.',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_gigabase_dot_com_links", false))
+					{
+						addFileHost(
+							'gigabase.com',
+							"gigabase\\.com\/getfile\/\\w+",
+							'/img/but_dnld_regular.jpg|gigaBtn std">',
+							/<div class="all" id="Page404"|(?:File|Page) Not Found/,
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_trainbit_dot_com_links", false))
+					{
+						addFileHost(
+							'trainbit.com',
+							"trainbit\\.com\/files\/\\w+",
+							'download"',
+							'file not found',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_videobam_dot_com_links", false))
+					{
+						addFileHost(
+							'videobam.com',
+							"videobam\\.com\/\\w+",
+							'wrap-video"',
+							'File not found',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_hyperfileshare_dot_com_links", false))
+					{
+						addFileHost(
+							'hyperfileshare.com',
+							"hyperfileshare\\.com\/d\/\\w+",
+							'/img/download_btm_site.gif',
+							'Download URL is incorrect or your file has already been deleted!',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_uploads_dot_ws_links", false))
+					{
+						addFileHost(
+							'uploads.ws|upl.me',
+							"(?:uploads\\.ws|upl\\.me)\/\\w+",
+							'downloadFile"',
+							'download does not exist or has been removed',
+							'optional--'
+						);
+					}
+
+					if (hostSet("Check_keep2share_dot_cc_links", false))
+					{
+						addFileHost(
+							'keep2share.cc|keep2share.com|k2s.cc|keep2s.cc',
+							"(?:(?:keep2share|k2s|keep2s)\\.cc|keep2share\\.com)\/file\/\\w+",
+							'low-speed.png"',
+							'deleted</h5>|<label for="download_links',
+							'optional--',
+							true);
+						}
+
+						if (hostSet("Check_cloud_dash_up_dot_be_links", false))
+						{
+							addFileHost(
+								'cloud-up.be',
+								"(?:download\\.)?cloud\\-up\\.be\/download\\.php\\?file=\\w+",
+								'download file',
+								'This file does not exist!',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_uploadc_dot_com_links", false)) //Do not use bulkcheck, false reports
+						{
+							addFileHost(
+								'uploadc.com|zalaa.com',
+								"(?:uploadc|zalaa)\\.com\/\\w+",
+								'Slow access"',
+								'File Not Found|file has been removed',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_fastupload_dot_ro_links", false))
+						{
+							addFileHost(
+								'fastupload.ro|rol.ro',
+								"fastupload\\.(?:rol\\.)?ro\/\\w+",
+								'isAliveRegex',
+								'Fişierele nu mai sunt active!',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_howfile_dot_com_links", false))
+						{
+							addFileHost(
+								'howfile.com',
+								"howfile\\.com\/file\/\\w+",
+								'btn1"',
+								'File not found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_free_dot_fr_links", false))
+						{
+							addFileHost(
+								'free.fr',
+								"dl\\.free\\.fr\/(?:getfile\\.pl\\?file=\/?|)\\w+",
+								'Valider et t&eacute;l&eacute;charger le fichier',
+								'Fichier inexistant',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_file4go_dot_com_links", false))
+						{
+							addFileHost(
+								'file4go.com',
+								"file4go\\.com\/d\/\\w+",
+								'gerarlinkdownload"',
+								'REMOVIDO POR <b>DMCA|FILE REMOVED DMCA<|>FILE4GO 404 ARQUIVO',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_hostinoo_dot_com_links", false)) //checkfiles.html not working
+						{
+							addFileHost(
+								'hostinoo.com',
+								"hostinoo\\.com\/\\w+",
+								'btn_download',
+								'File Not Found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_sendfile_dot_su_links", false))
+						{
+							addFileHost(
+								'sendfile.su',
+								"sendfile\\.su\/\\w+",
+								'download_click"',
+								'Файл не найден',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_usaupload_dot_net_links", false))
+						{
+							addFileHost(
+								'usaupload.net',
+								"usaupload\\.net\/d\/\\w+",
+								'Download">',
+								'is not available',
+								'In this moment you can`t download this file, please try again in few minutes, we working on this server, SORRY!'
+							);
+						}
+
+						if (hostSet("Check_anonfiles_dot_com_links", false))
+						{
+							addFileHost(
+								'anonfiles.com',
+								"anonfiles\\.com\/file\/\\w+",
+								'download_button"',
+								'File not found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_divxstage_dot_eu_links", false))
+						{
+							addFileHost(
+								'divxstage.eu|divxstage.net',
+								"divxstage\\.(?:eu|net)\/video\/\\w+",
+								'>Download the video<',
+								'>This file no longer exists on our servers.<',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_herosh_dot_com_links", false))
+						{
+							addFileHost(
+								'herosh.com',
+								"herosh\\.com\/download\/\\d+\/\\w+",
+								'green">Download',
+								'file not found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_minus_dot_com_links", false))
+						{
+							addFileHost(
+								'min.us|minus.com',
+								"(?:min\\.us|minus.com)\/\\w+",
+								'btn-action btn-download no-counter',
+								'File not found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_m5zn_dot_com_links", false))
+						{
+							addFileHost(
+								'm5zn.com',
+								"m5zn\\.com\/d\/\\?\\d+",
+								'free_account">',
+								'عذرا انتهت صلاحية الملف المطلوب ولايمكنك تحميله حاليا',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_girlshare_dot_ro_links", false))
+						{
+							addFileHost(
+								'girlshare.ro',
+								"girlshare\\.ro\/\\w+",
+								'download-button.gif',
+								'Acest fisier nu exista.',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_bin_dot_ge_links", false))
+						{
+							addFileHost(
+								'bin.ge',
+								"bin\\.ge\/dl\/\\w+",
+								'captchacode">',
+								'No file found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_nowvideo_dot_eu_links", false))
+						{
+							addFileHost(
+								'nowvideo.eu|nowvideo.sx',
+								"nowvideo\\.(?:sx|eu)\/video\/\\w+",
+								'>Download this video!<',
+								'>This file no longer exists on our servers',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_shareplace_dot_com_links", false))
+						{
+							addFileHost(
+								'shareplace.com',
+								"shareplace\\.com\/(?:index1\\.php\\?a=|\\?)",
+								'wait">',
+								'Your requested file is not found',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_terafiles_dot_net_links", false))
+						{
+							addFileHost(
+								'terafiles.net',
+								"terafiles\\.net\/v\\-\\d+",
+								'download file',
+								'Le fichier que vous souhaitez télécharger n\'est plus disponible sur nos serveurs.',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_uploadmb_dot_com_links", false))
+						{
+							addFileHost(
+								'uploadmb.com',
+								"uploadmb\\.com\/dw\\.php\\?id=\\w+",
+								'wait">',
+								'The file you are requesting to download is not available',
+								'optional--'
+							);
+						}
+
+						if (hostSet("Check_upload_dash_il_dot_com_links", false))
+						{
+							addFileHost(
+								'upload-il.com|upload-il.net|uploadilcloud.com|filez.bz|przeslij.net|pir.co.il|directil.com',
+								"(?:upload\\-il\\.(?:com|net)|uploadilcloud\\.com|filez\\.bz|przeslij\\.net|pir\\.co\\.il|directil\\.com)\/(?:en|he|ar|ru|view|)\/?\\w+",
+								'captchaUl">',
+								/\\\u05E9\\u05D2\\\u05D9\\\u05D0\\\u05D4: \\\u05E7\\\u05D5\\\u05D1\\\u05E5 \\\u05D0\\\u05D5 \\\u05D3\\\u05E3 \\\u05DC\\\u05D0 \\\u05E0\\\u05DE\\\u05E6\\\u05D0|Your requested file is not found./,
+								'optional--'
+							);
+						}
+
+						/*if (hostSet("Check_bayfiles_dot_net_links", false))
+						{
+						addFileHost(
+						'bayfiles.net',
+						"bayfiles\\.net\/file\/\\w+\/\\w+",
+						'download-header">',
+						'class="not-found">',
+						'optional--'
+					);
+				}*/
+
+				if (hostSet("Check_bitupload_dot_com_links", false))
+				{
+					addFileHost(
+						'bitupload.com',
+						"bitupload\\.com\/\\w+",
+						'limited">',
+						'two-col">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_ravishare_dot_com_links", false))
+				{
+					addFileHost(
+						'ravishare.com',
+						"ravishare\\.com\/\\w+",
+						'Free Download">',
+						'>File Not Found<',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_promptfile_dot_com_links", false))
+				{
+					addFileHost(
+						'promptfile.com',
+						"promptfile\\.com\/l\/[a-zA-Z0-9-]",
+						/<button type="submit" class="gray_btn">Continue to File<\/button>|<a href=".+" class="green_btn download_btn">Download File<\/a>/,
+						/\s+<div id="not_found_msg"/,
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filebar_dot_kz_links", false))
+				{
+					addFileHost(
+						'filebar.kz',
+						"filebar\\.kz\/files\/\\d+",
+						'I don\'t think this is a filehost tbh but meh...',
+						'Ошибка 404. Страница не найдена!',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_yourfilelink_dot_com_links", false))
+				{
+					addFileHost(
+						'yourfilelink.com',
+						"yourfilelink\\.com\/get\\.php\\?fid=\\d+",
+						'optional--',
+						'File not found.</div>',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_1file_dot_cc_links", false))
+				{
+					addFileHost(
+						'1f.cc|1file.cc',
+						"1f(?:ile)?\\.cc\/\\w+",
+						'download-btn">',
+						'>File Not Found<',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_qshare_dot_com_links", false))
+				{
+					addFileHost(
+						'quickshare.com|qshare.com',
+						"(?:quickshare|qshare)\\.com\/get\/\\d+",
+						'>Free<',
+						'File not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filewist_dot_com_links", false))
+				{
+					addFileHost(
+						'filewist.com',
+						"filewist\\.com\/\\w+",
+						'link btn-free"',
+						'>File not found<',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_airupload_dot_com_links", false))
+				{
+					addFileHost(
+						'airupload.com',
+						"airupload\\.com\/file\/i\/\\w+",
+						'download" value="Slow download',
+						'<span class="glyph attention"></span>File was removed',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_dropbox_dot_com_links", false)) //shared links
+				{
+					addFileHost(
+						'dropbox.com',
+						"dropbox\\.com\/sh?\/\\w+",
+						'default_content_download_button" class="freshbutton-blue">',
+						'>Nothing Here<|>Error (404)<|>Restricted Content|>Access to this link has been disabled.|The file you\'re looking for has been moved or deleted.',
+						/>Error \(509\)</
+					);
+				}
+
+				if (hostSet("Check_wikisend_dot_com_links", false))
+				{
+					addFileHost(
+						'wikisend.com',
+						"wikisend\\.com\/download\/\\d+",
+						'button_download.gif" alt="Download file',
+						'File not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_webfilehost_dot_com_links", false))
+				{
+					addFileHost(
+						'webfilehost.com',
+						"webfilehost\\.com\/\\?mode=viewupload&id=\\d+",
+						'linkDownload">',
+						'File not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_wrzuc_dot_to_links", false))
+				{
+					addFileHost(
+						'wrzuc.to',
+						"wrzuc.to\/\\w+",
+						'Download file">',
+						'został usunięty przez użytkownika.',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_myuplbox_dot_com_links", false))
+				{
+					addFileHost(
+						'myuplbox.com',
+						"myuplbox\\.com\/file\/download\/\\d+",
+						'dwl_button corner-all">Click',
+						'deleted_file">File Not Found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filesflash_dot_com_links", false))
+				{
+					addFileHost(
+						'filesflash.com|filesflash.net',
+						"filesflash\\.(?:com|net)\/\\w+",
+						'freedownload.php">',
+						/>That file (?:was deleted|is not available)/,
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_demo_dot_ovh_dot_eu_links", false))
+				{
+					addFileHost(
+						'ovh.eu',
+						"demo\\.ovh\\.eu\/(?:en|de)\/\\w+",
+						'download.gif"',
+						'p_point">',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_dwn_dot_so_links", false))
+				{
+					addFileHost(
+						'dwn.so|dwnshare.pl',
+						"(?:dwn\\.so|dwnshare.pl)\/show\\-file\/\\w+",
+						'$(\'.link_download\').click(function()',
+						'<div id="main_container',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_sharephile_dot_com_links", false))
+				{
+					addFileHost(
+						'sharephile.com',
+						"sharephile\\.com\/\\w+",
+						'<h1 class="download-file">',
+						/>\\\u0424\\\u0430\\\u0439\\\u043B \\\u043D\\\u0435 \\\u043D\\\u0430\\\u0439\\\u0434\\\u0435\\\u043D./,
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_maherfile_dot_com_links", false))
+				{
+					addFileHost(
+						'maherfire.com',
+						"maherfire\\.com\/\\?d=\\w+",
+						'<input type="button" onclick="startDownload();"',
+						'>Your requested file is not found',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_droidbin_dot_com_links", false))
+				{
+					addFileHost(
+						'droidbin.com|apkhosting.com',
+						"(?:droidbin\\.com|apkhosting.com)\/\\w+",
+						'optional--',
+						'>That\'s a 404<|<li>File has been removed by the site administrator.</li>',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_d_dash_h_dot_st_links", false))
+				{
+					addFileHost(
+						'd-h.st',
+						"d\\-h\\.st\/\\w+",
+						'>File Information<\/h2>',
+						'>File Not Found<',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_filefactory_dot_com_links", false) && !genset("Filefactory_API_Check", false))
+				{
+					addFileHost(
+						'filefactory.com',
+						"filefactory\\.com\/file\/\\w+",
+						/<div id="download-(?:free|premium)|<form action="\/error\.php\?code=257"/,
+						/(?:<h2>(?:File Removed|Invalid Download Link|File Unavailable|Server Failed|Datei entfernt|Ung.ltiger Download-Link))|>Account suspended/,
+						/<h2>Premium Account Required|<form action="\/error\.php\?code=253/
+					);
+				}
+
+				if (hostSet("Check_jumbofiles_dot_com_links", false))
+				{
+					addFileHost(
+						'jumbofiles.com',
+						"jumbofiles\\.com\/\\w+",
+						'<h3>Download File',
+						/>File\n*\s*Not Found/,
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_cloudstor_dot_es_links", false))
+				{
+					addFileHost(
+						'cloudstor.es',
+						"cloudstor\\.es\/f\/\\w+",
+						'<div id="btn_download"',
+						'>File not found<',
+						'optional--'
+					);
+				}
+
+				if (hostSet("Check_moevideo_dot_net_links", false))
+				{
+					addFileHost(
+						'moevideo.net',
+						"moevideo\\.net\/video\/\\d+\\.\\w+",
+						/>Download\s*video</,
+						'>Video not found<',
+						'optional--'
+					);
+				}
+
+				/*if (hostSet("Check_dizzcloud_dot_com_links", false))
+				{
+				addFileHost(
+				'dizzcloud.com',
+				"dizzcloud\\.com\/(?:file|dl)?\/?\\w+",
+				/<div\s+id="download-counter">/,
+				'<div class="font-404-1">',
+				'>File is temporary unavailable<'
+			);
+		}*/
+
+		if (hostSet("Check_shared_dot_com_links", false))
+		{
+			addFileHost(
+				'shared.com',
+				"shared\\.com\/\\w+",
+				/<div class="attachment\-icon">\n\s*<a href="https?:\/\/(?:dl|\d+\.ss)\.shared\.com\/\w+/,
+				'optional--',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_filetrip_dot_net_links", false))
+		{
+			addFileHost(
+				'filetrip.net',
+				"filetrip\\.net\/dl\\?\\w+",
+				'<input type="submit" name="download" value="Download"|<i>Your download will be ready in a second...</i>',
+				'>Sorry, the file you requested does not exist.',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_filepi_dot_com_links", false))
+		{
+			addFileHost(
+				'filepi.com',
+				"filepi\\.com\/\\w+",
+				'<button class="submit" id="button_start"',
+				'<div id="big_title">File not found or deleted :(',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_2downloadz_dot_com_links", false))
+		{
+			addFileHost(
+				'2downloadz.com',
+				"2downloadz\\.com\/\\w+",
+				'<div title="Slow Download"',
+				'>File not found<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_qfpost_dot_com_links", false))
+		{
+			addFileHost(
+				'qfpost.com',
+				"qfpost\\.com\/file\/d\\?g=\\w+",
+				'<input src="/i/download2.png"',
+				'>File not found<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_superupload_dot_com_links", false))
+		{
+			addFileHost(
+				'superupload.com',
+				"superupload\\.com\/(?:\\?|files\/)\\w+",
+				'<span id="regularspeed" class="speedt">',
+				'>DUNNO<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_tropicshare_dot_com_links", false))
+		{
+			addFileHost(
+				'tropicshare.com',
+				"tropicshare\\.com\/files\/\\d+",
+				'"free-download">FREE<br/>',
+				'>FNF<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_mystore_dot_to_links", false))
+		{
+			addFileHost(
+				'mystore.to',
+				"mystore\\.to\/dl\/\\w+",
+				/<button wert="\w+">Download File</,
+				'>file not found<', //?
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_putcker_dot_com_links", false))
+		{
+			addFileHost(
+				'putcker.com',
+				"putcker\\.com\/.+",
+				'<div class="downloadfree">',
+				'div_file"',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_turtleshare_dot_com_links", false))
+		{
+			addFileHost(
+				'turtleshare.com',
+				"turtleshare\\.com\/download\/\\w+",
+				/<div style=".+" id="download_link">Preparing Download/,
+				'We do not know this file.',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_flashx_dot_tv_links", false))
+		{
+			addFileHost(
+				'flashx.tv',
+				"flashx\\.tv\/video\/\\w+",
+				/<iframe width="\d+" height="\d+" src="http:\/\/play\.flashx\.tv\/player\/embed\.php/,
+				'>File not found<', //?
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_nosupload_dot_com_links", false))
+		{
+			addFileHost(
+				"nosupload.com",
+				"nosupload\\.com\/(?:\\?d=)?\\w+",
+				'op" value="download',
+				/>(?:File Not Found|The file was removed by administrator)</,
+				'optional--',
+				true
+			);
+		}
+
+		if (hostSet("Check_fileim_dot_com_links", false))
+		{
+			addFileHost(
+				'fileim.com',
+				"fileim\\.com\/file\/\\w+",
+				'<a id="freedown"',
+				'>Not Found<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_socifiles_dot_com_links", false))
+		{
+			addFileHost(
+				'socifiles.com',
+				"socifiles\\.com\/d\/\\w+",
+				'<h1 class="file-link"',
+				'something something darkside', //?
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_file4u_dot_pl_links", false))
+		{
+			addFileHost(
+				'file4u.pl',
+				'file4u\\.pl\/download\/\\d+',
+				/>Zwyk.y U.ytkownik<\/button>/,
+				/>\s*Plik kt.ry pr.bujesz pobra./,
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_kie_dot_nu_links", false))
+		{
+			addFileHost(
+				'kie.nu',
+				'kie\\.nu\/\\w+',
+				'<input type="submit" value="download" id="submit-dl" />',
+				'404 NOT FOUND',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_file-space_dot_org_links", false))
+		{
+			addFileHost(
+				'file-space.org',
+				'file\\-space\\.org\/files\/get\/[a-z0-9-]+',
+				'<a href="#" onclick="javascript:gotofree();"',
+				'nothingyet',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_sendfile_dot_pl_links", false))
+		{
+			addFileHost(
+				'sendfile.pl',
+				'sendfile\\.pl\/\\d+',
+				'<font color="#0000FF"><b><u>Pobierz</u>',
+				'<div class="error">Plik nie istnieje!</div>',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_uploadizer_dot_net_links", false))
+		{
+			addFileHost(
+				'uploadizer.net',
+				'uploadizer\\.net\/\\?d=\\d+',
+				'<input type="button" onclick="startDownload();"',
+				'<div class="error">Your requested file is not found',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_twojepliki_dot_eu_links", false))
+		{
+			addFileHost(
+				'twojepliki.eu',
+				'twojepliki\\.eu\/\\w+',
+				'<td><a class="free-btn-4 free-btn" href="/download/free',
+				'<h1>File not found. Probably it was deleted.</h1>|<div class="code-404" style="display:none;">404</div>',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_video_dot_tt_links", false))
+		{
+			addFileHost(
+				'video.tt',
+				'video\\.tt\/video\/\\w+',
+				'<div class="video_player" id="videoPlayer">',
+				'<font size="5">This video is no longer available</font>',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_hightail_dot_com_links", false))
+		{
+			addFileHost(
+				'hightail.com|yousendit.com',
+				'(?:hightail|yousendit)\\.com\/download\/\\w+',
+				'<a id="saveToDesktop" class="btn-save hightailWhite"',
+				'deadregex',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_upgolden_dot_com_links", false))
+		{
+			addFileHost(
+				'upgolden.com|shallfile.com',
+				'(?:upgolden\\.com|shallfile\\.com)\/download\\.php\\?file=\\d{3}',
+				'<input type="submit" value="Continue as a Guest"',
+				'>File not found<', //?
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_poslisoubor_dot_cz_links", false))
+		{
+			addFileHost(
+				'poslisoubor.cz',
+				'poslisoubor\\.cz\/stahni\/\\w+',
+				'<i>kliknutím na název souburu začne stahování</i>',
+				/>\s*Zadaná zásilka již na/,
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_edisk_dot_cz_links", false))
+		{
+			addFileHost(
+				'edisk.cz|edisk.sk|edisk.eu',
+				'(?:(?:muj|data)\\d*\\.|)edisk\\.(?:cz|sk|eu)\/(?:|(?:cz|sk|en|pl))',
+				'<a class="newdlbutton',
+				'<h3>This file does not exist',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_creafile_dot_com_links", false))
+		{
+			addFileHost(
+				'creafile.com',
+				'creafile\\.com\/download\/\\w+',
+				'>>ToBeAdded--',
+				'>File not found<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_seacloud_dot_cc_links", false))
+		{
+			addFileHost(
+				'seacloud.cc',
+				'seacloud\\.cc\/d\/\\w+\/files\/\\?p=.+',
+				'<a href="/repo/',
+				'>>ToBeAdded--',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_dropjiffy_dot_com_links", false))
+		{
+			addFileHost(
+				'dropjiffy.com',
+				'dropjiffy\\.com\/f\/\\w+',
+				'>Start Download</a>',
+				'<div class="expiredtext">',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_gulfup_dot_com_links", false))
+		{
+			addFileHost(
+				'gulfup.com',
+				'gulfup\\.com\/\\?\\w+',
+				'<img src="http://www.gulfup.com/styles/gulfup2/images/download.gif"',
+				'<title>Sorry We Can\'t Find The File  !!</title>',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_quickshare_dot_cz_links", false))
+		{
+			addFileHost(
+				'quickshare.cz',
+				'quickshare\\.cz\/stahnout-soubor\/\\d+',
+				':void(0)" onclick="stahnoutSoubor()">',
+				'<small>error 404</small>|<h1>Chyba! Vámi zadaný soubor neexistuje.</h1>',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_sharerepo_dot_com_links", false))
+		{
+			addFileHost(
+				'sharerepo.com',
+				'sharerepo\\.com\/(?:f\/)?\\w+',
+				/<a class="btn" href="\/f\/download\/\w+">Download<\/a>/,
+				'>File Not Found<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_purevid_dot_com_links", false))
+		{
+			addFileHost(
+				'purevid.com',
+				'purevid\\.com\/v\/\\w+',
+				'--ToBeAdded!',
+				'Sorry, this video has been deleted',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_tempfiles_dot_net_links", false))
+		{
+			addFileHost(
+				'tempfiles.net',
+				'tempfiles\\.net\/download\/\\d+',
+				'>>ToBeAdded',
+				'>File not found!<',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_thaicyberupload_dot_com_links", false))
+		{
+			addFileHost(
+				'thaicyberupload.com',
+				'thaicyberupload\\.com\/get\/\\w+',
+				'>>TOBEADDED!',
+				'<form method="post" enctype="multipart/form-data" id="frmupload"',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_linkz_dot_ge_links", false))
+		{
+			addFileHost(
+				'linkz.ge',
+				'linkz\\.ge\/file\/\\d+',
+				'>>ToBeAdded',
+				'No file found',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_nosvideo_dot_com_links", false))
+		{
+			addFileHost(
+				'nosvideo.com',
+				'nosvideo\\.com\/\\?v=\\w+',
+				'name="method_free"|id="btn_download"|value="Free Download"',
+				/>(?:File not found|We're sorry, the file you are looking for could not be found.|The file was removed by administrator|Datei nicht gefunden|No such file|The file you are trying to download is no longer available)\s*<|<div id="div_file" class="upload_block">/i,
+				'>This server is in maintenance mode|<img src="/images/under.gif"'
+			);
+		}
+
+		if (hostSet("Check_sdilej_dot_cz_links", false))
+		{
+			addFileHost(
+				'sdilej.cz',
+				'sdilej\\.cz\/\\w+',
+				'>Stáhnout FREE</a>',
+				'>>ToBeAdded!',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_upf_dot_co_dot_il_links", false))
+		{
+			addFileHost(
+				'upf.co.il',
+				'upf\\.co\\.il\/file\/\\d+\\.html',
+				'<div id="abc">',
+				'>>ToBeAdded',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_upload2box_dot_com_links", false))
+		{
+			addFileHost(
+				'upload2box.com',
+				'upload2box\\.com\/files\/\\w+',
+				'<input type="button" value="Free Download" id="dlbutton"',
+				'>>ToBeAdded',
+				'optional--'
+			);
+		}
+
+		if (hostSet("Check_safelinking_dot_net_links", false))
+		{
+			addFileHost(
+				'safelinking.net',
+				"safelinking\\.net\/p\/\\w{10}",
+				'color:green;"',
+				'color:red;"|<p>This link does not exist.',
+				'optional--',
+				true);
+			}
+
+			if (hostSet("Check_fileboom_dot_me_links", false)) {
+				addFileHost(
+					'fileboom.me|fboom.me',
+					'f(?:ile)?boom\\.me\/file\/[a-zA-Z0-9]{13}',
+					'<a id="download-free" href="#"|>Premium download</button>', //last part is for premium users only
+					'<title>File not found or deleted',
+					'optional--');
+				}
+
+				if (hostSet("Check_filesupload_dot_org_links", false))
+				{
+					addFileHost(
+						'filesupload.org',
+						'filesupload\\.org\/\\w+',
+						'<a href="/download-or-watch/',
+						'<title>File not found',
+						'optional--');
+					}
+
+					if (hostSet("Check_uplooad_dot_net_links", false)) //has API but doesn't work properly
+					{
+						addFileHost(
+							'uplooad.net',
+							'uplooad\\.net\/file\/[A-Z0-9]{8}\/#!.+',
+							'<i class="fa fa-download fa-lg">',
+							'<div class="alert alert-danger"><strong>Error ! </strong>This file has been deleted',
+							'optional--');
+						}
+
+						if (hostSet("Check_openload_dot_io_links", false)) //has API but doesn't work properly
+						{
+							addFileHost(
+								'openload.io',
+								'openload\\.io\/f\/[a-zA-Z0-9-_]+',
+								'<button id="btnDl" class="btn btn-primary btn-bootstrap">Download</button>|<strong>FREE DOWNLOAD</strong>',
+								'<title>File not found ;(',
+								'optional--');
+							}
+
+							if (hostSet("Check_4upld_dot_com_files", false))
+							{
+								addFileHost(
+									'4upld.com',
+									'4upld\\.com\/[a-zA-Z0-9]+',
+									'<div class="download-timer" style="display:none;">',
+									'<li>File not found|<li>File has been removed due to copyright issues',
+									'optional--');
+								}
+
+								if (hostSet("Check_ninjashare_dot_pl_links", false))
+								{
+									addFileHost(
+										'ninjashare.pl',
+										'ninjashare\\.pl\/f\/\\w+',
+										'<input type="submit" class="button" value="Download"',
+										'<div class="main">\nFile does not exists',
+										'optional--');
+									}
+
+									/***********
+									CUSTOM_ADD
+									***********/
+									if (hostSet("Check_jheberg_dot_net_links", false))
+									{
+										addFileHost(
+											"jheberg.net|jheberg.com",
+											"jheberg\\.net\/\\w+",
+											'title="Télécharger',
+											'Erreur 404',
+											'optionnal--'
+										);
+									}
+									if (hostSet("Check_go4up_dot_com_links", false))
+									{
+										addFileHost(
+											"go4up.com",
+											"go4up\\.com\/(?:\\d+\/\\w*|dl|link\.php)",
+											'id="linklist"',
+											'This file is not present in our database|File not Found',
+											'optionnal--'
+										);
+									}
+
+									if (hostSet("Check_mirrorupload_dot_net_links", false))
+									{
+										addFileHost(
+											"mirrorupload.net",
+											"mirrorupload\\.net\/\\w+",
+											'<input type="submit" class="input-access" name="access"',
+											'<div id="erreur-form">',
+											'optionnal--'
+										);
+									}
+
+									if (hostSet("Check_shareflare_dot_net_links", false))
+									{
+										addFileHost(
+											"shareflare.net",
+											"shareflare\\.net\/download\/\\w+",
+											'<h1 class="file-info',
+											'recaptcha',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_letitbit_dot_net_links", false))
+									{
+										addFileHost(
+											"letitbit.net",
+											"letitbit\.net\/download\/\\w+\.\\w+",
+											'test_btn',
+											'id="captchav"',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_bigdownloader_dot_com_links", false))
+									{
+										addFileHost(
+											"bigdownloader.com",
+											"bigdownloader\.com\/dl\/\\w+",
+											'<b>Fichier :<\/b>',
+											'Ce fichier n\'existe pas',
+											'optional--'
+										);
+									}
+
+									if (hostSet("Check_uptobox_dot_com_links", false))
+									{
+										addFileHost(
+											"uptobox.com",
+											"uptobox\.com\/\\w+",
+											'<input type="hidden" name="down_direct"',
+											'<span class="para_title">File not found|Fichier introuvable',
+											'optional--'
+										);
+									}
+
+								}
+
+								//hosts with direct download, so they must be requested for headers only
+								function initFileHostsHeadersOnly()
+								{
+									var aFHHCOCount = 1;
+									function addFileHostHeadersOnly(hostName, linkRegex, isAliveRegex, isDeadRegex)
+									{
+										hostName = hostName.split("|");
+										var i = hostName.length;
+
+
+										var hostID = "HC" + aFHHCOCount;
+
+										while(i--) {
+											var filehost = hostName[i].replace(/\./g, "_dot_").replace(/\-/g, "_dash_");
+
+											if (!hostsIDs[filehost]) {
+												hostsIDs[filehost] = [];
+											}
+											hostsIDs[filehost].push({
+												hostID: hostID,
+												linkRegex: linkRegex,
+											});
+										}
+
+										var HCObj = {
+											liveRegex: isAliveRegex,
+											deadRegex: isDeadRegex,
+											links: []
+										}
+
+										hostsCheck[hostID] = HCObj;
+										aFHHCOCount++;
+
+									}
+
+									if (hostSet("Check_uloziste_dot_com_links", false))
+									{
+										addFileHostHeadersOnly(
+											'uloziste.com',
+											"(?:|files\\.)uloziste\\.com\/\\w+\/\\w+",
+											'Connection: Keep-Alive',
+											'Content-Length: 3857'
+										)
+									}
+
+									if (hostSet("Check_filemonster_dot_net_links", false))
+									{
+										addFileHostHeadersOnly(
+											'folemonster.net',
+											"filemonster\\.net\/(?:..\/|)file\/\\w+",
+											'filename="',
+											'Content-Type: text/html'
+										)
+									}
+
+									if (hostSet("Check_uploadbin_dot_net_links", false))
+									{
+										addFileHostHeadersOnly(
+											'uploadbin.net',
+											"uploadbin\\.net\/\\w+\/\\w+",
+											'filename=',
+											'Connection: close'
+										)
+									}
+
+									if (hostSet("Check_videozer_dot_com_links", false))
+									{
+										addFileHostHeadersOnly(
+											'videozer.com',
+											"videozer\\.com\/embed\/\\w+",
+											"Connection: keep-alive|Content-Type: application/x-shockwave-flash",
+											"optional--"
+										)
+									}
+
+									if (hostSet("Check_karelia_dot_pro_links", false))
+									{
+										addFileHostHeadersOnly(
+											'karelia.pro',
+											"(?:disk|fast)\\.karelia\\.pro\/\\w+",
+											"Content-Disposition: attachment; filename=",
+											"Content-Type: text/html"
+										)
+									}
+
+									if (hostSet("Check_dropbox_dot_com_links", false))
+									{
+										addFileHostHeadersOnly(
+											'dropbox.com|dropboxusercontent.com',
+											"dl\\.dropbox(?:usercontent)?\\.com\/u\/\\d+\/.+?",
+											/x-dropbox-request-id: \w+/,
+											"optional--"
+										)
+									}
+
+									if (hostSet("Check_demo_dot_ovh_dot_eu_links", false))
+									{
+										addFileHostHeadersOnly(
+											'ovh.eu',
+											"demo\\.ovh\\.eu\/download\/\\w+",
+											"optional--",
+											"optional--"
+										)
+									}
+
+									if (hostSet("Check_archive_dot_org_links", false))
+									{
+										addFileHostHeadersOnly(
+											'archive.org',
+											"\\w+\\.us\\.archive\\.org\/.+",
+											/Content-Length: \d{6,}/,
+											'Content-Type: text/html'
+										);
+									}
+
+									if (hostSet("Check_rapidgator_dot_net_links", false) && !chromeBrowser)
+									{
+										addFileHostHeadersOnly(
+											'rapidgator.net|rg.to',
+											"(?:rapidgator\\.net|rg.to)\/file\/\\w+",
+											'download_url=http%3A%2F%2Frapidgator.net%2Ffile%2F',
+											'fnf=deleted;'
+										);
+									}
+								}
+							}
+
+							update.init();
