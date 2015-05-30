@@ -2,7 +2,7 @@
 // @name           PLC - Phoenix-Warez Links Checker
 // @description    Vérification des liens morts sur de nombreux hébergeurs.
 // @details        Basé sur W.A.R. Links Checker, ce script vérifie les liens morts sur de nombreux hébergeurs de fichiers. Utilisable sur Firefox, Chrome, Safari.
-// @version        1.0.2
+// @version        1.0.3
 // @license        Merci de ne pas modifier le contenu, contactez le staff en cas de problème
 // @author         Yeuf / Original iKickback & thecodingdude
 // @include        *phoenix-warez.ws*
@@ -14,7 +14,7 @@
 // @noframes
 // ==/UserScript==
 
-var PLC_version = "1.0.2";
+var PLC_version = "1.0.3";
 
 //separate alternative domains with "|" char (first name is considered being main)
 var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", "adrive.com", "bezvadata.cz", "filebeam.com",
@@ -49,7 +49,7 @@ var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", 
     "filesbomb.com", "cepzo.com", "project-free-upload.com", "imzupload.com", "hostingbulk.com", "speedy-share.com", "100shared.com", "igetfile.com",
     "xvidstage.com", "vidbull.com", "rapidfileshare.net", "filebox.ro|fbx.ro", "mixturecloud.com|mixturefile.com", "filefront.com|gamefront.com",
     "yourupload.com", "file-upload.net", "restfile.ca", "fliiby.com", "usersfiles.com", "upgolden.com|shallfile.com",
-    "jumbofiles.org|jumbofilebox.com", "upshared.com", "upload.ee", "putme.org", "hugefiles.net", "mega.co.nz", "thefile.me",
+    "jumbofiles.org|jumbofilebox.com", "upshared.com", "upload.ee", "putme.org", "hugefiles.net", "mega.co.nz|mega.nz", "thefile.me",
     "unlimitshare.com", "share4web.com", "novamov.com", "filedropper.com|filesavr.com", "yourfiles.to", "skydrive.live.com",
     "uploadboy.com", "city-upload.com", "mijnbestand.nl", "ultrashare.net", "dosya.tc", "exfile.ru", "fileshare.ro", "fshare.vn", "wikifortio.com",
     "wyslijto.pl", "kiwi6.com", "localhostr.com|lh.rs|hostr.co", "remixshare.com", "hidemyass.com", "tinyupload.com", "gigabase.com", "trainbit.com",
@@ -3480,8 +3480,8 @@ function start(filterId) {
 
         if (hostSet("Check_mega_dot_co_dot_nz_links", false)) {
             addHost(
-                "mega.co.nz",
-                "mega\\.co\\.nz\/#F?!\\w+",
+                "mega.co.nz|mega.nz",
+                "mega(?:\\.co)?\\.nz\/#F?!\\w+",
                 100000, //blocksize
                 null, //corrmatch
                 null, //corrreplwhat
@@ -4734,7 +4734,7 @@ function start(filterId) {
             }
 
             function postRequest(megaLink) {
-                var id = megaLink.match(/mega\.co\.nz\/#F?!(\w+)(?:!\w+)?/)[1];
+                var id = megaLink.match(/mega(?:\.co)?\.nz\/#F?!(\w+)(?:!\w+)?/)[1];
 
                 GM_xmlhttpRequest({
                     method: "POST",
