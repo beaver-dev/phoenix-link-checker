@@ -2,10 +2,11 @@
 // @name           PLC - Phoenix-Warez Links Checker
 // @description    Vérification des liens morts sur de nombreux hébergeurs.
 // @details        Basé sur W.A.R. Links Checker, ce script vérifie les liens morts sur de nombreux hébergeurs de fichiers. Utilisable sur Firefox, Chrome, Safari.
-// @version        1.0.3
+// @version        1.0.4
 // @license        Merci de ne pas modifier le contenu, contactez le staff en cas de problème
 // @author         Yeuf / Original iKickback & thecodingdude
 // @include        *phoenix-warez.ws*
+// @include        *wawa-mania.ec*
 // @grant          GM_xmlhttpRequest
 // @grant          GM_addStyle
 // @grant          GM_registerMenuCommand
@@ -14,7 +15,7 @@
 // @noframes
 // ==/UserScript==
 
-var PLC_version = "1.0.3";
+var PLC_version = "1.0.4";
 
 //separate alternative domains with "|" char (first name is considered being main)
 var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", "adrive.com", "bezvadata.cz", "filebeam.com",
@@ -87,8 +88,8 @@ var allHostNames = ["1fichier.com|dl4free.com", "2shared.com", "4fastfile.com", 
     /***********
     CUSTOM_ADD
     ***********/
-    "uptobox.com", "jheberg.net", "mirrorupload.net", "go4up.com", "shareflare.net", "letitbit.net", "bigdownloader.com",
-    "turbobit.pl|turbobit.net"
+    "uptobox.com", "jheberg.net", "jeodrive.com", "mirrorupload.net", "go4up.com", "multiup.org", "shareflare.net", "letitbit.net", "bigdownloader.com",
+    "turbobit.pl|turbobit.net", "upservmedia.com|hklp.co", "fufox.net"
 ];
 
 //separate alternative domains with "|" char (first name is considered being main)
@@ -142,7 +143,7 @@ var allObsoleteNames = ["uloz.cz", "storage.to", "iskladka.cz", "file-rack.com",
     "addat.hu", "filedeck.net|FileDeck.net", "eyvx.net", "filesnab.com", "filetitle.com", "ufliq.com", "sharebeats.com", "yotafile.com", "xxlupload.com",
     "your-filehosting.com", "uploading.to", "mummyfile.com", "play-host.net", "namipam.com", "alldrives.ge|allshares.ge", "filestrum.com", "uploadace.com",
     "7ups.net", "buckshare.com", "cokluupload.com", "filefaster.com", "divxme.com", "rapidmedia.net", "filerace.com", "mdj.com", "crocshare.com",
-    "movbay.org", "migafile.com", "dudupload.com", "fileuploadx.de", "fufox.net", "sharefiles4u.com", "fileor.com", "filedove.com", "wickedupload.com",
+    "movbay.org", "migafile.com", "dudupload.com", "fileuploadx.de", "sharefiles4u.com", "fileor.com", "filedove.com", "wickedupload.com",
     "freefilehosting.ws", "uploadby.us", "kisalt.me", "wizzupload.com", "squillion.com", "37v.net", "xshar.net", "filemsg.com", "datafile.us", "smallfile.in",
     "space4upload.info", "nrgfile.com", "okah.com", "filemojo.com", "filerose.com", "mega.huevn.com", "ex.ua", "filespump.com", "byethost12.com",
     "filezzz.com", "xazon.com", "uploadersite.com", "filegetty.com", "nfile.eu", "box4upload.com", "envirofile.org", "omxira.com", "evilshare.com",
@@ -194,7 +195,11 @@ var allObsoleteNames = ["uloz.cz", "storage.to", "iskladka.cz", "file-rack.com",
     "dizzcloud.com", "uploadsat.com|nodaup.com|safashare.com", "freakbit.net", 'upbooth.com', 'fileshareup.com', "1-clickshare.com", 'file-gag.com', "gigaup.fr",
     "zixshare.com", 'xerver.co', 'fileom.com', "firedrive.com|putlocker.com", 'sockshare.com', 'bl.st', 'privatefiles.com', 'bayfiles.net', 'vreer.com',
     'slingfile.com', 'filestorm.to', 'thefilebay.com', 'files.to', 'dodane.pl', "billionuploads.com", 'ultrafile.me', 'rapidshare.com', 'rapidshare.ru', 'boomupload.net',
-    'downforall.com', 'freakshare.net|freakshare.com', 'bitshare.com', 'ninjashare.com'
+    'downforall.com', 'freakshare.net|freakshare.com', 'bitshare.com', 'ninjashare.com',
+    /***********
+    CUSTOM_ADD
+    ***********/
+    "uploadhero.com|uploadhero.co"
 ];
 
 var pwCensoredHosts = ["filevice.com", "mirrorafile.com", "vip-file.com", "ufile.eu", "hitfile.net", "dirrectmirror.com", "keeplinks.me",
@@ -204,18 +209,17 @@ var pwCensoredHosts = ["filevice.com", "mirrorafile.com", "vip-file.com", "ufile
     "multishare.cz", "catshare.net", "4shared.com", "muchshare.net", "netfolder.in", "ziddu.com", "uploadblast.com", "uploadjockey.com",
     "adf.ly", "hellshare.com", "speedy.sh|speedyshare.com", "2downloadz.com", "anafile.com", "rapidu.net",
     "gamefront.com", "fileneo.com", "queenshare.com", "filemaze.ws", "goo.gl", "tiny.cc", "bit.ly", "tinyurl.com", "is.gd", "vidxden.com",
-    "q.gs", "imxd.net", "unlimit.co.il", "multiup.org", "flashmirrors.com", "filemirrorupload.com", "lix.in", "toturl.us", "fff.re", "directmirror.com",
+    "q.gs", "imxd.net", "unlimit.co.il", "flashmirrors.com", "filemirrorupload.com", "lix.in", "toturl.us", "fff.re", "directmirror.com",
     "uploadseeds.com", "uploadmagnet.com", "sflk.in", "adfoc.us", "urlz.so", "filetolink.com", "mtsafelinking.org"
 ];
 
 var update = {
     version: '',
     currentTime: new Date().valueOf(),
-    rawUrl: 'https://raw.githubusercontent.com/beaver-dev/phoenix-link-checker/master/',
     baseUrl: 'https://github.com/beaver-dev/phoenix-link-checker/',
-    updateSuffix: 'update.json',
-    changelogSuffix: 'changelog.md',
-    userscriptSuffix: 'PhoenixLC.user.js',
+    updateSuffix: 'raw/master/update.json',
+    changelogSuffix: 'blob/master/changelog.md',
+    userscriptSuffix: 'raw/master/PhoenixLC.user.js',
 
     init: function() {
         var timeDiff = update.currentTime - Last_Update_Check;
@@ -225,7 +229,8 @@ var update = {
     check: function() {
         GM_xmlhttpRequest({
             method: 'GET',
-            url: update.rawUrl + update.updateSuffix,
+            url: update.baseUrl + update.updateSuffix,
+            cache: false,
             onload: function(result) {
                 lsSetVal('general', 'Last_Update_Check', new Date().valueOf());
                 res = JSON.parse(result.responseText);
@@ -238,7 +243,7 @@ var update = {
 
     getUpdate: function(version) {
         var changelogUrl = update.baseUrl + update.changelogSuffix;
-        var userscriptUrl = update.rawUrl + update.userscriptSuffix;
+        var userscriptUrl = update.baseUrl + update.userscriptSuffix;
         var allowedToInstall = confirm('PLC - Une mise à jour est disponible (v' + version + ').\nElle sera installée après confirmation de votre part.\nNote: Si la mise à jour ne s\'effectue pas, vérifiez que votre navigateur ne bloque pas les popup.');
 
         sendMessage('PLC a été mise à jour ! Version ' + version + '. Cliquez <a href="' + changelogUrl + '">ici</a> pour voir les dernières modifications.');
@@ -875,7 +880,8 @@ function gimmeHostName(link) {
 //Second gimmehostname function to match whole hostname
 function gimmeHostName2(link) {
     link = link.replace(/http:\/\/.*?\?http:\/\//, 'http://'); //anonymizers
-    if (link.contains(/(?:https?:\/\/)?(?:www\.|[\w\.])*?[\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4})(?::\d+)?\//)) return link.match(/(?:https?:\/\/)?(?:www\.|[\w\.])*?([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?\//)[1];
+    if (link.contains(/(?:https?:\/\/)?(?:www\.|[\w\.])*?[\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4})(?::\d+)?\//))
+        return link.match(/(?:https?:\/\/)?(?:www\.|[\w\.])*?([\w-]+\.(?:com?\.\w{2}|in\.ua|uk\.com|\w{2,4}))(?::\d+)?\//)[1];
     else if (link.contains(".1fichier.com")) {
         return "1fichier.com";
     } else {
@@ -1588,7 +1594,8 @@ function configuration() {
     //Sets anonymizer setting
     function changeAnonymizer() {
         var val = $("#redirector").val();
-        lsSetVal("general", "Ref_anonymize_service", (val == ANONYMIZERS.length ? '' : ANONYMIZERS[val]));
+        // lsSetVal("general", "Ref_anonymize_service", (val == ANONYMIZERS.length ? '' : ANONYMIZERS[val]));
+        lsSetVal("general", "Ref_anonymize_service", (val == ANONYMIZERS.length ? 'NoRed' : ANONYMIZERS[val]));
         $('#redirector option[value=' + val + ']').prop('selected', true);
     }
 
@@ -1931,7 +1938,7 @@ function start(filterId) {
             y = links.length;
 
             while (y--) {
-                $(links[y]).attr('warlc_error', 'Cause de l\'erreur: <b>Obsolete filehosting.</b>');
+                $(links[y]).attr('warlc_error', 'Cause de l\'erreur: <b>Hébergeur obsolète.</b>');
                 displayTheCheckedLink(links[y], "obsolete_link");
             }
             hostsCheck[hostID].links = [];
@@ -7385,7 +7392,7 @@ function start(filterId) {
         if (hostSet("Check_letitbit_dot_net_links", false)) {
             addFileHost(
                 "letitbit.net",
-                "letitbit\.net\/download\/\\w+\.\\w+",
+                "letitbit\\.net\/download\/\\w+\.\\w+",
                 'test_btn',
                 'id="captchav"',
                 'optional--'
@@ -7395,7 +7402,7 @@ function start(filterId) {
         if (hostSet("Check_bigdownloader_dot_com_links", false)) {
             addFileHost(
                 "bigdownloader.com",
-                "bigdownloader\.com\/dl\/\\w+",
+                "bigdownloader\\.com\/dl\/\\w+",
                 '<b>Fichier :<\/b>',
                 'Ce fichier n\'existe pas',
                 'optional--'
@@ -7405,11 +7412,49 @@ function start(filterId) {
         if (hostSet("Check_uptobox_dot_com_links", false)) {
             addFileHost(
                 "uptobox.com",
-                "uptobox\.com\/\\w+",
+                "uptobox\\.com\/\\w+",
                 '<input type="hidden" name="down_direct"',
                 '<span class="para_title">File not found|Fichier introuvable',
                 'optional--'
             );
+        }
+
+        if (hostSet("Check_upservmedia_dot_com_links", false)) {
+            addFileHost(
+                "hklp.co|upservmedia.com",
+                "(?:hklp|upservmedia)\\.com?\/(?:success|dl\/)?\\w+",
+                '<p id="download|<strong>Lien|<a class=\'btn btn-free',
+                '<p class="clearfix submit">|brand-headingx|<ul class=\'pageErrors',
+                'optional--'
+            );
+        }
+
+        if (hostSet("Check_fufox_dot_net_links", false)) {
+            addFileHost(
+                "fufox.net",
+                "fufox\.net\/(?:success|dl)\/\\w+",
+                'downloads<\/span>',
+                '<h1>Error<',
+                'optional--'
+            );
+        }
+
+        if (hostSet("Check_multiup_dot_org_links", false)) {
+          addFileHost(
+            "multiup.org",
+            "multiup\\.org\/(?:\\w+\/)?(?:download|mirror)\/\\w+",
+            '<h2>Information sur le fichier<',
+            '<div class="alert alert-error">',
+            'optional--');
+        }
+
+        if (hostSet("Check_jeodrive_dot_com_links", false)) {
+          addFileHost(
+            "jeodrive.com",
+            "jeodrive\\.com\/(?:download|go)\/\\w+",
+            '<h1 class="filename">',
+            '<p class="p404">',
+            'optional--');
         }
 
     }
